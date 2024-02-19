@@ -4,7 +4,7 @@
 
 To create a Next.js app, open your terminal, [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) into the folder you'd like to keep your project, and run the following command:
 
-```Terminal
+```shell
 npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
 ```
 
@@ -18,7 +18,7 @@ Our goal is to help you focus on learning the main features of Next.js, without 
 
 After installation, open the project in your code editor and navigate to `nextjs-dashboard`.
 
-```Terminal
+```shell
 cd nextjs-dashboard
 ```
 
@@ -48,7 +48,7 @@ When you're building user interfaces, it helps to have some placeholder data. If
 
 For this project, we've provided some placeholder data in `app/lib/placeholder-data.js`. Each JavaScript object in the file represents a table in your database. For example, for the invoices table:
 
-```js [/app/lib/placeholder-data.js]
+```js:/app/lib/placeholder-data.js
 const invoices = [
   {
     customer_id: customers[0].id,
@@ -77,7 +77,7 @@ It's okay if you don't know TypeScript - we'll provide the TypeScript code snipp
 For now, take a look at the /app/lib/definitions.ts file. Here, we manually define the types that will be returned from the database. For example, the invoices table has the following types:
 
 
-```ts [/app/lib/definitions.ts]
+```ts:/app/lib/definitions.ts
 export type Invoice = {
   id: string;
   customer_id: string;
@@ -99,13 +99,13 @@ By using TypeScript, you can ensure you don't accidentally pass the wrong data f
 
 Run `npm i` to install the project's packages.
 
-```Terminal
+```shell
 npm i
 ```
 
 Followed by `npm run dev` to start the development server.
 
-```Terminal
+```shell
 npm run dev
 ```
 
