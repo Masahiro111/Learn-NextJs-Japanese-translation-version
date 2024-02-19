@@ -48,7 +48,7 @@ When you're building user interfaces, it helps to have some placeholder data. If
 
 For this project, we've provided some placeholder data in `app/lib/placeholder-data.js`. Each JavaScript object in the file represents a table in your database. For example, for the invoices table:
 
-```js:/app/lib/placeholder-data.js
+```js /app/lib/placeholder-data.js
 const invoices = [
   {
     customer_id: customers[0].id,
@@ -77,7 +77,7 @@ It's okay if you don't know TypeScript - we'll provide the TypeScript code snipp
 For now, take a look at the /app/lib/definitions.ts file. Here, we manually define the types that will be returned from the database. For example, the invoices table has the following types:
 
 
-```ts:/app/lib/definitions.ts
+```ts /app/lib/definitions.ts
 export type Invoice = {
   id: string;
   customer_id: string;
