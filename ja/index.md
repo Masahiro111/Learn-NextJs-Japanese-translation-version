@@ -1,48 +1,48 @@
-# Learn Next.js
+# Next.js を学ぶ
 
-Welcome to the Next.js App Router course! In this free interactive course, you'll learn the main features of Next.js by building a full-stack web application.
+Next.js App Router コースへようこそ！この無料の対話型コースでは、フルスタック Web アプリケーションを構築することによって Next.js の主な機能を学習します。
 
-## What we'll be building
+## 構築するもの
 
-For this course, we'll be building a simplified version of the financial dashboard that has:
+このコースでは、以下の機能を備えた財務ダッシュボードの簡易バージョンを構築します。
 
-* A public home page.
-* A login page.
-* Dashboard pages that are protected by authentication.
-* The ability for users to add, edit, and delete invoices.
+* ホームページの公開
+* ログインページ
+* 認証によって保護されているダッシュボードページ
+* ユーザーが請求書を追加、編集、削除できる機能
 
-The dashboard will also have an accompanying database, which you'll set up in [a later chapter](/learn/dashboard-app/setting-up-your-database).
+ダッシュボードには付随のデータベースもあります。これは、[後の章](/learn/dashboard-app/setting-up-your-database) でセットアップします。
 
-By the end of the course, you'll have the essential skills needed to start building full-stack Next.js applications.
+コース終了時には、フルスタックの Next.js アプリケーションを作り始めるために必要な必須スキルが身につきます。
 
-## Overview
+## 概要
 
-Here's an overview of features you'll learn about in this course:
+このコースで学習する機能の概要は以下のとおりです。
 
-* **Styling**: The different ways to style your application in Next.js.
-* **Optimizations**: How to optimize images, links, and fonts.
-* **Routing**: How to create nested layouts and pages using file-system routing.
-* **Data Fetching**: How to set up a database on Vercel, and best practices for fetching and streaming.
-* **Search and Pagination**: How to implement search and pagination using URL Search Params.
-* **Mutating Data**: How to mutate data using React Server Actions, and revalidate the Next.js cache.
-* **Error Handling**: How to handle general and `404` not found errors.
-* **Form Validation and Accessibility**: How to do server-side form validation and tips for improving accessibility.
-* **Authentication**: How to add authentication to your application using [`NextAuth.js`](https://next-auth.js.org/) and Middleware.
-* **Metadata**: How to add metadata and prepare your application for social sharing.
+* **スタイリング**: Next.js でアプリケーションをスタイル設定するさまざまな方法
+* **最適化**: 画像、リンク、フォントを最適化する方法
+* **ルーティング**: ファイルシステムルーティングを使用して、ネストされたレイアウトとページを作成する方法
+* **データフェッチ**: Vercel でデータベースをセットアップする方法、およびフェッチとストリーミングのベストプラクティス
+* **検索とページネーション**: URL の検索パラメータを使用して、検索とページネーションを実装する方法
+* **データの変更**: React Server Actions を使用してデータを変更し、Next.js のキャッシュを再検証する方法
+* **エラー処理**: 一般的なエラーと`404` not found エラーを処理する方法
+* **フォーム検証とアクセシビリティ**: サーバーサイドのフォーム検証方法とアクセシビリティ向上のヒント
+* **認証**: [`NextAuth.js`](https://next-auth.js.org/) とミドルウェアを使用してアプリケーションに認証を追加する方法
+* **メタデータ**: メタデータを追加し、ソーシャルシェアのためにアプリケーションを準備する方法
 
-## Prerequisite knowledge
+## 前提知識
 
-This course assumes you have a basic understanding of React and JavaScript. If you're new to React, we recommend going through our [React Foundations](/learn/react-foundations) course first to learn the fundamentals of React, such as components, props, state, and hooks, and newer features like Server Components and Suspense.
+このコースは、React と JavaScript の基本的な理解があることを前提としています。React が初めての方は、コンポーネント、プロップ、ステート、フックなどの React の基礎や、サーバーコンポーネントやサスペンスなどの新しい機能を学ぶために、最初に [React Foundations](/learn/react-foundations) コースを受講することをお勧めします。
 
-## System requirements
+## システム要件
 
-Before you start this course, make sure your system meets the following requirements:
+このコースを開始する前に、システムが以下の要件を満たしていることを確認してください。
 
-* Node.js 18.17.0 or later installed. [Download here](https://nodejs.org/en).
-* Operating systems: macOS, Windows (including WSL), or Linux.
+* Node.js 18.17.0 以降がインストールされていること。[ダウンロードはこちら](https://nodejs.org/en)
+* オペレーティングシステム: macOS、Windows (WSL を含む)、または Linux。
 
-In addition, you'll also need a [GitHub Account](https://github.com/join/) and a [Vercel Account](https://vercel.com/signup).
+さらに、[GitHub アカウント](https://github.com/join/) と [Vercel アカウント](https://vercel.com/signup) も必要です。
 
-## Join the conversation
+## コミュニティに参加
 
-If you have questions about this course or would like to provide feedback, you can ask our community on [Discord](https://discord.com/invite/Q3AsD4efFC) or [GitHub](https://github.com/vercel/next-learn).
+このコースについて質問がある場合、またはフィードバックを提供したい場合は、[Discord](https://discord.com/invite/Q3AsD4efFC) または [GitHub](https://github.com/vercel) で私たちのコミュニティに質問することができます。
