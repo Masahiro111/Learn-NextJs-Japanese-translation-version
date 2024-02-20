@@ -1,6 +1,6 @@
 # Getting Started
 
-## Creating a new project
+## 新規プロジェクトを作成
 
 To create a Next.js app, open your terminal, [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) into the folder you'd like to keep your project, and run the following command:
 
@@ -8,23 +8,23 @@ To create a Next.js app, open your terminal, [cd](https://developer.mozilla.org/
 npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
 ```
 
-This command uses `create-next-app`, a Command Line Interface (CLI) tool that sets up a Next.js application for you. In the command above, you're also using the --example flag with the [starter example](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example) for this course.
+このコマンドは、Next.js アプリケーションをセットアップするコマンドラインインターフェイス (CLI) ツールである `create-next-app` を使用しています。上記のコマンドでは、このコースの [スターターサンプル](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example) を使用するため --example フラグを付加しています。
 
-## Exploring the project
+## プロジェクトの探索
 
-Unlike tutorials that have you write code from scratch, much of the code for this course is already written for you. This better reflects real-world development, where you'll likely be working with existing codebases.
+コードを最初から作成するチュートリアルとは異なり、このコースのコードの多くはすでに作成されています。これは、既存のコードベースを使用して作業することになる実際の開発をよりよく反映しています。
 
-Our goal is to help you focus on learning the main features of Next.js, without having to write all the application code.
+私たちの目標は、すべてのアプリケーションコードを記述することなく、Next.js の主な機能の学習に集中できるようにすることです。
 
-After installation, open the project in your code editor and navigate to `nextjs-dashboard`.
+インストール後、コードエディターでプロジェクトを開き、`nextjs-dashboard` に移動します。
 
 ```shell
 cd nextjs-dashboard
 ```
 
-Let's spend some time exploring the project.
+時間をかけてプロジェクトを探索してみましょう。
 
-### Folder structure
+### フォルダ構造
 
 You'll notice that the project has the following folder structure:
 
