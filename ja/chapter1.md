@@ -1,8 +1,8 @@
-# Getting Started
+# はじめに
 
-## 新規プロジェクトを作成
+## 新規プロジェクトの作成
 
-To create a Next.js app, open your terminal, [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) into the folder you'd like to keep your project, and run the following command:
+Next.js アプリを作成するには、ターミナルを開き、プロジェクトを保存したいフォルダに [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) で移動し、以下のコマンドを実行します。
 
 ```shell
 npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
@@ -26,27 +26,27 @@ cd nextjs-dashboard
 
 ### フォルダ構造
 
-You'll notice that the project has the following folder structure:
+このプロジェクトは以下のようなフォルダ構造になっていることがわかります。
 
-![Folder structure of the dashboard project, showing the main folders and files: app, public, and config files.]()
+![ダッシュボード プロジェクトのフォルダ構造。主要なフォルダとファイル: アプリ、パブリック、構成ファイルが表示されます。]()
 
-* `/app`: Contains all the routes, components, and logic for your application, this is where you'll be mostly working from.
-* `/app/lib`: Contains functions used in your application, such as reusable utility functions and data fetching functions.
-* `/app/ui`: Contains all the UI components for your application, such as cards, tables, and forms. To save time, we've pre-styled these components for you.
-* `/public`: Contains all the static assets for your application, such as images.
-* `/scripts`: Contains a seeding script that you'll use to populate your database in a later chapter.
-* `Config Files`: You'll also notice config files such as `next.config.js` at the root of your application. Most of these files are created and pre-configured when you start a new project using `create-next-app`. You will not need to modify them in this course.
+* `/app`: アプリケーションのすべてのルート、コンポーネント、ロジックが含まれています。主にここから作業します。
+* `/app/lib`: 再利用可能なユーティリティ関数やデータ取得関数など、アプリケーションで使用される関数が含まれています。
+* `/app/ui`: カード、テーブル、フォームなど、アプリケーションのすべての UI コンポーネントが含まれます。時間を節約するために、これらのコンポーネントは事前にスタイル設定されています。
+* `/public`: 画像など、アプリケーションのすべての静的アセットが含まれます。
+* `/scripts`: 後の章で使用する、データベースにデータを取り込むためのシードスクリプトが含まれています。
+* `Config Files`: アプリケーションのルートに `next.config.js` などの構成ファイルがあることにも気づくでしょう。これらのファイルのほとんどは `create-next-app` を使用して新しいプロジェクトを開始するときに作成され、あらかじめ設定されています。このコースでは、これらのファイルを変更する必要はありません。
 
-Feel free to explore these folders, and don't worry if you don't understand everything the code is doing yet.
+これらのフォルダを自由に探索してください。コードの動作をすべて理解していなくても心配する必要はありません。
 
-### Placeholder data
+### プレースホルダデータ
 
-When you're building user interfaces, it helps to have some placeholder data. If a database or API is not yet available, you can:
+ユーザーインターフェイスを構築するとき、いくつかのプレースホルダデータがあると便利です。データベースや API がまだ利用できない場合は、以下のような方法があります。
 
-* Use placeholder data in JSON format or as JavaScript objects.
-* Use a 3rd party service like [mockAPI](https://mockapi.io/).
+* プレースホルダデータは JSON 形式または JavaScript オブジェクトとして使用します。
+* [mockAPI](https://mockapi.io/) などのサードパーティサービスを使用します。
 
-For this project, we've provided some placeholder data in `app/lib/placeholder-data.js`. Each JavaScript object in the file represents a table in your database. For example, for the invoices table:
+このプロジェクトでは、いくつかのプレースホルダデータを `app/lib/placeholder-data.js` に用意しました。ファイル内の各 JavaScript オブジェクトは、データベース内のテーブルを表しています。たとえば、invoices テーブルの場合は以下のようになります。
 
 ```js /app/lib/placeholder-data.js
 const invoices = [
@@ -66,16 +66,15 @@ const invoices = [
 ];
 ```
 
-In the chapter on setting up your database, you'll use this data to seed your database (populate it with some initial data).
+データベースのセットアップに関する章では、このデータを使用してデータベースをシード (データベースに初期データを入力) します。
 
 ### TypeScript
 
-You may also notice most files have a .ts or .tsx suffix. This is because the project is written in TypeScript. We wanted to create a course that reflects the modern web landscape.
+また、ほとんどのファイルには .ts または .tsx という接尾辞が付いていることに気づくかもしれません。これは、プロジェクトが TypeScript で記述されているためです。私たちは、現代の Web 環境を反映したコースを作成したいと考えました。
 
-It's okay if you don't know TypeScript - we'll provide the TypeScript code snippets when required.
+TypeScript を知らなくても大丈夫です。必要に応じて TypeScript コードスニペットを提供します。
 
-For now, take a look at the /app/lib/definitions.ts file. Here, we manually define the types that will be returned from the database. For example, the invoices table has the following types:
-
+`/app/lib/settings.ts` ファイルを見てください。ここでは、データベースから返される型を手動で定義します。たとえば、invoices テーブルには以下の型があります。
 
 ```ts /app/lib/definitions.ts
 export type Invoice = {
@@ -89,26 +88,26 @@ export type Invoice = {
 };
 ```
 
-By using TypeScript, you can ensure you don't accidentally pass the wrong data format to your components or database, like passing a `string` instead of a `number` to invoice `amount`.
+TypeScript を使用することで、コンポーネントやデータベースに間違ったデータ形式を誤って渡さないようにすることができます。たとえば、請求書の `amount` に `number` ではなく `string` を渡すような場合です。
 
-> If you're a TypeScript developer:
-> * We're manually declaring the data types, but for better type-safety, we recommend Prisma, which automatically generates types based on your database schema.
-> * Next.js detects if your project uses TypeScript and automatically installs the necessary packages and configuration. Next.js also comes with a TypeScript plugin for your code editor, to help with auto-completion and type-safety.
+> TypeScript 開発者の場合:
+> * データ型を手動で宣言していますが、型の安全性を高めるために、データベーススキーマに基づいて型を自動的に生成する Prisma をお勧めします。
+> * Next.js は、プロジェクトで TypeScript が使用されているかどうかを検出し、必要なパッケージと構成を自動的にインストールします。Next.js には、自動補完（オートコンプリート）と型安全性（タイプセーフティ）を支援する、コードエディタ用の TypeScript プラグインも付属しています。
 
-## Running the development server
+## 開発サーバーの実行
 
-Run `npm i` to install the project's packages.
+`npm i` を実行してプロジェクトのパッケージをインストールします。
 
 ```shell
 npm i
 ```
 
-Followed by `npm run dev` to start the development server.
+続いて `npm run dev` を実行して開発サーバーを起動します。
 
 ```shell
 npm run dev
 ```
 
-`npm run dev` starts your Next.js development server on port 3000. Let's check to see if it's working. Open [http://localhost:3000](http://localhost:3000) on your browser. Your home page should look like this:
+`npm run dev` は、Next.js の開発サーバーをポート 3000 で起動します。動作確認をしてみましょう。ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。トップページは以下のようになっているはずです。
 
 ![Unstyled page with the title 'Acme', a description, and login link.]()
