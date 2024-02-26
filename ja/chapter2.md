@@ -14,11 +14,11 @@
 
 `/app/ui` フォルダの中を見ると、`global.css` というファイルがあることがわかります。このファイルを使用すると、CSS リセットルール、リンクなどの HTML 要素のサイト全体のスタイルなど、CSS ルールをアプリケーション内のすべてのルートに追加できます。
 
-You can import `global.css` in any component in your application, but it's usually good practice to add it to your top-level component. In Next.js, this is the [root layout](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) (more on this later).
+`global.css` はアプリケーションのどのコンポーネントにもインポートできますが、通常はそれを最上位コンポーネントに追加することをお勧めします。Next.js では、これは [ルートレイアウト](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) となっています (これについては後で詳しく説明します) 。
 
-Add global styles to your application by navigating to `/app/layout.tsx` and importing the `global.css` file:
+`/app/layout.tsx` に移動し、`global.css` ファイルをインポートして、グローバルスタイルをアプリケーションに追加します。
 
-```diff /app/layout.tsx
+```diff ts:/app/layout.tsx
 + import '@/app/ui/global.css';
  
 export default function RootLayout({
