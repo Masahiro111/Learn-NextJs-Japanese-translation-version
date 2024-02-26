@@ -10,9 +10,9 @@
 > Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
 > clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
 
-## Global styles
+## グローバルスタイル
 
-If you look inside the `/app/ui` folder, you'll see a file called `global.css`. You can use this file to add CSS rules to all the routes in your application - such as CSS reset rules, site-wide styles for HTML elements like links, and more.
+`/app/ui` フォルダの中を見ると、`global.css` というファイルがあることがわかります。このファイルを使用すると、CSS リセットルール、リンクなどの HTML 要素のサイト全体のスタイルなど、CSS ルールをアプリケーション内のすべてのルートに追加できます。
 
 You can import `global.css` in any component in your application, but it's usually good practice to add it to your top-level component. In Next.js, this is the [root layout](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) (more on this later).
 
