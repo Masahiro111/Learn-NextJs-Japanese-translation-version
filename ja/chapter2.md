@@ -1,14 +1,14 @@
-# CSS Styling
+# CSS スタイル
 
-Currently, your home page doesn't have any styles. Let's look at the different ways you can style your Next.js application.
+現在、あなたのホームページにはスタイル設定がされていません。Next.js アプリケーションをスタイル設定するさまざまな方法を見てみましょう。
 
-**In this chapter...**
+**この章では...**
 
-Here are the topics we’ll cover
+ここで取り上げるトピックは次のとおりです
 
-> How to add a global CSS file to your application.
-> Two different ways of styling: Tailwind and CSS modules.
-> How to conditionally add class names with the clsx utility package.
+> グローバル CSS ファイルをアプリケーションに追加する方法
+> Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
+> clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
 
 ## Global styles
 
