@@ -1,18 +1,18 @@
-# CSS Styling
+# CSS スタイル
 
-Currently, your home page doesn't have any styles. Let's look at the different ways you can style your Next.js application.
+現在、あなたのホームページにはスタイル設定がされていません。Next.js アプリケーションをスタイル設定するさまざまな方法を見てみましょう。
 
-**In this chapter...**
+**この章では...**
 
-Here are the topics we’ll cover
+ここで取り上げるトピックは次のとおりです
 
-> How to add a global CSS file to your application.
-> Two different ways of styling: Tailwind and CSS modules.
-> How to conditionally add class names with the clsx utility package.
+> グローバル CSS ファイルをアプリケーションに追加する方法
+> Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
+> clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
 
-## Global styles
+## グローバルスタイル
 
-If you look inside the `/app/ui` folder, you'll see a file called `global.css`. You can use this file to add CSS rules to all the routes in your application - such as CSS reset rules, site-wide styles for HTML elements like links, and more.
+`/app/ui` フォルダの中を見ると、`global.css` というファイルがあることがわかります。このファイルを使用すると、CSS リセットルール、リンクなどの HTML 要素のサイト全体のスタイルなど、CSS ルールをアプリケーション内のすべてのルートに追加できます。
 
 You can import `global.css` in any component in your application, but it's usually good practice to add it to your top-level component. In Next.js, this is the [root layout](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) (more on this later).
 
