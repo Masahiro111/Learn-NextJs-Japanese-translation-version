@@ -34,15 +34,15 @@ export default function RootLayout({
 }
 ```
 
-With the development server still running, save your changes and preview them in the browser. Your home page should now look like this:
+開発サーバーを起動したまま、変更を保存し、ブラウザでプレビューしてください。あなたのホームページは以下のようになるはずです。
 
-![](Styled page with the logo 'Acme', a description, and login link.)
+![](ロゴ「Acme」、説明、ログイン リンクを含むスタイル付きページ)
 
-But wait a second, you didn't add any CSS rules, where did the styles come from?
+しかし、ちょっと待ってください。CSS ルールを追加していません。スタイルはどこから来たのでしょうか？
 
-If you take a look inside global.css, you'll notice some @tailwind directives:
+global.css の内部を見ると、いくつかの @tailwind ディレクティブに気づくでしょう。
 
-```css /app/ui/global.css
+```css:/app/ui/global.css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,28 +50,28 @@ If you take a look inside global.css, you'll notice some @tailwind directives:
 
 ## Tailwind
 
-[Tailwind](https://tailwindcss.com/) is a CSS framework that speeds up the development process by allowing you to quickly write [utility classes](https://tailwindcss.com/docs/utility-first) directly in your TSX markup.
+[Tailwind](https://tailwindcss.com/) は、TSX マークアップ内に [ユーティリティクラス](https://tailwindcss.com/docs/utility-first) を直接すばやく記述できるようにすることで、開発プロセスを高速化する CSS フレームワークです。
 
-In Tailwind, you style elements by adding class names. For example, adding the class `"text-blue-500"` will turn the `<h1>` text blue:
+Tailwind では、クラス名を追加することで要素をスタイル設定します。たとえば `"text-blue-500"` というクラスを追加すると `<h1>` のテキストが青に変わります。
 
 ```html
 <h1 className="text-blue-500">I'm blue!</h1>
 ```
 
-Although the CSS styles are shared globally, each class is singularly applied to each element. This means if you add or delete an element, you don't have to worry about maintaining separate stylesheets, style collisions, or the size of your CSS bundle growing as your application scales.
+CSSスタイルはグローバルに共有されますが、各クラスは各要素に個別に適用されます。つまり、要素を追加したり削除したりしても、別々のスタイルシートを維持したり、スタイルが衝突したり、アプリケーションの拡張に伴って CSS バンドルのサイズが大きくなったりする心配はありません。
 
-When you use `create-next-app` to start a new project, Next.js will ask if you want to use Tailwind. If you select `yes`, Next.js will automatically install the necessary packages and configure Tailwind in your application.
+`create-next-app` を使用して新しいプロジェクトを開始すると、Next.js は Tailwind を使用するかどうかを尋ねます。`yes` を選択すると、Next.js は必要なパッケージを自動的にインストールし、アプリケーションに Tailwind を設定します。
 
-If you look at `/app/page.tsx`, you'll see that we're using Tailwind classes in the example.
+`/app/page.tsx` を見ると、サンプルで Tailwind のクラスを使っていることがわかります。
 
-```ts /app/page.tsx
+```ts:/app/page.tsx
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
  
 export default function Page() {
   return (
-    // These are Tailwind classes:
+    // これらは Tailwind のクラスです
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
     // ...
@@ -79,11 +79,11 @@ export default function Page() {
 }
 ```
 
-Don't worry if this is your first time using Tailwind. To save time, we've already styled all the components you'll be using.
+Tailwind を初めて使用する場合でも心配する必要はありません。時間を節約するために、使用するすべてのコンポーネントのスタイルがすでに設定されています。
 
-Let's play with Tailwind! Copy the code below and paste it above the `<p>` element in `/app/page.tsx`:
+Tailwind で遊んでみましょう！以下のコードをコピーして `/app/page.tsx` の `<p>` 要素の上に貼り付けてください。
 
-```ts /app/page.tsx
+```ts:app/page.tsx
 <div
   className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"
 />
