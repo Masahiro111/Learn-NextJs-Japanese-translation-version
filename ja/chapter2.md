@@ -89,28 +89,28 @@ Tailwind で遊んでみましょう！以下のコードをコピーして `/ap
 />
 ```
 
-**It’s time to take a quiz!**
+**クイズの時間です！**
 
-Test your knowledge and see what you’ve just learned.
+自分の知識をテストして、学んだことを確認してください。
 
-What shape do you see when using the code snippet above?
+上記のコードスニペットを使用すると、どのような形状が表示されますか？
 
-> A : A yellow star
-> B : A blue triangle
-> C : A black triangle
-> D : A red circle
+> A : 黄色い星
+> B : 青い三角形
+> C : 黒い三角形
+> D : 赤い丸
 
-If you prefer writing traditional CSS rules or keeping your styles separate from your JSX - CSS Modules are a great alternative.
+従来の CSS ルールを記述したい場合、またはスタイルを JSX から分離しておきたい場合は、CSS モジュールが優れた代替手段となります。
 
-## CSS Modules
+## CSS モジュール
 
-[CSS Modules](https://nextjs.org/docs/basic-features/built-in-css-support) allow you to scope CSS to a component by automatically creating unique class names, so you don't have to worry about style collisions as well.
+[CSS モジュール](https://nextjs.org/docs/basic-features/built-in-css-support) を使用すると、一意のクラス名を自動的に作成することで CSS のスコープをコンポーネントに設定できます。なので、スタイルの衝突については心配する必要はありません。
 
-We'll continue using Tailwind in this course, but let's take a moment to see how you can achieve the same results from the quiz above using CSS modules.
+このコースでは Tailwind を使用しますが、CSS モジュールを使用して上記のクイズと同じ結果を得る方法を少し見てみましょう。
 
-Inside `/app/ui`, create a new file called `home.module.css` and add the following CSS rules:
+`/app/ui` 内に、`home.module.css` という名前の新しいファイルを作成し、以下の CSS ルールを追加します。
 
-```css /app/ui/home.module.css
+```css:/app/ui/home.module.css
 .shape {
   height: 0;
   width: 0;
@@ -120,26 +120,26 @@ Inside `/app/ui`, create a new file called `home.module.css` and add the followi
 }
 ```
 
-Then, inside your `/app/page.tsx` file import the styles and replace the Tailwind class names from the `<div>` you've added with `styles.shape`:
+次に、`/app/page.tsx` ファイル内でスタイルをインポートし、追加した `<div>` の Tailwind クラス名を `styles.shape` に置き換えます。
 
-```ts /app/page.tsx
+```ts:/app/page.tsx
 import styles from '@/app/ui/home.module.css';
 <div className={styles.shape} />;
 ```
 
-Save your changes and preview them in the browser. You should see the same shape as before.
+変更を保存し、ブラウザでプレビューしてください。以前と同じ形状が表示されるはずです。
 
-Tailwind and CSS modules are the two most common ways of styling Next.js applications. Whether you use one or the other is a matter of preference - you can even use both in the same application!
+Tailwind と CSS モジュールは、Next.js アプリケーションをスタイリングする最も一般的な2つの方法です。どちらを使うかは好みの問題ですが、同じアプリケーションで両方を使うこともできます！
 
-**It’s time to take a quiz!**
+**クイズの時間です！**
 
-Test your knowledge and see what you’ve just learned.
+あなたの知識をテストして、今学んだことを確認しましょう。
 
-What is one benefit of using CSS modules?
+CSS モジュールを使う利点の1つは何でしょう？
 
-> A : Increase the global scope of CSS classes, making them easier to manage across different files.
-> B : Provide a way to make CSS classes locally scoped to components by default, reducing the risk of styling conflicts.
-> C : Automatically compress and minify CSS files for faster page loading.
+> A : CSS クラスのグローバルスコープを広げ、異なるファイル間での管理を容易にする。
+> B : CSS クラスをデフォルトでコンポーネントに対してローカルにスコープさせる方法を提供し、スタイルの衝突のリスクを減らす。
+> C : CSS ファイルを自動的に圧縮・最小化して、ページの読み込みを速くする。
 
 ## Using the `clsx` library to toggle class names
 There may be cases where you may need to conditionally style an element based on state or some other condition.
