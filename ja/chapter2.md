@@ -91,7 +91,7 @@ Tailwind で遊んでみましょう！以下のコードをコピーして `/ap
 
 **クイズの時間です！**
 
-自分の知識をテストして、学んだことを確認してください。
+あなたの知識をテストして、今学んだことを確認しましょう。
 
 上記のコードスニペットを使用すると、どのような形状が表示されますか？
 
@@ -141,17 +141,17 @@ CSS モジュールを使う利点の1つは何でしょう？
 > B : CSS クラスをデフォルトでコンポーネントに対してローカルにスコープさせる方法を提供し、スタイルの衝突のリスクを減らす。
 > C : CSS ファイルを自動的に圧縮・最小化して、ページの読み込みを速くする。
 
-## Using the `clsx` library to toggle class names
-There may be cases where you may need to conditionally style an element based on state or some other condition.
+## `clsx` ライブラリを使用してクラス名を切り替える
+状態やその他の条件に基づいて要素を条件付きでスタイル設定する必要がある場合があります。
 
-[clsx](https://www.npmjs.com/package/clsx) is a library that lets you toggle class names easily. We recommend taking a look at [documentation](https://github.com/lukeed/clsx) for more details, but here's the basic usage:
+[clsx](https://www.npmjs.com/package/clsx) は、クラス名を簡単に切り替えることができるライブラリです。詳細については、[ドキュメント](https://github.com/lukeed/clsx) を参照することをお勧めしますが、基本的な使用法は以下のとおりです。
 
-* Suppose that you want to create an `InvoiceStatus` component which accepts `status`. The status can be `'pending'` or `'paid'`.
-* If it's `'paid'`, you want the color to be green. If it's `'pending'`, you want the color to be gray.
+* `InvoiceStatus`コンポーネントを作成して `status`を受け入れます。ステータスは `'pending'` （保留中） または `'paid'` （支払い済み） になります。
+* もし `'paid'` なら、色をグリーンにします。`pending'`の場合はグレーにします。
 
-You can use `clsx` to conditionally apply the classes, like this:
+`clsx` を使用うと、以下のように条件付きでクラスを適用できます。
 
-```diff /app/ui/invoices/status.tsx
+```diff ts:/app/ui/invoices/status.tsx
 import clsx from 'clsx';
  
 export default function InvoiceStatus({ status }: { status: string }) {
@@ -169,21 +169,21 @@ export default function InvoiceStatus({ status }: { status: string }) {
 )}
 ```
 
-**It’s time to take a quiz!**
+**クイズの時間です！**
 
-Test your knowledge and see what you’ve just learned.
+あなたの知識をテストして、今学んだことを確認しましょう。
 
-Search for "clsx" in your code editor, what components use it to conditionally apply class names?
+あなたのコードエディタで「clsx」を検索してください。クラス名を条件付きで適用するために、どのコンポーネントが "clsx "を使っているでしょうか？
 
-> A : `status.tsx` and `pagination.tsx`
-> B : `table.tsx` and `status.tsx`
-> C : `nav-links.tsx` and `table.tsx`
+> A : `status.tsx` と `pagination.tsx`
+> B : `table.tsx` と `status.tsx`
+> C : `nav-links.tsx` と `table.tsx`
 
-## Other styling solutions
+## その他のスタイリング方法
 
-In addition to the approaches we've discussed, you can also style your Next.js application with:
+これまで説明してきたアプローチに加えて、以下のように Next.js アプリケーションのスタイルを設定することもできます。
 
-* Sass which allows you to import `.css` and `.scss` files.
-* CSS-in-JS libraries such as [styled-jsx](), [styled-components](), and [emotion]().
+* `.css` および `.scss` ファイルをインポートできる Sass。
+* [styled-jsx](https://github.com/vercel/styled-jsx)、[styled-components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)、[emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion) などの CSS-in-JS ライブラリ。
 
-Take a look at the [CSS documentation]() for more information.
+詳細については、[CSS ドキュメント](https://nextjs.org/docs/app/building-your-application/styling) を参照してください。
