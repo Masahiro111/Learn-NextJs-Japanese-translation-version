@@ -16,17 +16,15 @@
 
 ![] (ページの初期読み込みと、それに続くカスタム フォントの読み込みに伴うレイアウトのシフトを示すモック UI。)
 
-![](Mock UI showing initial load of a page, followed by a layout shift as the custom font loads.)
+Next.js は `next/font` モジュールを使用すると、アプリケーション内のフォントを自動的に最適化します。ビルド時にフォントファイルをダウンロードし、他の静的アセットとともにホストします。ユーザーがアプリケーションにアクセスしたときに、フォントの読み込みによってパフォーマンスに影響するようなネットワークリクエストが追加されないということです。
 
-Next.js automatically optimizes fonts in the application when you use the `next/font` module. It downloads font files at build time and hosts them with your other static assets. This means when a user visits your application, there are no additional network requests for fonts which would impact performance.
+## プライマリフォントの追加
 
-## Adding a primary font
+カスタム Google フォントをアプリケーションに追加して、この仕組みを確認してみましょう。
 
-Let's add a custom Google font to your application to see how this works!
+`/app/ui` フォルダーに、`fonts.ts` という名前の新しいファイルを作成します。このファイルを使用して、アプリケーション全体で使用されるフォントを保存します。
 
-In your `/app/ui` folder, create a new file called `fonts.ts`. You'll use this file to keep the fonts that will be used throughout your application.
-
-Import the `Inter` font from the `next/font/google` module - this will be your primary font. Then, specify what (subset)[https://fonts.google.com/knowledge/glossary/subsetting] you'd like to load. In this case, 'latin':
+`next/font/google` モジュールから `Inter` フォントをインポートします。これがプライマリフォントになります。次に、読み込むもの（サブセット）[https://fonts.google.com/knowledge/glossary/subsetting]を指定します。今回の場合は `latin` となります。
 
 ```ts:/app/ui/fonts.ts
 import { Inter } from 'next/font/google';
@@ -34,7 +32,7 @@ import { Inter } from 'next/font/google';
 export const inter = Inter({ subsets: ['latin'] });
 ```
 
-Finally, add the font to the `<body>` element in `/app/layout.tsx`:
+最後に、フォントを `/app/layout.tsx` の `<body>` 要素に追加します。
 
 ```tsx:/app/layout.tsx
 import '@/app/ui/global.css';
