@@ -1,20 +1,20 @@
-# Optimizing Fonts and Images
+# フォントと画像の最適化
 
-In the previous chapter, you learned how to style your Next.js application. Let's continue working on your home page by adding a custom font and a hero image.
+前の章では、Next.js アプリケーションのスタイルを設定する方法を学びました。カスタムフォントとヒーロー画像を追加して、ホームページ作成を続けましょう。
 
-**In this chapter...**
+この章で取り上げるトピックは以下のとおりです。
 
-Here are the topics we’ll cover
+- `next/font` でカスタムフォントを追加する方法
+- `next/image` で画像を追加する方法
+- Next.js でフォントと画像がどのように最適化されるか
 
-> How to add custom fonts with `next/font`.
-> How to add images with `next/image`.
-> How fonts and images are optimized in Next.js.
+## フォントを最適化する理由
 
-## Why optimize fonts?
+フォントは Web サイトのデザインにおいて重要な役割を果たしますが、プロジェクトでカスタムフォントを使用する際、フォントファイルをフェッチしてロードする必要があるとき、パフォーマンスに影響を与える可能性があります。
 
-Fonts play a significant role in the design of a website, but using custom fonts in your project can affect performance if the font files need to be fetched and loaded.
+[Cumulative Layout Shift](https://web.dev/cls/) は、Google が Web サイトのパフォーマンスとユーザーエクスペリエンスを評価するために使用する指標です。フォントの場合、ブラウザが最初にフォールバックフォントまたはシステムフォントでテキストをレンダリングし、読み込まれた後にカスタムフォントに置き換えるときに、レイアウトのシフトが発生します。この入れ替えにより、テキストのサイズ、間隔、レイアウトが変更され、周囲の要素が移動する可能性があります。
 
-[Cumulative Layout Shift](https://web.dev/cls/) is a metric used by Google to evaluate the performance and user experience of a website. With fonts, layout shift happens when the browser initially renders text in a fallback or system font and then swaps it out for a custom font once it has loaded. This swap can cause the text size, spacing, or layout to change, shifting elements around it.
+![] (ページの初期読み込みと、それに続くカスタム フォントの読み込みに伴うレイアウトのシフトを示すモック UI。)
 
 ![](Mock UI showing initial load of a page, followed by a layout shift as the custom font loads.)
 
