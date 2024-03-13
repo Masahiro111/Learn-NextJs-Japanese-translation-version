@@ -2,13 +2,11 @@
 
 現在、あなたのホームページにはスタイル設定がされていません。Next.js アプリケーションをスタイル設定するさまざまな方法を見てみましょう。
 
-**この章では...**
+この章で取り上げるトピックは以下のとおりです。
 
-ここで取り上げるトピックは次のとおりです
-
-> グローバル CSS ファイルをアプリケーションに追加する方法
-> Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
-> clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
+> - グローバル CSS ファイルをアプリケーションに追加する方法
+> - Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
+> - clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
 
 ## グローバルスタイル
 
@@ -18,25 +16,25 @@
 
 `/app/layout.tsx` に移動し、`global.css` ファイルをインポートして、グローバルスタイルをアプリケーションに追加します。
 
-```diff ts:/app/layout.tsx
+```ts diff:/app/layout.tsx
 + import '@/app/ui/global.css';
  
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
-}
+  export default function RootLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return (
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    );
+  }
 ```
 
 開発サーバーを起動したまま、変更を保存し、ブラウザでプレビューしてください。あなたのホームページは以下のようになるはずです。
 
-![](ロゴ「Acme」、説明、ログイン リンクを含むスタイル付きページ)
+![ロゴ「Acme」説明、ログイン リンクを含むスタイル付きページ](/_images/home-page-with-tailwind.avif)
 
 しかし、ちょっと待ってください。CSS ルールを追加していません。スタイルはどこから来たのでしょうか？
 
@@ -95,10 +93,15 @@ Tailwind で遊んでみましょう！以下のコードをコピーして `/ap
 
 上記のコードスニペットを使用すると、どのような形状が表示されますか？
 
-> A : 黄色い星
-> B : 青い三角形
-> C : 黒い三角形
-> D : 赤い丸
+1. 黄色い星
+2. 青い三角形
+3. 黒い三角形
+4. 赤い丸
+
+<details>
+<summary>答え：</summary>
+3
+</details>
 
 従来の CSS ルールを記述したい場合、またはスタイルを JSX から分離しておきたい場合は、CSS モジュールが優れた代替手段となります。
 
@@ -137,9 +140,14 @@ Tailwind と CSS モジュールは、Next.js アプリケーションをスタ�
 
 CSS モジュールを使う利点の1つは何でしょう？
 
-> A : CSS クラスのグローバルスコープを広げ、異なるファイル間での管理を容易にする。
-> B : CSS クラスをデフォルトでコンポーネントに対してローカルにスコープさせる方法を提供し、スタイルの衝突のリスクを減らす。
-> C : CSS ファイルを自動的に圧縮・最小化して、ページの読み込みを速くする。
+1. CSS クラスのグローバルスコープを広げ、異なるファイル間での管理を容易にする
+2. CSS クラスをデフォルトでコンポーネントに対してローカルにスコープさせる方法を提供し、スタイルの衝突のリスクを減らす
+3. CSS ファイルを自動的に圧縮・最小化して、ページの読み込みを速くする
+
+<details>
+<summary>答え：</summary>
+2
+</details>
 
 ## `clsx` ライブラリを使用してクラス名を切り替える
 状態やその他の条件に基づいて要素を条件付きでスタイル設定する必要がある場合があります。
@@ -151,22 +159,22 @@ CSS モジュールを使う利点の1つは何でしょう？
 
 `clsx` を使用うと、以下のように条件付きでクラスを適用できます。
 
-```diff ts:/app/ui/invoices/status.tsx
-import clsx from 'clsx';
- 
-export default function InvoiceStatus({ status }: { status: string }) {
-  return (
-    <span
-      className={clsx(
-        'inline-flex items-center rounded-full px-2 py-1 text-sm',
-        {
-+         'bg-gray-100 text-gray-500': status === 'pending',
-+         'bg-green-500 text-white': status === 'paid',
-        },
-      )}
-    >
-    // ...
-)}
+```ts diff:/app/ui/invoices/status.tsx
+  import clsx from 'clsx';
+  
+  export default function InvoiceStatus({ status }: { status: string }) {
+    return (
+      <span
+        className={clsx(
+          'inline-flex items-center rounded-full px-2 py-1 text-sm',
+          {
++           'bg-gray-100 text-gray-500': status === 'pending',
++           'bg-green-500 text-white': status === 'paid',
+          },
+        )}
+      >
+      // ...
+  )}
 ```
 
 **クイズの時間です！**
@@ -175,9 +183,14 @@ export default function InvoiceStatus({ status }: { status: string }) {
 
 あなたのコードエディタで「clsx」を検索してください。クラス名を条件付きで適用するために、どのコンポーネントが "clsx "を使っているでしょうか？
 
-> A : `status.tsx` と `pagination.tsx`
-> B : `table.tsx` と `status.tsx`
-> C : `nav-links.tsx` と `table.tsx`
+1. `status.tsx` と `pagination.tsx`
+2. `table.tsx` と `status.tsx`
+3. `nav-links.tsx` と `table.tsx`
+
+<details>
+<summary>答え：</summary>
+1
+</details>
 
 ## その他のスタイリング方法
 
