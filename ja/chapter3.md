@@ -24,7 +24,7 @@ Next.js は `next/font` モジュールを使用すると、アプリケーシ�
 
 `/app/ui` フォルダーに、`fonts.ts` という名前の新しいファイルを作成します。このファイルを使用して、アプリケーション全体で使用されるフォントを保存します。
 
-`next/font/google` モジュールから `Inter` フォントをインポートします。これがプライマリフォントになります。次に、読み込むもの（サブセット）[https://fonts.google.com/knowledge/glossary/subsetting]を指定します。今回の場合は `latin` となります。
+`next/font/google` モジュールから `Inter` フォントをインポートします。これがプライマリフォントになります。次に、どの [サブセット](https://fonts.google.com/knowledge/glossary/subsetting) を読み込むかを指定します。今回の場合は `latin` となります。
 
 ```ts:/app/ui/fonts.ts
 import { Inter } from 'next/font/google';
@@ -149,30 +149,54 @@ export default function Page() {
 }
 ```
 
-Here, you're setting the `width` to `1000` and `height` to `760` pixels. It's good practice to set the `width` and `height` of your images to avoid layout shift, these should be an aspect ratio **identical** to the source image.
+## （練習）モバイルヒーロー画像を追加する
 
-You'll also notice the class `hidden` to remove the image from the DOM on mobile screens, and `md:block` to show the image on desktop screens.
+次はあなたの番です！追加した画像の下に `hero-mobile.png` の別の `<Image>` コンポーネントを追加してみましょう。
 
-This is what your home page should look like now:
+- この画像は `width` が `560` ピクセル、`height`は `620` ピクセルのものです。
+- モバイル画面では表示され、デスクトップでは非表示になるはずです。開発ツールを使用して、デスクトップとモバイルの画像が正しく入れ替わっているかどうか確認してみましょう。
 
-![](Styled home page with a custom font and hero image
+コードが書けたら、以下のコードスニペットを展開して解決策を確認してみてください。
 
-## Practice: Adding the mobile hero image)
+```tsx diff:/app/page.tsx
+  import AcmeLogo from '@/app/ui/acme-logo';
+  import { ArrowRightIcon } from '@heroicons/react/24/outline';
+  import Link from 'next/link';
+  import { lusitana } from '@/app/ui/fonts';
+  import Image from 'next/image';
+  
+  export default function Page() {
+    return (
+      // ...
+      <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+        {/* Add Hero Images Here */}
+        <Image
+          src="/hero-desktop.png"
+          width={1000}
+          height={760}
+          className="hidden md:block"
+          alt="Screenshots of the dashboard project showing desktop version"
+        />
++       <Image
++         src="/hero-mobile.png"
++         width={560}
++         height={620}
++         className="block md:hidden"
++         alt="Screenshot of the dashboard project showing mobile version"
++       />
+      </div>
+      //...
+    );
+  }
+```
 
-Now it's your turn! Under the image you've just added, add another `<Image>` component for `hero-mobile.png`.
+素晴らしい！これで、ホームページにカスタムフォントとヒーロー画像が追加されました。
 
-- The image should have a `width` of `560` and `height` of `620` pixels.
-- It should be shown on mobile screens, and hidden on desktop - you can use dev tools to check if the desktop and mobile images are swapped correctly.
+## おすすめ記事
 
-Once you're ready, expand the code snippet below to see the solution.
+これらのトピックについては、リモート画像の最適化やローカルフォントファイルの使用など、学ぶべきことがたくさんあります。フォントと画像についてさらに詳しく知りたい場合は、以下を参照してください。
 
-Great! Your home page now has a custom font and hero images.
-
-## Recommended reading
-
-There's a lot more to learn about these topics, including optimizing remote images and using local font files. If you'd like to dive deeper into fonts and images, see:
-
-- [Image Optimization Docs]()
-- [Font Optimization Docs]()
-- [Improving Web Performance with Images (MDN)]()
-- [Web Fonts (MDN)]()
+- [画像最適化ドキュメント](https://nextjs.org/docs/app/building-your-application/optimizing/images)
+- [フォント最適化ドキュメント](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+- [画像による Web パフォーマンスの向上 (MDN)](https://developer.mozilla.org/en-US/docs/Learn/Performance/Multimedia)
+- [Web フォント (MDN)](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts)
