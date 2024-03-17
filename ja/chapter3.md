@@ -148,10 +148,10 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 
 `<Image>` コンポーネントは HTML の `<img>` タグの拡張であり、以下のような自動画像最適化機能が付属しています。
 
-- Preventing layout shift automatically when images are loading.
-- Resizing images to avoid shipping large images to devices with a smaller viewport.
-- Lazy loading images by default (images load as they enter the viewport).
-- Serving images in modern formats, like WebP and AVIF, when the browser supports it.
+- 画像読み込み時に自動的にレイアウトがずれるのを防ぎます
+- 小さなビューポートを備えたデバイスに大きな画像が送信されるのを避けるために、画像のサイズを変更します
+- デフォルトで画像を遅延読み込みします (画像はビューポートに入るときに読み込まれます)
+- ブラウザーがサポートしている場合、WebP や AVIF などの最新の形式で画像を提供します
 
 ## デスクトップにヒーロー画像を追加
 
@@ -165,7 +165,7 @@ In your `/app/page.tsx` file, import the component from [next/image](). Then, ad
   import Link from 'next/link';
   import { lusitana } from '@/app/ui/fonts';
 + import Image from 'next/image';
-  
+
   export default function Page() {
     return (
       // ...
@@ -192,7 +192,7 @@ In your `/app/page.tsx` file, import the component from [next/image](). Then, ad
 
 ![カスタムフォントとヒーロー画像を使用したスタイル設定されたホームページ](/_images/home-page-with-hero.avif)
 
-## （練習）モバイルビューにヒーロー画像を追加
+## （練習）モバイル画面にヒーロー画像を追加
 
 次はあなたの番です！追加した画像の下に `hero-mobile.png` の別の `<Image>` コンポーネントを追加してみましょう。
 
