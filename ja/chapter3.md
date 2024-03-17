@@ -14,7 +14,7 @@
 
 [Cumulative Layout Shift](https://web.dev/cls/) は、Google が Web サイトのパフォーマンスとユーザーエクスペリエンスを評価するために使用する指標です。フォントの場合、ブラウザが最初にフォールバックフォントまたはシステムフォントでテキストをレンダリングし、読み込まれた後にカスタムフォントに置き換えるときに、レイアウトのシフトが発生します。この入れ替えにより、テキストのサイズ、間隔、レイアウトが変更され、周囲の要素が移動する可能性があります。
 
-![] (ページの初期読み込みと、それに続くカスタム フォントの読み込みに伴うレイアウトのシフトを示すモック UI。)
+![ページの初期読み込みとそれに続くカスタムフォントの読み込みに伴うレイアウトのシフトを示すモック UI](/_images/font-layout-shift.avif)
 
 Next.js は `next/font` モジュールを使用すると、アプリケーション内のフォントを自動的に最適化します。ビルド時にフォントファイルをダウンロードし、他の静的アセットとともにホストします。ユーザーがアプリケーションにアクセスしたときに、フォントの読み込みによってパフォーマンスに影響するようなネットワークリクエストが追加されないということです。
 
@@ -28,7 +28,7 @@ Next.js は `next/font` モジュールを使用すると、アプリケーシ�
 
 ```ts:/app/ui/fonts.ts
 import { Inter } from 'next/font/google';
- 
+
 export const inter = Inter({ subsets: ['latin'] });
 ```
 
@@ -37,7 +37,7 @@ export const inter = Inter({ subsets: ['latin'] });
 ```tsx:/app/layout.tsx
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
- 
+
 export default function RootLayout({
   children,
 }: {
@@ -51,47 +51,59 @@ export default function RootLayout({
 }
 ```
 
-By adding `Inter` to the `<body>` element, the font will be applied throughout your application. Here, you're also adding the Tailwind (antialiased)[] class which smooths out the font. It's not necessary to use this class, but it adds a nice touch.
+`Inter` を `<body>` 要素に追加すると、フォントがアプリケーション全体に適用されます。ここでは、フォントを滑らかにする Tailwind [antialiased](https://tailwindcss.com/docs/font-smoothing) クラスも追加しています。このクラスを使用する必要はありませんが、使用すると便利です。
 
-Navigate to your browser, open dev tools and select the `body` element. You should see `Inter` and `Inter_Fallback` are now applied under styles.
+ブラウザに移動し、開発ツールを開いて `body` 要素を選択します。`Inter` と `Inter_Fallback` がスタイルに適用されていることがわかります。
 
-## Practice: Adding a secondary font
+## （練習）セカンダリフォントを追加
 
-You can also add fonts to specific elements of your application.
+アプリケーションの特定の要素にフォントを追加することもできます。
 
-Now it's your turn! In your `fonts.ts` file, import a secondary font called `Lusitana` and pass it to the `<p>` element in your `/app/page.tsx` file. In addition to specifying a subset like you did before, you'll also need to specify the font `weight`.
+ここであなたの番です！`fonts.ts` ファイルで、`Lusitana` というセカンダリフォントをインポートし、それを `/app/page.tsx` ファイルの `<p>` 要素に渡します。前と同じようにサブセットを指定することに加えて、フォントの太さも指定する必要があります。
 
-Once you're ready, expand the code snippet below to see the solution.
+> ヒント
+>
+> - フォントにどのウェイトオプションを渡すべきかわからない場合は、コードエディタで TypeScript エラーを確認してください。
+> - [Google Fonts](https://fonts.google.com/) の Web サイトにアクセスし、`Lusitana` を検索して、利用可能なオプションを確認します。
+> - [複数のフォントの追加](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts) と [オプションの完全なリスト](https://nextjs.org/docs/app/api-reference/components/font#font-function-arguments) のドキュメントを参照してください。
 
-> Hints:
->- If you're unsure what weight options to pass to a font, check the TypeScript errors in your code editor.
-> - Visit the [Google Fonts](https://fonts.google.com/) website and search for Lusitana to see what options are available.
-> - See the documentation for [adding multiple fonts](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts) and the [full list of options](https://nextjs.org/docs/app/api-reference/components/font#font-function-arguments).
+答え
 
-Finally, the `<AcmeLogo />` component also uses Lusitana. It was commented out to prevent errors, you can now uncomment it:
+```ts diff:/app/ui/fonts.ts
++ import { Inter, Lusitana } from 'next/font/google';
+
+  export const inter = Inter({ subsets: ['latin'] });
+
++ export const lusitana = Lusitana({
++   weight: ['400', '700'],
++   subsets: ['latin'],
++ });
+```
+
+最後に `<AcmeLogo />` コンポーネントも Lusitana を使用します。エラーを防ぐためにコメントアウトされていますが、コメントを解除できるようになりました。
 
 ```tsx:/app/page.tsx
 // ...
- 
-export default function Page() {
-  return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        <AcmeLogo />
-        {/* ... */}
-      </div>
-    </main>
-  );
-}
+
+  export default function Page() {
+    return (
+      <main className="flex min-h-screen flex-col p-6">
+        <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
++         <AcmeLogo />
+          {/* ... */}
+        </div>
+      </main>
+    );
+  }
 ```
 
-Great, you've added two custom fonts to your application! Next, let's add a hero image to the home page.
+無事、アプリケーションに 2 つのカスタムフォントが追加されました。次にヒーロー画像をホームページに追加しましょう。
 
-## Why optimize images?
+## 画像を最適化する理由
 
-Next.js can serve `static assets`, like images, under the top-level [/public](https://nextjs.org/docs/app/building-your-application/optimizing/static-assets) folder. Files inside `/public` can be referenced in your application.
+Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-application/optimizing/static-assets) フォルダの下で画像などの「静的アセット」を提供できます。`/public` 内のファイルはアプリケーションで参照できます。
 
-With regular HTML, you would add an image as follows:
+通常の HTML では、以下のように画像を追加します。
 
 ```html
 <img
