@@ -80,6 +80,29 @@ export default function RootLayout({
 + });
 ```
 
+```tsx diff:/app/page.tsx
+  import AcmeLogo from "@/app/ui/acme-logo";
+  import { ArrowRightIcon } from "@heroicons/react/24/outline";
+  import Link from "next/link";
++ import { lusitana } from "@/app/ui/fonts";
+
+  export default function Page() {
+    return (
+      // ...
++     <p
++       className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
++     >
+        <strong>Welcome to Acme.</strong> This is the example for the{" "}
+        <a href="https://nextjs.org/learn/" className="text-blue-500">
+          Next.js Learn Course
+        </a>
+        , brought to you by Vercel.
+      </p>
+      // ...
+    );
+  }
+```
+
 最後に `<AcmeLogo />` コンポーネントも Lusitana を使用します。エラーを防ぐためにコメントアウトされていますが、コメントを解除できるようになりました。
 
 ```tsx:/app/page.tsx
@@ -112,25 +135,25 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 />
 ```
 
-However, this means you have to manually:
+しかし、これは手動で以下のことを行う必要があることを意味します：
 
-- Ensure your image is responsive on different screen sizes.
-- Specify image sizes for different devices.
-- Prevent layout shift as the images load.
-- Lazy load images that are outside the user's viewport.
+- 異なる画面サイズに対応できるようにする
+- デバイスごとに画像サイズを指定する
+- 画像の読み込みに伴うレイアウトのずれを防ぐ
+- ユーザーのビューポート外にある画像を遅延ロードする
 
-Image Optimization is a large topic in web development that could be considered a specialization in itself. Instead of manually implementing these optimizations, you can use the `next/image` component to automatically optimize your images.
+画像の最適化は Web 開発における大きなトピックであり、それ自体が専門分野であると考えられます。これらの最適化を手動で実装する代わりに `next/image` コンポーネントを使用して画像を自動的に最適化できます。
 
-## The `<Image>` component
+## `<Image>` コンポーネント
 
-The `<Image>` Component is an extension of the HTML `<img>` tag, and comes with automatic image optimization, such as:
+`<Image>` コンポーネントは HTML の `<img>` タグの拡張であり、以下のような自動画像最適化機能が付属しています。
 
 - Preventing layout shift automatically when images are loading.
 - Resizing images to avoid shipping large images to devices with a smaller viewport.
 - Lazy loading images by default (images load as they enter the viewport).
 - Serving images in modern formats, like WebP and AVIF, when the browser supports it.
 
-## Adding the desktop hero image
+## デスクトップにヒーロー画像を追加
 
 Let's use the `<Image>` component. If you look inside the `/public` folder, you'll see there are two images: `hero-desktop.png` and `hero-mobile.png`. These two images are completely different, and they'll be shown depending if the user's device is a desktop or mobile.
 
@@ -161,7 +184,15 @@ In your `/app/page.tsx` file, import the component from [next/image](). Then, ad
   }
 ```
 
-## （練習）モバイルヒーロー画像を追加する
+ここでは `width` を 1000 ピクセル、`height` を 760 ピクセルに設定しています。レイアウトのずれを避けるために、画像の `width` と `height` を設定することをお勧めします。これらのアスペクト比はソース画像と **同じ** である必要があります。
+
+また、モバイル画面の DOM から画像を削除するクラス `hidden` と、デスクトップ画面に画像を表示するクラス `md:block` にも注意してください。
+
+これで、ホームページは以下のようになります。
+
+![カスタムフォントとヒーロー画像を使用したスタイル設定されたホームページ](/_images/home-page-with-hero.avif)
+
+## （練習）モバイルビューにヒーロー画像を追加
 
 次はあなたの番です！追加した画像の下に `hero-mobile.png` の別の `<Image>` コンポーネントを追加してみましょう。
 
@@ -176,7 +207,7 @@ In your `/app/page.tsx` file, import the component from [next/image](). Then, ad
   import Link from 'next/link';
   import { lusitana } from '@/app/ui/fonts';
   import Image from 'next/image';
-  
+
   export default function Page() {
     return (
       // ...
