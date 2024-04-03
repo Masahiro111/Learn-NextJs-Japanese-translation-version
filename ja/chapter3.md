@@ -155,9 +155,9 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 
 ## デスクトップにヒーロー画像を追加
 
-Let's use the `<Image>` component. If you look inside the `/public` folder, you'll see there are two images: `hero-desktop.png` and `hero-mobile.png`. These two images are completely different, and they'll be shown depending if the user's device is a desktop or mobile.
+`<Image>` コンポーネントを使用してみましょう。`/public`フォルダー内を見ると、`hero-desktop.png` と `hero-mobile.png` という 2 つのイメージがあることがわかります。これら 2 つの画像はまったく異なり、ユーザーのデバイスがデスクトップかモバイルかに応じて表示されます。
 
-In your `/app/page.tsx` file, import the component from [next/image](). Then, add the image under the comment:
+`/app/page.tsx` ファイルで、[next/image](https://nextjs.org/docs/api-reference/next/image) からコンポーネントをインポートします。それから、コメントの下に画像を追加します。
 
 ```tsx diff:/app/page.tsx
   import AcmeLogo from '@/app/ui/acme-logo';
