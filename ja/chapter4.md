@@ -1,35 +1,33 @@
-# Creating Layouts and Pages
+# layouts と pages の作成
 
-So far, your application only has a home page. Let's learn how you can create more routes with **layouts** and **pages**.
+これまでのところ、アプリケーションにはホームページのみがあります。**layouts** と **pages** を使用してさらに多くのルートを作成する方法を学びましょう。
 
-In this chapter...
+ここで取り上げるトピックは次のとおりです。
 
-Here are the topics we’ll cover
+- ファイルシステムルーティングを使用してダッシュボードルートを作成します。
+- 新しいルートセグメントを作成するときのフォルダとファイルの役割を理解します。
+- 複数のダッシュボードページ間で共有できるネストされたレイアウトを作成します。
+- コロケーション、部分レンダリング、ルートレイアウトとは何かを理解します。
 
-- Create the dashboard routes using file-system routing.
-- Understand the role of folders and files when creating new route segments.
-- Create a nested layout that can be shared between multiple dashboard pages.
-- Understand what colocation, partial rendering, and the root layout are.
+## ネストされたルーティング
 
-## Nested routing
+Next.js はファイルシステムルーティングを採用しており、**フォルダ** を使用してネストされたルートを作成します。各フォルダは、`URL セグメント` に対応する `ルートセグメント` を表します。
 
-Next.js uses file-system routing where **folders** are used to create nested routes. Each folder represents a `route segment` that maps to a `URL segment`.
+フォルダが URL セグメントにどのように対応するかを示す図
 
-Diagram showing how folders map to URL segments
+`layout.tsx` ファイルと `page.tsx` ファイルを使用して、ルートごとに個別の UI を作成できます。
 
-You can create separate UIs for each route using `layout.tsx` and `page.tsx` files.
+`page.tsx` は React コンポーネントをエクスポートする特別な Next.js ファイルで、ルートにアクセスできるようにするために必要です。アプリケーションには、すでにページファイル `/app/page.tsx` があります。これは、ルート `/` に関連付けられたホームページです。
 
-`page.tsx` is a special Next.js file that exports a React component, and it's required for the route to be accessible. In your application, you already have a page file: `/app/page.tsx` - this is the home page associated with the route `/`.
+ネストされたルートを作成するには、フォルダを相互にネストし、その中に `page.tsx` ファイルを追加します。例えば
 
-To create a nested route, you can nest folders inside each other and add `page.tsx` files inside them. For example:
+`dashboard` というフォルダを追加すると、新しいルート `/dashboard` がどのように作成されるかを示す図
 
-Diagram showing how adding a folder called dashboard creates a new route '/dashboard'
+`/app/dashboard/page.tsx` は `/dashboard` パスに関連付けられます。ページを作成して、どのように機能するか見てみましょう。
 
-`/app/dashboard/page.tsx` is associated with the `/dashboard` path. Let's create the page to see how it works!
+## ダッシュボードページの作成
 
-## Creating the dashboard page
-
-Create a new folder called `dashboard` inside `/app`. Then, create a new `page.tsx` file inside the `dashboard` folder with the following content:
+`/app` 内に `dashboard` という新しいフォルダを作成します。そして以下の内容を含む新しい `page.tsx` ファイルを `dashboard` フォルダ内に作成します。
 
 `/app/dashboard/page.tsx`
 
@@ -39,26 +37,26 @@ export default function Page() {
 }
 ```
 
-Now, make sure that the development server is running and visit http://localhost:3000/dashboard. You should see the "Dashboard Page" text.
+次に、開発サーバーが実行されていることを確認し、http://localhost:3000/dashboard にアクセスします。"Dashboard Page" というテキストが表示されるはずです。
 
-This is how you can create different pages in Next.js: create a new route segment using a folder, and add a `page` file inside it.
+Next.js でさまざまなページを作成する方法は以下のとおりです。フォルダを使用して新しいルートセグメントを作成し、その中に `page` ファイルを追加します。
 
-By having a special name for `page` files, Next.js allows you to [colocate](https://nextjs.org/docs/app/building-your-application/routing#colocation) UI components, test files, and other related code with your routes. Only the content inside the `page` file will be publicly accessible. For example, the `/ui` and `/lib` folders are colocated inside the `/app` folder along with your routes.
+Next.js では、`page` ファイルに特別な名前をつけることで、UI コンポーネント、テストファイル、その他の関連コードをルートと [コロケーション](https://nextjs.org/docs/app/building-your-application/routing#colocation) することができます。`page` ファイル内のコンテンツのみが公開されます。例えば、`/ui` フォルダと `/lib` フォルダはルートと一緒に `/app` フォルダ内に配置されます。
 
-## Practice: Creating the dashboard pages
+## （練習）ダッシュボードページの作成
 
-Let's practice creating more routes. In your dashboard, create two more pages:
+さらにルートを作成する練習をしてみましょう。ダッシュボードに、さらに 2 つのページを作成します。
 
-1, Customers Page: The page should be accessible on http://localhost:3000/dashboard/customers. For now, it should return a `<p>Customers Page</p>` element.
-2, Invoices Page: The invoices page should be accessible on http://localhost:3000/dashboard/invoices. For now, also return a `<p>Invoices Page</p>` element.
+1, 顧客ページ: http://localhost:3000/dashboard/customers からアクセスできます。現時点では、`<p>Customers Page</p>` 要素が返します。
+2, 請求書ページ: http://localhost:3000/dashboard/invoices から請求書ページにアクセスできます。現時点では、`<p>Invoices Page</p>` 要素を返します。
 
-Spend some time tackling this exercise, and when you're ready, expand the toggle below for the solution:
+練習の内容を解決するためのコードを書けましたか？以下を参考にして答え合わせをしてみましょう。
 
-You should have the following folder structure:
+次のようなフォルダ構造になっているはずです。
 
-Diagram showing how adding a folder called login creates a new route '/login'
+`login` というフォルダを追加すると、新しいルート `/login` がどのように作成されるかを示す図
 
-Customers Page:
+**顧客ページ:**
 
 `/app/dashboard/customers/page.tsx`
 
@@ -68,7 +66,7 @@ export default function Page() {
 }
 ```
 
-Invoices Page:
+**請求書ページ:**
 
 `/app/dashboard/invoices/page.tsx`
 
@@ -78,11 +76,11 @@ export default function Page() {
 }
 ```
 
-## Creating the dashboard layout
+## ダッシュボードレイアウトの作成
 
-Dashboards have some sort of navigation that is shared across multiple pages. In Next.js, you can use a special `layout.tsx` file to create UI that is shared between multiple pages. Let's create a layout for the dashboard pages!
+ダッシュボードには、複数のページにわたって共有されるある種のナビゲーションがあります。Next.js では、特別な `layout.tsx` ファイルを使用して、複数のページ間で共有される UI を作成できます。ダッシュボードページのレイアウトを作成しましょう。
 
-Inside the `/dashboard` folder, add a new file called `layout.tsx` and paste the following code:
+`/dashboard` フォルダ内に `layout.tsx` という名前の新しいファイルを追加し、以下のコードを貼り付けます。
 
 `/app/dashboard/layout.tsx`
 
@@ -101,25 +99,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 ```
 
-A few things are going on in this code, so let's break it down:
+このコードではいくつかの処理が行われているので、詳しく見てみましょう。
 
-First, you're importing the `<SideNav />` component into your layout. Any components you import into this file will be part of the layout.
+まず、`<SideNav />` コンポーネントをレイアウトにインポートします。このファイルにインポートするコンポーネントはすべてレイアウトの一部になります。
 
-The `<Layout />` component receives a `children` prop. This child can either be a page or another layout. In your case, the pages inside `/dashboard` will automatically be nested inside a `<Layout />` like so:
+`<Layout />` コンポーネントは `children` プロパティを受け取ります。この子コンポーネントは、1 つのページか、または別のレイアウトのいずれかになります。今回の場合、`/dashboard` 内のページは以下のように `<Layout />` 内に自動的にネストされます。
 
-Folder structure with dashboard layout nesting the dashboard pages as children
+ダッシュボードページを子としてネストしたダッシュボード レイアウトのフォルダ構造
 
-Check that everything is working correctly by saving your changes and checking your localhost. You should see the following:
+変更を保存し、ローカルホストを確認して、すべてが正しく動作していることを確認します。以下の内容が表示されるはずです。
 
-Dashboard page with a sidenav and a main content area
+サイドナビゲーションとメインコンテンツエリアを備えたダッシュボードページ
 
-One benefit of using layouts in Next.js is that on navigation, only the page components update while the layout won't re-render. This is called [partial rendering](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#3-partial-rendering) :
+Next.js でレイアウトを使用する利点の 1 つは、ナビゲーション時にページコンポーネントのみが更新され、レイアウトは再レンダリングされないことです。これは [部分レンダリング](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#3-partial-rendering) と呼ばれます。
 
-Folder structure showing the dashboard layout nesting the dashboard pages, but only the pages UI swap on navigation
+ダッシュボードページをネストしたダッシュボードレイアウトを示すフォルダ構造ですが、ナビゲーションではページ UI のみが切り替わります
 
-## Root layout
+## ルートレイアウト
 
-In Chapter 3, you imported the `Inter` font into another layout: `/app/layout.tsx`. As a reminder:
+第 3 章では、`Inter` フォントを別のレイアウト `/app/layout.tsx` にインポートしました。
 
 `/app/layout.tsx`
 
@@ -140,6 +138,6 @@ export default function RootLayout({
 }
 ```
 
-This is called a [root layout](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) and is required. Any UI you add to the root layout will be shared across all pages in your application. You can use the root layout to modify your `<html>` and `<body>` tags, and add metadata (you'll learn more about metadata in [a later chapter](https://nextjs.org/learn/dashboard-app/adding-metadata)).
+これは [ルートレイアウト](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) と呼ばれ、必須です。ルートレイアウトに追加した UI は、アプリケーション内のすべてのページで共有されます。ルートレイアウトを使用して、`<html>` タグと `<body>` タグを変更し、メタデータを追加できます（メタデータについては [後の章](https://nextjs.org/learn/dashboard-app/adding-metadata) で詳しく学びます）。
 
-Since the new layout you've just created (`/app/dashboard/layout.tsx`) is unique to the dashboard pages, you don't need to add any UI to the root layout above.
+作成した新しいレイアウト (`/app/dashboard/layout.tsx`) はダッシュボードページに固有であるため、上記のルートレイアウトに UI を追加する必要はありません。
