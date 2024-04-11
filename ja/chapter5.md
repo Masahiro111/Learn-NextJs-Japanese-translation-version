@@ -1,27 +1,26 @@
-# Navigating Between Pages
+# ページ間の移動
 
-In the previous chapter, you created the dashboard layout and pages. Now, let's add some links to allow users to navigate between the dashboard routes.
+前の章では、ダッシュボードのレイアウトとページを作成しました。次は、ユーザーがダッシュボードのルート間を移動できるようにするためのリンクをいくつか追加してみましょう。
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- Here are the topics we’ll cover
-- How to use the `next/link` component.
-- How to show an active link with the `usePathname()` hook.
-- How navigation works in Next.js.
+- `next/link` コンポーネントの使用方法
+- `usePathname()` フックを使用してアクティブなリンクを表示する方法
+- Next.js でのナビゲーションの仕組み
 
-## Why optimize navigation?
+## ナビゲーションを最適化する理由
 
-To link between pages, you'd traditionally use the `<a>` HTML element. At the moment, the sidebar links use `<a>` elements, but notice what happens when you navigate between the home, invoices, and customers pages on your browser.
+ページ間をリンクするには、伝統的に `<a>` HTML 要素を使用します。現時点では、サイドバーのリンクには `<a>` 要素が使用されていますが、ブラウザーでホーム、請求書、顧客のページ間を移動するとどうなるかに注目してください。
 
-Did you see it?
+ご覧いただけましたか？
 
-There's a full page refresh on each page navigation!
+各ページのナビゲーションでは、ページ全体が更新されます。
 
-## The `<Link>` component
+## `<Link>` コンポーネント
 
-In Next.js, you can use the `<Link />` Component to link between pages in your application. `<Link>` allows you to do client-side navigation with JavaScript.
+Next.js では、`<Link />` コンポーネントを使用してアプリケーション内のページ間をリンクできます。`<Link>` を使用すると、JavaScript を使用してクライアント側のナビゲーションを行うことができます。
 
-To use the `<Link />` component, open /app/ui/dashboard/nav-links.tsx, and import the Link component from [`next/link`](https://nextjs.org/docs/app/api-reference/components/link). Then, replace the `<a>` tag with `<Link>`:
+`<Link />` コンポーネントを使用すると、`/app/ui/dashboard/nav-links.tsx` を開き、[`next/link`](https://nextjs.org/docs/app/api-reference/components/link) から `Link` コンポーネントをインポートして `<a>` タグを `<Link>` に置き換えることができます。
 
 `/app/ui/dashboard/nav-links.tsx`
 
@@ -56,25 +55,25 @@ To use the `<Link />` component, open /app/ui/dashboard/nav-links.tsx, and impor
   }
 ```
 
-As you can see, the `Link` component is similar to using `<a>` tags, but instead of `<a href="…">`, you use `<Link href="…">`.
+ご覧のとおり、`Link` コンポーネントは `<a>` タグの使用に似ていますが、`<a href="…">` の代わりに `<Link href="…">` を使用します。
 
-Save your changes and check to see if it works in your localhost. You should now be able to navigate between the pages without seeing a full refresh. Although parts of your application are rendered on the server, there's no full page refresh, making it feel like a web app. Why is that?
+変更を保存し、ローカルホストで動作するか確認してみてください。これで、完全なリフレッシュをすることなくページ間を移動できるようになります。アプリケーションの一部はサーバー上でレンダリングされますが、ページ全体が更新されることはないため、Web アプリのように感じられます。なぜでしょう？
 
-### Automatic code-splitting and prefetching
+### 自動コード分割とプリフェッチ
 
-To improve the navigation experience, Next.js automatically code splits your application by route segments. This is different from a traditional React [SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA) , where the browser loads all your application code on initial load.
+ナビゲーション体験を向上させるために、Next.js はアプリケーションをルートセグメントごとに自動的にコード分割します。これは、初期ロード時にブラウザがすべてのアプリケーションコードをロードする従来の React [SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA) とは異なります。
 
-Splitting code by routes means that pages become isolated. If a certain page throws an error, the rest of the application will still work.
+コードをルートごとに分割すると、ページが分離されます。特定のページでエラーが発生しても、アプリケーションの残りの部分は引き続き動作します。
 
-Furthermore, in production, whenever [`<Link>`](https://nextjs.org/docs/api-reference/next/link) components appear in the browser's viewport, Next.js automatically **prefetches** the code for the linked route in the background. By the time the user clicks the link, the code for the destination page will already be loaded in the background, and this is what makes the page transition near-instant!
+さらに、本番運用環境では、[`<Link>`](https://nextjs.org/docs/api-reference/next/link) コンポーネントがブラウザーのビューポートに表示されるたびに、Next.js がコードを自動的に **プリフェッチ** します。ユーザーがリンクをクリックするころには、リンク先ページのコードはすでにバックグラウンドで読み込まれており、これによりページがほぼ瞬時に遷移します。
 
-Learn more about [how navigation works](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#how-routing-and-navigation-works).
+[ナビゲーションの仕組み](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#how-routing-and-navigation-works) の詳細をご覧ください。
 
-## Pattern: Showing active links
+## アクティブリンクの表示パターン
 
-A common UI pattern is to show an active link to indicate to the user what page they are currently on. To do this, you need to get the user's current path from the URL. Next.js provides a hook called [`usePathname()`](https://nextjs.org/docs/app/api-reference/functions/use-pathname) that you can use to check the path and implement this pattern.
+アクティブリンクを表示することは、現在ユーザーがどのページにいるかを示すための一般的な UI パターンとなっています。これを行うには、URL からユーザーの現在のパスを取得する必要があります。Next.js は、パスを確認してこのパターンを実装するために使用できる [`usePathname()`](https://nextjs.org/docs/app/api-reference/functions/use-pathname) というフックを提供しています。
 
-Since [`usePathname()`](https://nextjs.org/docs/app/api-reference/functions/use-pathname) is a hook, you'll need to turn `nav-links.tsx` into a Client Component. Add React's `"use client"` directive to the top of the file, then import `usePathname()` from `next/navigation`:
+[`usePathname()`](https://nextjs.org/docs/app/api-reference/functions/use-pathname) はフックであるため、`nav-links.tsx` を Client Component にする必要があります。React の `"use client"` ディレクティブをファイルの先頭に追加し、`next/navigation` から `usePathname()` をインポートします。
 
 `/app/ui/dashboard/nav-links.tsx`
 
@@ -92,7 +91,7 @@ Since [`usePathname()`](https://nextjs.org/docs/app/api-reference/functions/use-
   // ...
 ```
 
-Next, assign the path to a variable called `pathname` inside your `<NavLinks />` component:
+次に、`<NavLinks />` コンポーネント内の `pathname` という変数にパスを割り当てます。
 
 `/app/ui/dashboard/nav-links.tsx`
 
@@ -103,9 +102,9 @@ Next, assign the path to a variable called `pathname` inside your `<NavLinks />`
   }
 ```
 
-You can use the `clsx` library introduced in the chapter on [CSS styling](https://nextjs.org/learn/dashboard-app/css-styling) to conditionally apply class names when the link is active. When `link.href` matches the `pathname`, the link should be displayed with blue text and a light blue background.
+[CSS スタイリング](https://nextjs.org/learn/dashboard-app/css-styling) の章で紹介されている `clsx` ライブラリを使用して、リンクがアクティブなときに条件付きでクラス名を適用できます。 `link.href` が `pathname` と一致する場合、リンクは青いテキストと水色の背景で表示されます。
 
-Here's the final code for `nav-links.tsx`:
+`nav-links.tsx` の最終的なコードは以下のとおりです。
 
 `/app/ui/dashboard/nav-links.tsx`
 
@@ -151,4 +150,4 @@ Here's the final code for `nav-links.tsx`:
   }
 ```
 
-Save and check your localhost. You should now see the active link highlighted in blue.
+保存して確認しましょう。アクティブなリンクが青色で強調表示されるはずです。
