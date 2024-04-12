@@ -1,40 +1,40 @@
-# Setting Up Your Database
+# データベースのセットアップ
 
-Before you can continue working on your dashboard, you'll need some data. In this chapter, you'll be setting up a PostgreSQL database using @vercel/postgres. If you're already familiar with PostgreSQL and would prefer to use your own provider, you can skip this chapter and set it up on your own. Otherwise, let's continue!
+ダッシュボードでの作業を続ける前に、いくつかのデータが必要です。この章では、`@vercel/postgres` を使用して PostgreSQL データベースをセットアップします。すでに PostgreSQL に慣れていて、独自のプロバイダを使用したい場合は、この章をスキップして自分で設定してもかまいません。それ以外の場合は、続けましょう!
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- Push your project to GitHub.
-- Set up a Vercel account and link your GitHub repo for instant previews and deployments.
-- Create and link your project to a Postgres database.
-- Seed the database with initial data.
+- プロジェクトを GitHub にプッシュします
+- Vercel アカウントを設定し、GitHub リポジトリをリンクして、プレビューやデプロイを行えるようにします
+- プロジェクトを作成し、Postgres データベースにリンクします
+- データベースに初期データをシードします
 
-## Create a GitHub repository
+## GitHub リポジトリの作成
 
-To start, let's push your repository to Github if you haven't done so already. This will make it easier to set up your database and deploy.
+まだリポジトリを Github にプッシュしていない場合は、リポジトリを Github にプッシュしましょう。そうすることで、データベースのセットアップとデプロイが簡単になります。
 
-If you need help setting up your repository, take a look at [this guide on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo).
+リポジトリの設定に関するヘルプが必要な場合は、[GitHub のこのガイド](https://help.github.com/en/github/getting-started-with-github/create-a-repo) を参照してください。
 
-> **Good to know** :
+> **コラム** :
 >
-> - You can also use other Git provider like GitLab or Bitbucket.
-> - If you're new to GitHub, we recommend the [GitHub Desktop App](https://desktop.github.com/) for a simplified development workflow.
+> - GitLab や Bitbucket などの他の Git プロバイダを使用することもできます
+> - GitHub を初めて使用する場合は、開発ワークフローを簡素化できる [GitHub デスクトップアプリ](https://desktop.github.com/) をお勧めします
 
-## Create a Vercel account
+## Vercel アカウントの作成
 
-Visit [vercel.com/signup](https://vercel.com/signup) to create an account. Choose the free "hobby" plan. Select **Continue with GitHub** to connect your GitHub and Vercel accounts.
+[vercel.com/signup](https://vercel.com/signup) にアクセスしてアカウントを作成してください。無料の「hobby」プランを選択してください。[**Continue with GitHub**] を選択して、GitHub アカウントと Vercel アカウントを接続します。
 
-## Connect and deploy your project
+## プロジェクトの接続とデプロイ
 
-Next, you'll be taken to this screen where you can select and import the GitHub repository you've just created:
+次に、先ほど作成した GitHub リポジトリを選択してインポートする画面が表示されます。
 
-![Screenshot of Vercel Dashboard, showing the import project screen with a list of the user's GitHub Repositories](/_images/import-git-repo.avif)
+![ユーザーの GitHub リポジトリのリストを含むプロジェクトのインポート画面を示す Vercel ダッシュボードのスクリーンショット](/_images/import-git-repo.avif)
 
-Name your project and click **Deploy**.
+プロジェクトに名前を付けて、[**Deploy**] をクリックします。
 
-![Deployment screen showing the project name field and a deploy button](/_images/configure-project.avif)
+![プロジェクト名フィールドと Deploy ボタンを示すデプロイ画面](/_images/configure-project.avif)
 
-Hooray! 🎉 Your project is now deployed.
+やりました！ 🎉 これでプロジェクトがデプロイされました。
 
 ![Project overview screen showing the project name, domain, and deployment status](/_images/deployed-project.avif)
 
