@@ -15,7 +15,7 @@
 
 リポジトリの設定に関するヘルプが必要な場合は、[GitHub のこのガイド](https://help.github.com/en/github/getting-started-with-github/create-a-repo) を参照してください。
 
-> **コラム** :
+> [!TIP]
 >
 > - GitLab や Bitbucket などの他の Git プロバイダを使用することもできます
 > - GitHub を初めて使用する場合は、開発ワークフローを簡素化できる [GitHub デスクトップアプリ](https://desktop.github.com/) をお勧めします
@@ -36,46 +36,47 @@
 
 やりました！ 🎉 これでプロジェクトがデプロイされました。
 
-![Project overview screen showing the project name, domain, and deployment status](/_images/deployed-project.avif)
+![プロジェクト名、ドメイン、デプロイ状況を表示するプロジェクト概要画面](/_images/deployed-project.avif)
 
-By connecting your GitHub repository, whenever you push changes to your **main** branch, Vercel will automatically redeploy your application with no configuration needed. When opening pull requests, you'll also have [instant previews](https://vercel.com/docs/deployments/preview-deployments#preview-urls) which allow you to catch deployment errors early and share a preview of your project with team members for feedback.
+GitHub リポジトリに接続すると、**main** ブランチに変更をプッシュするたびに、Vercel は設定不要で自動的にアプリケーションを再デプロイします。また、プルリクエストを発行する際 [インスタントプレビュー](https://vercel.com/docs/deployments/preview-deployments#preview-urls) も利用できるので、デプロイエラーを早期に発見したり、チームメンバーとプロジェクトのプレビューを共有してフィードバックを得ることができます。
 
-## Create a Postgres database
+## Postgres データベースの作成
 
-Next, to set up a database, click **Continue to Dashboard** and select the **Storage** tab from your project dashboard. Select **Connect Store → Create New → Postgres → Continue**.
+次に、データベースをセットアップするために **Continue to Dashboard** をクリックし、プロジェクトダッシュボードから **Storage** タブを選択します。**Connect Store → Create New → Postgres → Continue** を選択します。
 
-![Connect Store screen showing the Postgres option along with KV, Blob and Edge Config](/_images/create-database.avif)
+![Postgres オプションと KV、Blob、および Edge Config を表示する Connect Store 画面](/_images/create-database.avif)
 
-Accept the terms, assign a name to your database, and ensure your database region is set to **Washington D.C (iad1)** - this is also the [default region](https://vercel.com/docs/functions/serverless-functions/regions#select-a-default-serverless-region) for all new Vercel projects. By placing your database in the same region or close to your application code, you can reduce [latency](https://developer.mozilla.org/en-US/docs/Web/Performance/Understanding_latency) for data requests.
+規約に同意し、データベースに名前を割り当て、データベースリージョンが **Washington D.C (iad1)** に設定されていることを確認してください。これは、すべての新しい Vercel プロジェクトの [デフォルトリージョン](https://vercel.com/docs/functions/serverless-functions/regions#select-a-default-serverless-region) でもあります。データベースを同じリージョンまたはアプリケーションコードの近くに配置することで、データリクエストの [レイテンシ（待ち時間）](https://developer.mozilla.org/en-US/docs/Web/Performance/Understanding_latency) を短縮できます。
 
-![Database creation modal showing the database name and region](/_images/database-region.avif)
+![データベース名とリージョンを表示するデータベース作成モーダル](/_images/database-region.avif)
 
-> **Good to know** :
-> You cannot change the database region once it has been initalized. If you wish to use a different [region](https://vercel.com/docs/storage/vercel-postgres/limits#supported-regions), you should set it before creating a database.
+> [!TIP]
+> データベース領域は、一度初期化されると変更できません。別の [リージョン](https://vercel.com/docs/storage/vercel-postgres/limits#supported-regions) を使用したい場合は、データベースを作成する前に設定する必要があります。
 
-Once connected, navigate to the `.env.local` tab, click `Show secret` and `Copy Snippet`. Make sure you reveal the secrets before copying them.
+接続が完了したら `.env.local` タブに移動し、`Show secret` と `Copy Snippet` をクリックします。必ず秘密のキーを表示させてから、コピーするようにしてください。
 
-![The .env.local tab showing the hidden database secrets](/_images/database-dashboard.avif)
+![`.env.local タブ` で、非表示であるデータベースのシークレットキーを表示させる](/_images/database-dashboard.avif)
 
-Navigate to your code editor and rename the `.env.example` file to `.env`. Paste in the copied contents from Vercel.
+コードエディタに移動し、`.env.example` ファイルの名前を `.env` に変更します。 Vercel からコピーした内容を貼り付けます。
 
-**Important**: Go to your `.gitignore` file and make sure `.env` is in the ignored files to prevent your database secrets from being exposed when you push to GitHub.
+> [!IMPORTANT]
+> GitHub にプッシュする際、データベースの機密情報である接続キーが公開されるのを防ぐため、`.gitignore` ファイルで、無視されるファイルに `.env` が含まれていることを確認してください。
 
-Finally, run `npm i @vercel/postgres` in your terminal to install the [Vercel Postgres SDK](https://vercel.com/docs/storage/vercel-postgres/sdk).
+最後に、ターミナルで `npm i @vercel/postgres` を実行して、[Vercel Postgres SDK](https://vercel.com/docs/storage/vercel-postgres/sdk) をインストールします。
 
-## Seed your database
+## データベースのシード設定
 
-Now that your database has been created, let's seed it with some initial data. This will allow you to have some data to work with as you build the dashboard.
+データベースが作成されたので、初期データをシードしてみましょう。これにより、ダッシュボードを構築するときにいくつかのデータを操作できるようになります。
 
-In the `/scripts` folder of your project, there's a file called `seed.js`. This script contains the instructions for creating and seeding the `invoices`, `customers`, `user`, `revenue` tables.
+プロジェクトの `/scripts` フォルダに、`seed.js` というファイルがあります。このスクリプトには、`invoices`、`customers`、`user`、`revenue` テーブルの作成とシードの手順が記述されています。
 
-Don't worry if you don't understand everything the code is doing, but to give you an overview, the script uses **SQL** to create the tables, and the data from `placeholder-data.js` file to populate them after they've been created.
+コードの動作をすべて理解していなくても心配する必要はありません。概要を説明すると、スクリプトは **SQL** を使用してテーブルを作成し、テーブル作成後 `placeholder-data.js` ファイルからデータを取得してテーブル内データの設定を行います。
 
-Next, in your `package.json` file, add the following line to your scripts:
+次に、`package.json` ファイルに、以下のようにスクリプトを追加します。
 
 `/package.json`
 
-```json diff
+```js diff
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -84,31 +85,31 @@ Next, in your `package.json` file, add the following line to your scripts:
   },
 ```
 
-This is the command that will execute `seed.js`.
+これは `seed.js` を実行するためのコマンドになります。
 
-Now, run `npm run seed`. You should see some `console.log` messages in your terminal to let you know the script is running.
+ここで、`npm run seed` を実行してみましょう。ターミナルにいくつかの `console.log` メッセージが表示され、スクリプトが実行中であることがわかります。
 
-> **Troubleshooting** :
-> Make sure to reveal your database secrets before copying it into your `.env` file.
-> The script uses bcrypt to hash the user's password, if `bcrypt` isn't compatible with your environment, you can update the script to use [bcryptjs](https://www.npmjs.com/package/bcryptjs) instead.
-> If you run into any issues while seeding your database and want to run the script again, you can drop any existing tables by running DROP TABLE tablename in your database query interface. See the [executing queries section](https://nextjs.org/learn/dashboard-app/setting-up-your-database#executing-queries) below for more details. But be careful, this command will delete the tables and all their data. It's ok to do this with your example app since you're working with placeholder data, but you shouldn't run this command in a production app.
-> If you continue to experience issues while seeding your Vercel Postgres database, please open a [discussion on GitHub](https://github.com/vercel/next-learn/issues).
+> [!IMPORTANT]
+> データベースのシークレットキーを `.env` ファイルにコピーする前に、必ず公開してご確認ください
+> スクリプトは bcrypt を使用してユーザーのパスワードをハッシュします。`bcrypt` が現在の環境と互換性がない場合は、代わりに [bcryptjs](https://www.npmjs.com/package/bcryptjs) を使用するようにスクリプトを更新できます
+> データベースのシード中に問題が発生し、スクリプトを再度実行したい場合は、データベースクエリインターフェイスで `DROP TABLE tablename` を実行して既存のテーブルを削除できます。詳細については、以下の [クエリの実行セクション](https://nextjs.org/learn/dashboard-app/setting-up-your-database#executing-queries) を参照してください。ただし、このコマンドはテーブルとそのすべてのデータを削除することに注意してください。プレースホルダデータを操作しているため、サンプルアプリでこれを実行しても問題ありませんが、運用アプリではこのコマンドを実行しないでください。
+> Vercel Postgres データベースのシード中に引き続き問題が発生する場合は、[GitHub でのディスカッション](https://github.com/vercel/next-learn/issues) を開いてください。
 
-## Exploring your database
+## データベースの探索
 
-Let's see what your database looks like. Go back to Vercel, and click Data on the sidenav.
+データベースがどのようなものかを見てみましょう。 Vercel に戻り、サイドナビの **Data** をクリックします。
 
-In this section, you'll find the four new tables: users, customers, invoices, and revenue.
+このセクションには、 users、customers、invoices、revenue の 4 つの新しいテーブルがあります。
 
-![Database screen showing dropdown list with four tables: users, customers, invoices, and revenue](/_images/database-tables.avif)
+![users、customers、invoices、revenue の 4 つのテーブルを含むドロップダウンリストを表示するデータベース画面](/_images/database-tables.avif)
 
-By selecting each table, you can view its records and ensure the entries align with the data from placeholder-data.js file.
+各テーブルを選択すると、そのレコードを表示し、エントリが `placeholder-data.js` ファイルのデータと一致していることを確認できます。
 
-## Executing queries
+## クエリの実行
 
-You can switch to the "query" tab to interact with your database. This section supports standard SQL commands. For instance, inputting DROP TABLE customers will delete "customers" table along with all its data - so be careful!
+「query」タブに切り替えるとデータベースを操作できます。このセクションでは、標準の SQL コマンドをサポートします。たとえば、`DROP TABLE customers` を入力すると `customers` テーブルがそのすべてのデータとともに削除されるため、**注意してください**。
 
-Let's run your first database query. Paste and run the following SQL code into the Vercel interface:
+最初のデータベースクエリを実行してみましょう。次の SQL コードを Vercel のインターフェイスに貼り付けて実行してください。
 
 ```sql
 SELECT invoices.amount, customers.name
