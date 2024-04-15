@@ -1,6 +1,6 @@
-# データベースのセットアップ
+# データベースの設定
 
-ダッシュボードでの作業を続ける前に、いくつかのデータが必要です。この章では、`@vercel/postgres` を使用して PostgreSQL データベースをセットアップします。すでに PostgreSQL に慣れていて、独自のプロバイダを使用したい場合は、この章をスキップして自分で設定してもかまいません。それ以外の場合は、続けましょう!
+ダッシュボードでの作業を続ける前に、いくつかのデータが必要です。この章では、`@vercel/postgres` を使用して PostgreSQL データベースの設定をします。すでに PostgreSQL に慣れていて、独自のプロバイダを使用したい場合は、この章をスキップして自分で設定してもかまいません。それ以外の場合は、続けましょう!
 
 この章で取り上げるトピックは以下のとおりです。
 
@@ -11,7 +11,7 @@
 
 ## GitHub リポジトリの作成
 
-まだリポジトリを Github にプッシュしていない場合は、リポジトリを Github にプッシュしましょう。そうすることで、データベースのセットアップとデプロイが簡単になります。
+まだリポジトリを Github にプッシュしていない場合は、リポジトリを Github にプッシュしましょう。そうすることで、データベースの設定とデプロイが簡単になります。
 
 リポジトリの設定に関するヘルプが必要な場合は、[GitHub のこのガイド](https://help.github.com/en/github/getting-started-with-github/create-a-repo) を参照してください。
 
@@ -42,7 +42,7 @@ GitHub リポジトリに接続すると、**main** ブランチに変更をプ�
 
 ## Postgres データベースの作成
 
-次に、データベースをセットアップするために **Continue to Dashboard** をクリックし、プロジェクトダッシュボードから **Storage** タブを選択します。**Connect Store → Create New → Postgres → Continue** を選択します。
+次に、データベースの設定するために **Continue to Dashboard** をクリックし、プロジェクトダッシュボードから **Storage** タブを選択します。**Connect Store → Create New → Postgres → Continue** を選択します。
 
 ![Postgres オプションと KV、Blob、および Edge Config を表示する Connect Store 画面](/_images/create-database.avif)
 
