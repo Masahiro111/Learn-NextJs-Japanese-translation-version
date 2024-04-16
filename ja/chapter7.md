@@ -1,56 +1,56 @@
-# Fetching Data
+# データの取得
 
-Now that you've created and seeded your database, let's discuss the different ways you can fetch data for your application, and build out your dashboard overview page.
+データベースを作成しシーディングを行ったので、アプリケーションのデータを取得し、ダッシュボードの概要ページを構築するさまざまな方法について説明しましょう。
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- Learn about some approaches to fetching data: APIs, ORMs, SQL, etc.
-- How Server Components can help you access back-end resources more securely.
-- What network waterfalls are.
-- How to implement parallel data fetching using a JavaScript Pattern.
+- API、ORM、SQL など、データを取得するためのいくつかのアプローチについての説明
+- サーバーコンポーネントがバックエンドリソースへのより安全なアクセスにどのように役立つのか
+- ネットワークウォーターフォールとは何か
+- JavaScript パターンを使用して並列データフェッチを実装する方法
 
-## Choosing how to fetch data
+## データを取得する方法の選択
 
-### API layer
+### API レイヤー
 
-APIs are an intermediary layer between your application code and database. There are a few cases where you might use an API:
+API は、アプリケーションコードとデータベースの間の中間層です。API を使用するケースとして以下のようなケースがあります。
 
-- If you're using 3rd party services that provide an API.
-- If you're fetching data from the client, you want to have an API layer that runs on the server to avoid exposing your database secrets to the client.
+- API を提供するサードパーティのサービスを使用している場合
+- クライアントからデータを取得する場合、データベースのシークレットキーがクライアントに公開されることを避けるためにサーバー上で実行される API レイヤーが必要
 
-In Next.js, you can create API endpoints using [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers).
+Next.js では、[Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) を使用して API のエンドポイントを作成できます。
 
-### Database queries
+### データベースクエリ
 
-When you're creating a full-stack application, you'll also need to write logic to interact with your database. For [relational databases](https://aws.amazon.com/relational-database/) like Postgres, you can do this with SQL, or an [ORM](https://vercel.com/docs/storage/vercel-postgres/using-an-orm#) like [Prisma](https://www.prisma.io/).
+フルスタックアプリケーションを作成する場合は、データベースと対話するロジックも作成する必要があります。 Postgres などの [リレーショナルデータベース](https://aws.amazon.com/relational-database/) の場合、SQL または [Prisma](https://www.prisma.io/) などの [ORM](https://vercel.com/docs/storage/vercel-postgres/using-an-orm#) を使用してこれを行うことができます。
 
-There are a few cases where you have to write database queries:
+データベースクエリを作成する必要があるケースがいくつかあります。
 
-- When creating your API endpoints, you need to write logic to interact with your database.
-- If you are using React Server Components (fetching data on the server), you can skip the API layer, and query your database directly without risking exposing your database secrets to the client.
+- API エンドポイントを作成するときは、データベースと対話するロジックを作成する必要がある
+- React Server Components (サーバー上のデータを取得) を使用している場合は、API レイヤーをスキップして、データベースのシークレットキーをクライアントに公開する危険を冒さずにデータベースに直接クエリを実行できる
 
-Let's learn more about React Server Components.
+React サーバーコンポーネントについて詳しく学びましょう。
 
-## Using Server Components to fetch data
+## サーバーコンポーネントを使用したデータ取得
 
-By default, Next.js applications use **React Server Components**. Fetching data with Server Components is a relatively new approach and there are a few benefits of using them:
+デフォルトでは、Next.js アプリケーションは **React Server Components** を使用します。サーバーコンポーネントを使用したデータの取得は比較的新しいアプローチであり、サーバーコンポーネントを使用することでいくつかの利点があります。
 
-- Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. You can use async/await syntax without reaching out for useEffect, useState or data fetching libraries.
-- Server Components execute on the server, so you can keep expensive data fetches and logic on the server and only send the result to the client.
-- As mentioned before, since Server Components execute on the server, you can query the database directly without an additional API layer.
+- サーバーコンポーネントは Promise をサポートし、データのフェッチなどの非同期タスクに対するよりシンプルなソリューションを提供します。`useEffect`、`useState`、またはデータ取得ライブラリを使用せずに、`async/await` 構文を使用できる
+- サーバーコンポーネントはサーバー上で実行されるため、高価なデータ取得やロジックをサーバー上に保持し、結果のみをクライアントに送信できる
+- 前述したように、サーバーコンポーネントはサーバー上で実行されるため、API レイヤーを追加することなくデータベースに直接クエリを実行できる
 
-## Using SQL
+## SQL の使用
 
-For your dashboard project, you'll write database queries using the [Vercel Postgres SDK](https://vercel.com/docs/storage/vercel-postgres/sdk) and SQL. There are a few reasons why we'll be using SQL:
+このダッシュボードプロジェクトでは、[Vercel Postgres SDK](https://vercel.com/docs/storage/vercel-postgres/sdk) と SQL を使用してデータベースクエリを作成します。SQL を使用する理由はいくつかあります。
 
-- SQL is the industry standard for querying relational databases (e.g. ORMs generate SQL under the hood).
-- Having a basic understanding of SQL can help you understand the fundamentals of relational databases, allowing you to apply your knowledge to other tools.
-- SQL is versatile, allowing you to fetch and manipulate specific data.
-- The Vercel Postgres SDK provides protection against [SQL injections](https://vercel.com/docs/storage/vercel-postgres/sdk#preventing-sql-injections).
+- SQL は、リレーショナルデータベースにクエリを実行するための業界標準である (たとえば、ORM は内部で SQL を生成)
+- SQL の基本を理解すると、リレーショナルデータベースの基礎を理解するのに役立ち、その知識を他のツールに応用できる
+- SQL は多用途であり、特定のデータを取得して操作できる
+- Vercel Postgres SDK は、[SQL インジェクション](https://vercel.com/docs/storage/vercel-postgres/sdk#preventing-sql-injections) に対する保護を提供している
 
-Don't worry if you haven't used SQL before - we have provided the queries for you.
+これまで SQL を使用したことがなくても、心配する必要はありません。すでにこちら側でクエリが用意されています。
 
-Go to `/app/lib/data.ts`, here you'll see that we're importing the [sql](https://vercel.com/docs/storage/vercel-postgres/sdk#sql) function from @vercel/postgres. This function allows you to query your database:
+`/app/lib/data.ts` に移動すると、@vercel/postgres から [sql](https://vercel.com/docs/storage/vercel-postgres/sdk#sql) 関数をインポートしていることがわかります。この関数を使用すると、データベースにクエリを実行できます。
 
 `/app/lib/data.ts`
 
@@ -65,7 +65,7 @@ You can call `sql` inside any Server Component. But to allow you to navigate the
 > [!note]
 > If you used your own database provider in Chapter 6, you'll need to update the database queries to work with your provider. You can find the queries in `/app/lib/data.ts`.
 
-## Fetching data for the dashboard overview page
+## ダッシュボード概要ページのデータ取得
 
 Now that you understand different ways of fetching data, let's fetch data for the dashboard overview page. Navigate to `/app/dashboard/page.tsx`, paste the following code, and spend some time exploring it:
 
