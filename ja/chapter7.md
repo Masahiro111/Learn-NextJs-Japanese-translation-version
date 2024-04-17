@@ -293,11 +293,11 @@ const {
 
 ただし、この動作は意図的せず、パフォーマンスに影響を与える可能性もあります。
 
-## Parallel data fetching
+## パラレルなデータフェッチ
 
-A common way to avoid waterfalls is to initiate all data requests at the same time - in parallel.
+ウォーターフォールを回避する一般的な方法は、すべてのデータリクエストを同時に、つまり並行して開始することです。
 
-In JavaScript, you can use the [Promise.all()]() or [Promise.allSettled()]() functions to initiate all promises at the same time. For example, in data.ts, we're using `Promise.all()` in the `fetchCardData()` function:
+JavaScript では、[Promise.all()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) 関数または [Promise.allSettled()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled) 関数を使用して、すべての Promise を同時に開始できます。たとえば、`data.ts` では、`fetchCardData()` 関数内で `Promise.all()` を使用しています。
 
 `/app/lib/data.js`
 
@@ -321,9 +321,9 @@ In JavaScript, you can use the [Promise.all()]() or [Promise.allSettled()]() fun
   }
 ```
 
-By using this pattern, you can:
+このパターンを使用すると、次のことが可能になります。
 
-- Start executing all data fetches at the same time, which can lead to performance gains.
-- Use a native JavaScript pattern that can be applied to any library or framework.
+- すべてのデータ取得の実行を同時に開始することで、パフォーマンスの向上につながる可能性があります
+- どのようなライブラリやフレームワークにも適用できるネイティブの JavaScript パターンを使用します。
 
-However, there is one `disadvantage` of relying only on this JavaScript pattern: what happens if one data request is slower than all the others?
+しかし、この JavaScript パターンだけに頼ることには 1 つの欠点があります。1 つのデータリクエストが他のすべてのデータリクエストよりも遅い場合はどうなるでしょうか？
