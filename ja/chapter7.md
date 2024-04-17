@@ -60,14 +60,14 @@ import { sql } from "@vercel/postgres";
 // ...
 ```
 
-You can call `sql` inside any Server Component. But to allow you to navigate the components more easily, we've kept all the data queries in the `data.ts` file, and you can import them into the components.
+任意のサーバーコンポーネント内で `sql` を呼び出すことができます。ただし、コンポーネントをより簡単に操作できるようにするために、すべてのデータクエリを `data.ts` ファイルに保存し、それらをコンポーネントにインポートできます。
 
 > [!note]
-> If you used your own database provider in Chapter 6, you'll need to update the database queries to work with your provider. You can find the queries in `/app/lib/data.ts`.
+> Chapter 6 で独自のデータベースプロバイダを使用した場合は、プロバイダで動作するようにデータベースクエリを更新する必要があります。クエリは `/app/lib/data.ts` にあります。
 
 ## ダッシュボード概要ページのデータ取得
 
-Now that you understand different ways of fetching data, let's fetch data for the dashboard overview page. Navigate to `/app/dashboard/page.tsx`, paste the following code, and spend some time exploring it:
+データを取得するさまざまな方法を理解したところで、ダッシュボードの概要ページのデータを取得してみましょう。 `/app/dashboard/page.tsx` に移動し、以下のコードを貼り付け、時間をかけてコードを見てみましょう。
 
 `/app/dashboard/page.tsx`
 
@@ -102,14 +102,14 @@ export default async function Page() {
 }
 ```
 
-In the code above:
+上記のコードでは
 
-- Page is an **async** component. This allows you to use `await` to fetch data.
-- There are also 3 components which receive data: `<Card>`, `<RevenueChart>`, and `<LatestInvoices>`. They are currently commented out to prevent the application from erroring.
+- Page は **非同期** コンポーネントです。これにより、`await` を使用してデータを取得できるようになります
+- `<Card>`、`<RevenueChart>`、`<latestInvoices>` という 3 つのデータを受け取るためのコンポーネントもあります。これらは現在、アプリケーションのエラーを防ぐためにコメントアウトされています。
 
-## Fetching data for `<RevenueChart/>`
+## `<RevenueChart/>` のデータを取得
 
-To fetch data for the `<RevenueChart/>` component, import the `fetchRevenue` function from `data.ts` and call it inside your component:
+`<RevenueChart/>` コンポーネントのデータを取得するには、`data.ts` から `fetchRevenue` 関数をインポートしてからコンポーネント内で呼び出します。
 
 `/app/dashboard/page.tsx`
 
@@ -126,19 +126,19 @@ To fetch data for the `<RevenueChart/>` component, import the `fetchRevenue` fun
   }
 ```
 
-Then, uncomment the `<RevenueChart/>` component, navigate to the component file (`/app/ui/dashboard/revenue-chart.tsx`) and uncomment the code inside it. Check your localhost, you should be able to see a chart that uses `revenue` data.
+次に、`<RevenueChart/>` コンポーネントのコメントを解除し、コンポーネントファイル (`/app/ui/dashboard/revenue-chart.tsx`) に移動して、その中のコードのコメントを解除します。ローカルホストを確認すると、`revenue` データを使用したグラフが表示されるはずです。
 
-![Revenue chart showing the total revenue for the last 12 months](/_images/recent-revenue.avif)
+![過去 12 か月の総収益を示す収益グラフ](/_images/recent-revenue.avif)
 
-Let's continue importing some more data queries!
+さらにデータクエリのインポートを続けましょう。
 
-## Fetching data for `<LatestInvoices/>`
+## `<LatestInvoices/>` のデータを取得
 
-For the `<LatestInvoices />` component, we need to get the latest 5 invoices, sorted by date.
+`<LatestInvoices />` コンポーネントでは、日付順に並べ替えられた最新の 5 件の請求書を取得する必要があります。
 
-You could fetch all the invoices and sort through them using JavaScript. This isn't a problem as our data is small, but as your application grows, it can significantly increase the amount of data transferred on each request and the JavaScript required to sort through it.
+すべての請求書情報を取得し、JavaScript でソートすることもできます。今のところはデータ量が小さいため問題ではありませんが、アプリケーションが大きくなるにつれて、リクエストごとに転送されるデータ量と、それをソートするために必要な JavaScript の量が大幅に増える可能性があります。
 
-Instead of sorting through the latest invoices in-memory, you can use an SQL query to fetch only the last 5 invoices. For example, this is the SQL query from your `data.ts` file:
+最新の請求書をメモリ内でソートする代わりに、SQL クエリを使用して直近の 5 件の請求書のみを取得できます。たとえば、以下は `data.ts` ファイルの SQL クエリです。
 
 `/app/lib/data.ts`
 
@@ -152,7 +152,7 @@ const data = await sql<LatestInvoiceRaw>`
   LIMIT 5`;
 ```
 
-In your page, import the `fetchLatestInvoices` function:
+page ファイルに `fetchLatestInvoices` 関数をインポートしましょう。
 
 `/app/dashboard/page.tsx`
 
@@ -170,29 +170,29 @@ In your page, import the `fetchLatestInvoices` function:
   }
 ```
 
-Then, uncomment the `<LatestInvoices />` component. You will also need to uncomment the relevant code in the `<LatestInvoices />` component itself, located at `/app/ui/dashboard/latest-invoices`.
+次に、`<LatestInvoices />` コンポーネントのコメントを解除します。また `/app/ui/dashboard/latest-invoices` にある `<LatestInvoices />` コンポーネント自体の関連するコードのコメントを解除する必要もあります。
 
-If you visit your localhost, you should see that only the last 5 are returned from the database. Hopefully, you're beginning to see the advantages of querying your database directly!
+ローカルホストにアクセスすると、データベースから最後の 5 件だけが返されていることがわかります。データベースに直接クエリを実行する利点が見えてきたと思います。
 
-![Latest invoices component alongside the revenue chart](/_images/latest-invoices.avif)
+![収益グラフと並んだ最新の請求書コンポーネント](/_images/latest-invoices.avif)
 
-## Practice: Fetch data for the `<Card>` components
+## 実践 `<Card>` コンポーネントのデータを取得
 
-Now it's your turn to fetch data for the `<Card>` components. The cards will display the following data:
+次は、`<Card>` コンポーネントのデータを取得してみましょう。カードには次のデータが表示されます。
 
-- Total amount of invoices collected.
-- Total amount of invoices pending.
-- Total number of invoices.
-- Total number of customers.
+- 回収された請求書の合計金額
+- 保留中の請求書の合計金額
+- 請求書の総数
+- 顧客の総数
 
-Again, you might be tempted to fetch all the invoices and customers, and use JavaScript to manipulate the data. For example, you could use `Array.length` to get the total number of invoices and customers:
+繰り返しになりますが、すべての請求書と顧客を取得し、JavaScript を使用してデータを操作したくなるかもしれません。たとえば、`Array.length` を使用して請求書と顧客の総数を取得するとしましょう。
 
 ```ts
 const totalInvoices = allInvoices.length;
 const totalCustomers = allCustomers.length;
 ```
 
-But with SQL, you can fetch only the data you need. It's a little longer than using `Array.length`, but it means less data needs to be transferred during the request. This is the SQL alternative:
+しかし SQL を使用すれば、必要なデータのみを取得することができます。`Array.length` を使用するよりも少し時間がかかりますが、リクエスト中に転送するデータが少なくて済みます。以下は SQL の代替です。
 
 `/app/lib/data.ts`
 
@@ -201,14 +201,14 @@ const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
 const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
 ```
 
-The function you will need to import is called `fetchCardData`. You will need to destructure the values returned from the function.
+インポートする必要がある関数は `fetchCardData` となります。この関数から返される値を再構築する必要があります。
 
-> [tips]
+> [!tip]
 >
-> - Check the card components to see what data they need.
-> - Check the data.ts file to see what the function returns.
+> - カードコンポーネントをチェックして、必要なデータを確認します
+> - `data.ts` ファイルをチェックして、関数が何を返すかを確認します
 
-Once you're ready, expand the toggle below for the final code:
+以上を参考にして、最終的なコードは以下のようになります。
 
 `/app/dashboard/page.tsx`
 
@@ -257,24 +257,24 @@ Once you're ready, expand the toggle below for the final code:
   }
 ```
 
-Great! You've now fetched all the data for the dashboard overview page. Your page should look like this:
+素晴らしい！これで、ダッシュボードの概要ページのすべてのデータが取得できました。ページは以下のようになっていると思います。
 
-![Dashboard page with all the data fetched](/_images/complete-dashboard.avif)
+![取得されたすべてのデータを含むダッシュボード画面](/_images/complete-dashboard.avif)
 
-However... there are two things you need to be aware of:
+ただし...注意しなければならないことが 2 つあります。
 
-1. The data requests are unintentionally blocking each other, creating a `request waterfall`.
-2. By default, Next.js `prerenders` routes to improve performance, this is called `Static Rendering`. So if your data changes, it won't be reflected in your dashboard.
+1. データリクエストが意図せずお互いにブロックし合い、`リクエストウォーターフォール` を作り出してしまうこと
+2. デフォルトでは、Next.js はパフォーマンスを向上させるためにルートをプリレンダリングします。これは「静的レンダリング」と呼ばれます。そのため、データが変更されてもダッシュボードには反映されません。
 
-Let's discuss number 1 in this chapter, then look into detail at number 2 in the next chapter.
+この章では 1 について説明し、次の章で 2 について詳しく説明します。
 
-## What are request waterfalls?
+## リクエストウォーターフォールについて
 
-A "waterfall" refers to a sequence of network requests that depend on the completion of previous requests. In the case of data fetching, each request can only begin once the previous request has returned data.
+「ウォーターフォール」とは、前のリクエストの完了に依存する一連のネットワークリクエストのことです。データ取得の際に、各リクエストは、前のリクエストがデータを返した後にのみ開始できます。
 
-![Diagram showing time with sequential data fetching and parallel data fetching](/_images/sequential-parallel-data-fetching.avif)
+![シーケンシャルなデータフェッチとパラレルなデータフェッチの時間を示す図](/_images/sequential-Parallel-data-fetching.avif)
 
-For example, we need to wait for `fetchRevenue()` to execute before `fetchLatestInvoices()` can start running, and so on.
+たとえば、`fetchLatestInvoices()` の実行を開始するには、`fetchRevenue()` の実行を待つ必要があります。
 
 `/app/dashboard/page.tsx`
 
@@ -289,9 +289,9 @@ const {
 } = await fetchCardData(); // wait for fetchLatestInvoices() to finish
 ```
 
-This pattern is not necessarily bad. There may be cases where you want waterfalls because you want a condition to be satisfied before you make the next request. For example, you might want to fetch a user's ID and profile information first. Once you have the ID, you might then proceed to fetch their list of friends. In this case, each request is contingent on the data returned from the previous request.
+このパターンが必ずしも悪いわけではありません。次のリクエストを行う前に条件を満たす目的でウォーターフォールが必要な場合もあります。たとえば、最初にユーザーの ID とプロフィール情報を取得したい場合があります。ID を取得したら、友達のリストを取得します。この場合、各リクエストは前のリクエストから返されたデータに依存しています。
 
-However, this behavior can also be unintentional and impact performance.
+ただし、この動作は意図的せず、パフォーマンスに影響を与える可能性もあります。
 
 ## Parallel data fetching
 
