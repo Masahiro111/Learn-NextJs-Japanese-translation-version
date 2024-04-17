@@ -1,22 +1,22 @@
-# Static and Dynamic Rendering
+# 静的レンダリングと動的レンダリング
 
-In the previous chapter, you fetched data for the Dashboard Overview page. However, we briefly discussed two limitations of the current setup:
+前章では、ダッシュボードの概要ページのデータを取得しました。しかし、現状のセットアップでの 2 つの制限について簡単に説明したいと思います。
 
-1. The data requests are creating an unintentional waterfall.
-2. The dashboard is static, so any data updates will not be reflected on your application.
+1. データリクエストにより、意図しないウォーターフォールが発生すること
+2. ダッシュボードは静的であるため、データの更新はアプリケーションに反映されないこと
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- What static rendering is and how it can improve your application's performance.
-- What dynamic rendering is and when to use it.
-- Different approaches to make your dashboard dynamic.
-- Simulate a slow data fetch to see what happens.
+- 静的レンダリングとは何か、また静的レンダリングによってアプリケーションのパフォーマンスがどのように向上するか
+- 動的レンダリングとは何か、どのような場合に使用するのか
+- ダッシュボードを動的にするためのさまざまなアプローチ
+- 低速なデータ取得をシミュレートして、何が起こるかを確認する
 
-## What is Static Rendering?
+## 静的レンダリングとは？
 
-With static rendering, data fetching and rendering happens on the server at build time (when you deploy) or during [revalidation](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data).The result can then be distributed and cached in a [Content Delivery Network (CDN)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#static-rendering-default).
+静的レンダリングでは、データのフェッチとレンダリングは、ビルド時 (デプロイ時) または [再検証] (https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data) 時にサーバー上で行われます。結果は、[コンテンツデリバリーネットワーク (CDN)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#static-rendering-default) で配信され、キャッシュされます。
 
-![Diagram showing how users hit the CDN instead of the server when requesting a page](/_images/dashboard-route.avif)
+![ページをリクエストするときにユーザーがサーバーではなく CDN にアクセスする様子](/_images/dashboard-route.avif)
 
 Whenever a user visits your application, the cached result is served. There are a couple of benefits of static rendering:
 
