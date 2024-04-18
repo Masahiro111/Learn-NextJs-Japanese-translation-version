@@ -92,13 +92,14 @@
   }
 ```
 
-> [!note] > `unstable_noStore` is an experimental API and may change in the future. If you prefer to use a stable API in your own projects, you can also use the [Segment Config Option]() `export const dynamic = "force-dynamic"`.
+> [!note]
+> 現在 `unstable_noStore` は実験的な API であり、将来変更される可能性があります。独自のプロジェクトで安定した API を使用したい場合は、[Segment Config Option](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config) `export const dynamic = "force-dynamic"` を使用することもできます
 
-## Simulating a Slow Data Fetch
+## 低速なデータフェッチのシミュレーション
 
-Making the dashboard dynamic is a good first step. However... there is still one problem we mentioned in the previous chapter. What happens if one data request is slower than all the others?
+ダッシュボードを動的にすることは良い第一歩です。しかし、前の章で述べた問題がまだ 1 つあります。もし 1 つのデータリクエストが他のすべてのリクエストよりも遅い場合はどうなるでしょうか？
 
-Let's simulate a slow data fetch. In your `data.ts` file, uncomment the `console.log` and `setTimeout` inside `fetchRevenue()`:
+遅いデータフェッチをシミュレートしてみましょう。`data.ts` ファイルの `fetchRevenue()` 内の `console.log` と `setTimeout` のコメントを解除します。
 
 `/app/lib/data.ts`
 
@@ -122,15 +123,15 @@ export async function fetchRevenue() {
 }
 ```
 
-Now open http://localhost:3000/dashboard/ in a new tab and notice how the page takes longer to load. In your terminal, you should also see the following messages:
+新しいタブで http://localhost:3000/dashboard/ を開くと、ページの読み込みに時間がかかることがわかります。ターミナルには次のメッセージも表示されるはずです。
 
 ```
 Fetching revenue data...
 Data fetch completed after 3 seconds.
 ```
 
-Here, you've added an artificial 3-second delay to simulate a slow data fetch. The result is that now your whole page is blocked while the data is being fetched.
+ここでは、遅いデータフェッチをシミュレートするために故意的に 3 秒の遅延を追加しています。その結果、データがフェッチされている間、ページ全体がブロックされることになります。
 
-Which brings us to a common challenge developers have to solve:
+これにより、開発者が解決しなければならない課題が見えてきます。
 
-With dynamic rendering, **your application is only as fast as your slowest data fetch**.
+動的レンダリングでは、**アプリケーションは、最も遅いデータフェッチと同じ速度になってしまいます**。
