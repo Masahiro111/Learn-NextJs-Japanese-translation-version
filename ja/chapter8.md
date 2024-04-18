@@ -18,31 +18,31 @@
 
 ![ページをリクエストするときにユーザーがサーバーではなく CDN にアクセスする様子](/_images/dashboard-route.avif)
 
-Whenever a user visits your application, the cached result is served. There are a couple of benefits of static rendering:
+ユーザーがアプリケーションにアクセスするたびに、キャッシュされた結果が提供されます。静的レンダリングにはいくつかの利点があります。
 
-- **Faster Websites** - Prerendered content can be cached and globally distributed. This ensures that users around the world can access your website's content more quickly and reliably.
-- **Reduced Server Load** - Because the content is cached, your server does not have to dynamically generate content for each user request.
-- **SEO** - Prerendered content is easier for search engine crawlers to index, as the content is already available when the page loads. This can lead to improved search engine rankings.
+- **より高速な Web サイト** - 事前にレンダリングされたコンテンツをキャッシュしてから配信できます。これにより、世界中のユーザーがより迅速かつ確実に Web サイトのコンテンツにアクセスできるようになります
+- **サーバー負荷の軽減** - コンテンツがキャッシュされるため、サーバーはユーザーのリクエストごとにコンテンツを動的に生成する必要がありません
+- **SEO** - 事前にレンダリングされたコンテンツは、ページの読み込み時にすでに利用可能であるため、検索エンジンのクローラーにとってインデックス付けが容易です。これにより、検索エンジンのランキングが向上につながります
 
-Static rendering is useful for UI with **no data** or **data that is shared across users**, such as a static blog post or a product page. It might not be a good fit for a dashboard that has personalized data that is regularly updated.
+静的レンダリングは、静的なブログ記事や製品ページなど **データのない** または **ユーザー間で共有されるデータ** を含む UI に役立ちます。定期的に更新されるパーソナライズされたデータを含むダッシュボードには適さない可能性があります。
 
-The opposite of static rendering is dynamic rendering.
+静的レンダリングの反対は動的レンダリングです。
 
-## What is Dynamic Rendering?
+## 動的レンダリングとは？
 
-With dynamic rendering, content is rendered on the server for each user at **request time** (when the user visits the page). There are a couple of benefits of dynamic rendering:
+動的レンダリングでは、**リクエスト時** (ユーザーがページにアクセスした時) に、各ユーザーのコンテンツがサーバー上でレンダリングされます。動的レンダリングにはいくつかの利点があります。
 
-- **Real-Time Data** - Dynamic rendering allows your application to display real-time or frequently updated data. This is ideal for applications where data changes often.
-- **User-Specific Content** - It's easier to serve personalized content, such as dashboards or user profiles, and update the data based on user interaction.
-- **Request Time Information** - Dynamic rendering allows you to access information that can only be known at request time, such as cookies or the URL search parameters.
+- **リアルタイムなデータ** - 動的レンダリングにより、アプリケーションはリアルタイムまたは頻繁に更新されるデータを表示できます。これは、データが頻繁に変更されるアプリケーションに最適です
+- **ユーザー固有のコンテンツ** - ダッシュボードやユーザープロフィールなどのパーソナライズされたコンテンツの提供が容易になり、ユーザーインタラクションに基づいてデータを更新するできます
+- **リクエスト時の情報** - 動的レンダリングにより、Cookie や URL 検索パラメーターなど、リクエスト時にしかわからない情報にアクセスできます
 
-## Making the dashboard dynamic
+## ダッシュボードを動的にする
 
-By default, `@vercel/postgres` doesn't set its own caching semantics. This allows the framework to set its own static and dynamic behavior.
+デフォルトでは、`@vercel/postgres` は独自のキャッシュ セマンティクスを設定しません。これにより、フレームワークは独自の静的および動的動作を設定できるようになります。
 
-You can use a Next.js API called `unstable_noStore` inside your Server Components or data fetching functions to opt out of static rendering. Let's add this.
+サーバーコンポーネントやデータ取得関数の内部で `unstable_noStore` と呼ばれる Next.js API を使用して、静的レンダリングを無効にできます。これを追加してみましょう。
 
-In your `data.ts`, import `unstable_noStore` from `next/cache`, and call it the top of your data fetching functions:
+`data.ts` で、`next/cache` から `unstable_noStore` をインポートし、それをデータを取得する関数の先頭で呼び出します。
 
 `/app/lib/data.ts`
 
