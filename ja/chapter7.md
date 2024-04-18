@@ -272,7 +272,7 @@ const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
 
 「ウォーターフォール」とは、前のリクエストの完了に依存する一連のネットワークリクエストのことです。データ取得の際に、各リクエストは、前のリクエストがデータを返した後にのみ開始できます。
 
-![シーケンシャルなデータフェッチとパラレルなデータフェッチの時間を示す図](/_images/sequential-Parallel-data-fetching.avif)
+![シーケンシャルなデータフェッチとパラレルなデータフェッチの時間を示す図](/_images/sequential-parallel-data-fetching.avif)
 
 たとえば、`fetchLatestInvoices()` の実行を開始するには、`fetchRevenue()` の実行を待つ必要があります。
 
