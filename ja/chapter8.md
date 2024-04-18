@@ -14,7 +14,7 @@
 
 ## 静的レンダリングとは？
 
-静的レンダリングでは、データのフェッチとレンダリングは、ビルド時 (デプロイ時) または [再検証] (https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data) 時にサーバー上で行われます。結果は、[コンテンツデリバリーネットワーク (CDN)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#static-rendering-default) で配信され、キャッシュされます。
+静的レンダリングでは、データのフェッチとレンダリングは、ビルド時 (デプロイ時) または [再検証](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data) 時にサーバー上で行われます。結果は、[コンテンツデリバリーネットワーク (CDN)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#static-rendering-default) で配信され、キャッシュされます。
 
 ![ページをリクエストするときにユーザーがサーバーではなく CDN にアクセスする様子](/_images/dashboard-route.avif)
 
