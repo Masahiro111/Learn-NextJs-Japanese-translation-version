@@ -14,11 +14,11 @@ In this chapter...
 
 Streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and progressively stream them from the server to the client as they become ready.
 
-![Diagram showing time with sequential data fetching and parallel data fetching]()
+![Diagram showing time with sequential data fetching and parallel data fetching](/_images/server-rendering-with-streaming.avif)
 
 By streaming, you can prevent slow data requests from blocking your whole page. This allows the user to see and interact with parts of the page without waiting for all the data to load before any UI can be shown to the user.
 
-![Diagram showing time with sequential data fetching and parallel data fetching]()
+![Diagram showing time with sequential data fetching and parallel data fetching](/_images/server-rendering-with-streaming-chart.avif)
 
 Streaming works well with React's component model, as each component can be considered a chunk.
 
@@ -43,7 +43,7 @@ export default function Loading() {
 
 Refresh http://localhost:3000/dashboard, and you should now see:
 
-![Dashboard page with 'Loading...' text]()
+![Dashboard page with 'Loading...' text](/_images/loading-page.avif)
 
 A few things are happening here:
 
@@ -71,7 +71,7 @@ Inside your `loading.tsx` file, import a new component called `<DashboardSkeleto
 
 Then, refresh http://localhost:3000/dashboard, and you should now see:
 
-![Dashboard page with loading skeletons]()
+![Dashboard page with loading skeletons](/_images/loading-page-with-skeleton.avif)
 
 ### Fixing the loading skeleton bug with route groups
 
@@ -81,7 +81,7 @@ Since `loading.tsx` is a level higher than `/invoices/page.tsx` and `/customers/
 
 We can change this with [Route Groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups). Create a new folder called `/(overview)` inside the dashboard folder. Then, move your `loading.tsx` and `page.tsx` files inside the folder:
 
-![Folder structure showing how to create a route group using parentheses]()
+![Folder structure showing how to create a route group using parentheses](/_images/route-group.avif)
 
 Now, the `loading.tsx` file will only apply to your dashboard overview page.
 
@@ -204,7 +204,7 @@ Finally, update the `<RevenueChart>` component to fetch its own data and remove 
 
 Now refresh the page, you should see the dashboard information almost immediately, while a fallback skeleton is shown for `<RevenueChart>`:
 
-![Dashboard page with revenue chart skeleton and loaded Card and Latest Invoices components]()
+![Dashboard page with revenue chart skeleton and loaded Card and Latest Invoices components](/_images/loading-revenue-chart.avif)
 
 ### Practice: Streaming `<LatestInvoices>`
 
@@ -219,32 +219,138 @@ Dashboard Page:
 `/app/dashboard/(overview)/page.tsx`
 
 ```tsx diff
-import { Card } from "@/app/ui/dashboard/cards";
-import RevenueChart from "@/app/ui/dashboard/revenue-chart";
-import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
-import { lusitana } from "@/app/ui/fonts";
-import { fetchCardData } from "@/app/lib/data"; // Remove fetchLatestInvoices
-import { Suspense } from "react";
-import {
-  RevenueChartSkeleton,
-  LatestInvoicesSkeleton,
-} from "@/app/ui/skeletons";
+  import { Card } from "@/app/ui/dashboard/cards";
+  import RevenueChart from "@/app/ui/dashboard/revenue-chart";
+  import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
+  import { lusitana } from "@/app/ui/fonts";
++ import { fetchCardData } from "@/app/lib/data"; // Remove fetchLatestInvoices
+  import { Suspense } from "react";
+  import {
+    RevenueChartSkeleton,
++   LatestInvoicesSkeleton,
+  } from "@/app/ui/skeletons";
 
-export default async function Page() {
-  // Remove `const latestInvoices = await fetchLatestInvoices()`
-  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
+  export default async function Page() {
+    // Remove `const latestInvoices = await fetchLatestInvoices()`
+    const {
+      numberOfInvoices,
+      numberOfCustomers,
+      totalPaidInvoices,
+      totalPendingInvoices,
+    } = await fetchCardData();
 
-  return (
-    <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
-      </h1>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    return (
+      <main>
+        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+          Dashboard
+        </h1>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Card title="Collected" value={totalPaidInvoices} type="collected" />
+          <Card title="Pending" value={totalPendingInvoices} type="pending" />
+          <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+          <Card
+            title="Total Customers"
+            value={numberOfCustomers}
+            type="customers"
+          />
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+          <Suspense fallback={<RevenueChartSkeleton />}>
+            <RevenueChart />
+          </Suspense>
++         <Suspense fallback={<LatestInvoicesSkeleton />}>
++           <LatestInvoices />
++         </Suspense>
+        </div>
+      </main>
+    );
+  }
+```
+
+`<LatestInvoices>` component. Remember to remove the props!:
+
+`/app/ui/dashboard/latest-invoices.tsx`
+
+```tsx diff
+  import { ArrowPathIcon } from '@heroicons/react/24/outline';
+  import clsx from 'clsx';
+  import Image from 'next/image';
+  import { lusitana } from '@/app/ui/fonts';
++ import { fetchLatestInvoices } from '@/app/lib/data';
+
++ export default async function LatestInvoices() { // Remove props
++   const latestInvoices = await fetchLatestInvoices();
+
+    return (
+      // ...
+    );
+  }
+```
+
+## Grouping components
+
+Great! You're almost there, now you need to wrap the `<Card>` components in Suspense. You can fetch data for each individual card, but this could lead to a popping effect as the cards load in, this can be visually jarring for the user.
+
+So, how would you tackle this problem?
+
+To create more of a staggered effect, you can group the cards using a wrapper component. This means the static `<SideNav/>` will be shown first, followed by the cards, etc.
+
+In your `page.tsx` file:
+
+- Delete your `<Card>` components.
+- Delete the `fetchCardData()` function.
+- Import a new **wrapper** component called `<CardWrapper />`.
+- Import a new skeleton component called `<CardsSkeleton />`.
+- Wrap `<CardWrapper />` in Suspense.
+
+`/app/dashboard/page.tsx`
+
+```tsx diff
++ import CardWrapper from "@/app/ui/dashboard/cards";
+  // ...
+  import {
+    RevenueChartSkeleton,
+    LatestInvoicesSkeleton,
++   CardsSkeleton,
+  } from "@/app/ui/skeletons";
+
+  export default async function Page() {
+    return (
+      <main>
+        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+          Dashboard
+        </h1>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
++         <Suspense fallback={<CardsSkeleton />}>
++           <CardWrapper />
++         </Suspense>
+        </div>
+        // ...
+      </main>
+    );
+  }
+```
+
+Then, move into the file `/app/ui/dashboard/cards.tsx`, import the `fetchCardData()` function, and invoke it inside the `<CardWrapper/>` component. Make sure to uncomment any necessary code in this component.
+
+`/app/ui/dashboard/cards.tsx`
+
+```tsx diff
+  // ...
++ import { fetchCardData } from "@/app/lib/data";
+
+  // ...
+
+  export default async function CardWrapper() {
++   const {
++     numberOfInvoices,
++     numberOfCustomers,
++     totalPaidInvoices,
++     totalPendingInvoices,
++   } = await fetchCardData();
+
+    return (
+      <>
         <Card title="Collected" value={totalPaidInvoices} type="collected" />
         <Card title="Pending" value={totalPendingInvoices} type="pending" />
         <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
@@ -253,115 +359,9 @@ export default async function Page() {
           value={numberOfCustomers}
           type="customers"
         />
-      </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <Suspense fallback={<RevenueChartSkeleton />}>
-          <RevenueChart />
-        </Suspense>
-        <Suspense fallback={<LatestInvoicesSkeleton />}>
-          <LatestInvoices />
-        </Suspense>
-      </div>
-    </main>
-  );
-}
-```
-
-`<LatestInvoices>` component. Remember to remove the props!:
-
-`/app/ui/dashboard/latest-invoices.tsx`
-
-```tsx diff
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
-import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import { fetchLatestInvoices } from '@/app/lib/data';
-
-export default async function LatestInvoices() { // Remove props
-  const latestInvoices = await fetchLatestInvoices();
-
-  return (
-    // ...
-  );
-}
-```
-
-## Grouping components
-
-Great! You're almost there, now you need to wrap the <Card> components in Suspense. You can fetch data for each individual card, but this could lead to a popping effect as the cards load in, this can be visually jarring for the user.
-
-So, how would you tackle this problem?
-
-To create more of a staggered effect, you can group the cards using a wrapper component. This means the static <SideNav/> will be shown first, followed by the cards, etc.
-
-In your `page.tsx` file:
-
-    Delete your <Card> components.
-    Delete the fetchCardData() function.
-    Import a new wrapper component called <CardWrapper />.
-    Import a new skeleton component called <CardsSkeleton />.
-    Wrap <CardWrapper /> in Suspense.
-
-`/app/dashboard/page.tsx`
-
-```tsx diff
-import CardWrapper from "@/app/ui/dashboard/cards";
-// ...
-import {
-  RevenueChartSkeleton,
-  LatestInvoicesSkeleton,
-  CardsSkeleton,
-} from "@/app/ui/skeletons";
-
-export default async function Page() {
-  return (
-    <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
-      </h1>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Suspense fallback={<CardsSkeleton />}>
-          <CardWrapper />
-        </Suspense>
-      </div>
-      // ...
-    </main>
-  );
-}
-```
-
-Then, move into the file /app/ui/dashboard/cards.tsx, import the fetchCardData() function, and invoke it inside the <CardWrapper/> component. Make sure to uncomment any necessary code in this component.
-
-`/app/ui/dashboard/cards.tsx`
-
-```tsx diff
-// ...
-import { fetchCardData } from "@/app/lib/data";
-
-// ...
-
-export default async function CardWrapper() {
-  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData();
-
-  return (
-    <>
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      />
-    </>
-  );
-}
+      </>
+    );
+  }
 ```
 
 Refresh the page, and you should see all the cards load in at the same time. You can use this pattern when you want multiple components to load in at the same time.
@@ -370,27 +370,23 @@ Refresh the page, and you should see all the cards load in at the same time. You
 
 Where you place your Suspense boundaries will depend on a few things:
 
-    How you want the user to experience the page as it streams.
-    What content you want to prioritize.
-    If the components rely on data fetching.
+1. How you want the user to experience the page as it streams.
+2. What content you want to prioritize.
+3. If the components rely on data fetching.
 
 Take a look at your dashboard page, is there anything you would've done differently?
 
 Don't worry. There isn't a right answer.
 
-    You could stream the whole page like we did with `loading.tsx`... but that may lead to a longer loading time if one of the components has a slow data fetch.
-    You could stream every component individually... but that may lead to UI popping into the screen as it becomes ready.
-    You could also create a staggered effect by streaming page sections. But you'll need to create wrapper components.
+- You could stream the **whole page** like we did with `loading.tsx`... but that may lead to a longer loading time if one of the components has a slow data fetch.
+- You could stream **every component** individually... but that may lead to UI popping into the screen as it becomes ready.
+- You could also create a staggered effect by streaming **page sections**. But you'll need to create wrapper components.
 
 Where you place your suspense boundaries will vary depending on your application. In general, it's good practice to move your data fetches down to the components that need it, and then wrap those components in Suspense. But there is nothing wrong with streaming the sections or the whole page if that's what your application needs.
 
 Don't be afraid to experiment with Suspense and see what works best, it's a powerful API that can help you create more delightful user experiences.
-It’s time to take a quiz!
 
-Test your knowledge and see what you’ve just learned.
-
-In general, what is considered good practice when working with Suspense and data fetching?
-Looking ahead
+## Looking ahead
 
 Streaming and Server Components give us new ways to handle data fetching and loading states, ultimately with the goal of improving the end user experience.
 
