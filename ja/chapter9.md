@@ -1,28 +1,28 @@
-# Streaming
+# ストリーミング
 
-In the previous chapter, you made your dashboard page dynamic, however, we discussed how the slow data fetches can impact the performance of your application. Let's look at how you can improve the user experience when there are slow data requests.
+前の章では、ダッシュボードページを動的にしましたが、データ取得の遅さがアプリケーションのパフォーマンスにどのような影響を与える可能性があるかについて説明しました。データリクエストが遅い場合にユーザーエクスペリエンスを改善させる方法を見てみましょう。
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- What streaming is and when you might use it.
-- How to implement streaming with `loading.tsx` and Suspense.
-- What loading skeletons are.
-- What route groups are, and when you might use them.
-- Where to place Suspense boundaries in your application.
+- ストリーミングとは何か。また、いつ使用するのか
+- `loading.tsx` と Suspense を使用したストリーミングの実装方法
+- ローディングスケルトンとは何か
+- ルートグループとは何か。また、いつ使用するか
+- アプリケーションのどこに Suspense の境界を配置するか
 
-## What is streaming?
+## ストリーミングとは？
 
-Streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and progressively stream them from the server to the client as they become ready.
+ストリーミングはデータ転送技術のひとつで、ルートをより小さな「チャンク」に分割し、準備が整ったらサーバーからクライアントへ順次配信することができます。
 
-![Diagram showing time with sequential data fetching and parallel data fetching](/_images/server-rendering-with-streaming.avif)
+![順次データ取得と並列データ取得の時間を示す図](/_images/server-rendering-with-streaming.avif)
 
-By streaming, you can prevent slow data requests from blocking your whole page. This allows the user to see and interact with parts of the page without waiting for all the data to load before any UI can be shown to the user.
+ストリーミングすることで、遅いデータリクエストによってページ全体がブロックされるのを防ぐことができます。これにより、UI がユーザーに表示される前にすべてのデータが読み込まれるのを待つことなく、ページの一部を表示して操作できるようになります。
 
-![Diagram showing time with sequential data fetching and parallel data fetching](/_images/server-rendering-with-streaming-chart.avif)
+![順次データ取得と並列データ取得の時間を示す図](/_images/server-rendering-with-streaming-chart.avif)
 
-Streaming works well with React's component model, as each component can be considered a chunk.
+各々のコンポーネントはチャンクとみなすことができるため、ストリーミングは React のコンポーネントモデルとうまく連携します。
 
-There are two ways you implement streaming in Next.js:
+Next.js でストリーミングを実装する方法は 2 つあります。
 
 1. At the page level, with the `loading.tsx` file.
 2. For specific components, with `<Suspense>`.
