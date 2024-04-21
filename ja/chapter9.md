@@ -47,17 +47,17 @@ http://localhost:3000/dashboard を更新すると、以下が表示されるは
 
 ここでは、いくつかのことが起きています。
 
-1. `loading.tsx` is a special Next.js file built on top of Suspense, it allows you to create fallback UI to show as a replacement while page content loads.
-2. Since `<SideNav>` is static, it's shown immediately. The user can interact with `<SideNav>` while the dynamic content is loading.
-3. The user doesn't have to wait for the page to finish loading before navigating away (this is called interruptable navigation).
+1. `loading.tsx` は Suspense の上に構築された特別な Next.js ファイルで、ページコンテンツの読み込み中に代替として表示するフォールバック UI を作成できます。
+2. `<SideNav>` は静的であるため、すぐに表示されます。ユーザーは、動的コンテンツの読み込み中に `<SideNav>` を操作できます。
+3. ユーザーは、ページの読み込みが完了するのを待ってから、ページ移動をする必要はありません (これを中断可能なナビゲーションと呼びます)。
 
-Congratulations! You've just implemented streaming. But we can do more to improve the user experience. Let's show a loading skeleton instead of the `Loading…` text.
+おめでとうございます！これでストリーミングが実装されました。しかし、ユーザーエクスペリエンスを向上させるためにできることは他にもあります。`Loading…` テキストの代わりに、読み込み中のスケルトンを表示してみましょう。
 
-## Adding loading skeletons
+## ローディングスケルトンの追加
 
-A loading skeleton is a simplified version of the UI. Many websites use them as a placeholder (or fallback) to indicate to users that the content is loading. Any UI you embed into `loading.tsx` will be embedded as part of the static file, and sent first. Then, the rest of the dynamic content will be streamed from the server to the client.
+ローディングスケルトンは、UI の簡略化版です。多くの Web サイトでは、コンテンツがロード中であることをユーザーに示すためのプレースホルダー (またはフォールバック) として使用します。`loading.tsx` に埋め込む UI はすべて静的ファイルの一部として埋め込まれ、最初に送信されます。その後、残りの動的コンテンツがサーバーからクライアントにストリーミングされます。
 
-Inside your `loading.tsx` file, import a new component called `<DashboardSkeleton>`:
+`loading.tsx` ファイルの中に、`<DashboardSkeleton>` という新しいコンポーネントをインポートします。
 
 `/app/dashboard/loading.tsx`
 
@@ -69,15 +69,15 @@ Inside your `loading.tsx` file, import a new component called `<DashboardSkeleto
   }
 ```
 
-Then, refresh http://localhost:3000/dashboard, and you should now see:
+そして、http://localhost:3000/dashboard を更新すると、次のように表示されるはずです。
 
-![Dashboard page with loading skeletons](/_images/loading-page-with-skeleton.avif)
+![スケルトンをロードしているダッシュボードページ](/_images/loading-page-with-skeleton.avif)
 
-### Fixing the loading skeleton bug with route groups
+### ルートグループのローディングスケルトンのバグを修正
 
-Right now, your loading skeleton will apply to the invoices and customers pages as well.
+現在、ローディングスケルトンは請求書と顧客ページにも適用されます。
 
-Since `loading.tsx` is a level higher than `/invoices/page.tsx` and `/customers/page.tsx` in the file system, it's also applied to those pages.
+`loading.tsx` はファイルシステムの `/invoices/page.tsx` や ​​ `/customers/page.tsx` より上位階層のレベルであるため、これらのページにも適用されます。
 
 We can change this with [Route Groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups). Create a new folder called `/(overview)` inside the dashboard folder. Then, move your `loading.tsx` and `page.tsx` files inside the folder:
 
