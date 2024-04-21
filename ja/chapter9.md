@@ -24,14 +24,14 @@
 
 Next.js でストリーミングを実装する方法は 2 つあります。
 
-1. At the page level, with the `loading.tsx` file.
-2. For specific components, with `<Suspense>`.
+1. ページレベルで、`loading.tsx` ファイルを使用
+2. 特定のコンポーネントに `<Suspense>` を使用
 
-Let's see how this works.
+これがどのように機能するかを見てみましょう。
 
-## Streaming a whole page with `loading.tsx`
+## `loading.tsx` を使用してページ全体をストリーミング
 
-In the `/app/dashboard` folder, create a new file called `loading.tsx`:
+`/app/dashboard` フォルダーに、`loading.tsx` という名前の新しいファイルを作成します。
 
 `/app/dashboard/loading.tsx`
 
@@ -41,11 +41,11 @@ export default function Loading() {
 }
 ```
 
-Refresh http://localhost:3000/dashboard, and you should now see:
+http://localhost:3000/dashboard を更新すると、以下が表示されるはずです。
 
-![Dashboard page with 'Loading...' text](/_images/loading-page.avif)
+![「Loading...」テキストを含むダッシュボードページ](/_images/loading-page.avif)
 
-A few things are happening here:
+ここでは、いくつかのことが起きています。
 
 1. `loading.tsx` is a special Next.js file built on top of Suspense, it allows you to create fallback UI to show as a replacement while page content loads.
 2. Since `<SideNav>` is static, it's shown immediately. The user can interact with `<SideNav>` while the dynamic content is loading.
