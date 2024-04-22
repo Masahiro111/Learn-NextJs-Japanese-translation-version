@@ -95,23 +95,23 @@ http://localhost:3000/dashboard を更新すると、以下が表示されるは
 
 Susppense を使用すると、何らかの条件が満たされるまで (たとえば、データがロードされるまで)、アプリケーションの一部のレンダリングを延期できます。動的コンポーネントを Susppense でラップできます。次に、動的コンポーネントのロード中に表示するフォールバックコンポーネントを渡します。
 
-If you remember the slow data request, `fetchRevenue()`, this is the request that is slowing down the whole page. Instead of blocking your page, you can use Suspense to stream only this component and immediately show the rest of the page's UI.
+低速なデータリクエストである `fetchRevenue()` を覚えていると思いますが、これはページ全体の速度を低下させているリクエストです。ページをブロックする代わりに、Suspense を使用してこのコンポーネントのみをストリーミングし、ページの残りの UI をすぐに表示することができます。
 
-To do so, you'll need to move the data fetch to the component, let's update the code to see what that'll look like:
+そのためには、データ取得をコンポーネントに移す必要があります。コードを更新して、それがどのようになるかを確認してみましょう。
 
-Delete all instances of `fetchRevenue()` and its data from `/dashboard/(overview)/page.tsx`:
+`/dashboard/(overview)/page.tsx` から、`fetchRevenue()` のすべてのインスタンスとそのデータを削除します。
 
 `/app/dashboard/(overview)/page.tsx`
 
-```tsx diff
+```diff tsx
   import { Card } from '@/app/ui/dashboard/cards';
   import RevenueChart from '@/app/ui/dashboard/revenue-chart';
   import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
   import { lusitana } from '@/app/ui/fonts';
-+ import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data'; // remove fetchRevenue
+- import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data'; // remove fetchRevenue
 
   export default async function Page() {
-+   const revenue = await fetchRevenue // delete this line
+-   const revenue = await fetchRevenue // delete this line
     const latestInvoices = await fetchLatestInvoices();
     const {
       numberOfInvoices,
