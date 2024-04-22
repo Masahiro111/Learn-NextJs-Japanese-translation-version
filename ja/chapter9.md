@@ -108,7 +108,7 @@ Susppense を使用すると、何らかの条件が満たされるまで (た�
   import RevenueChart from '@/app/ui/dashboard/revenue-chart';
   import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
   import { lusitana } from '@/app/ui/fonts';
-- import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data'; // remove fetchRevenue
++ import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data'; // remove fetchRevenue
 
   export default async function Page() {
 -   const revenue = await fetchRevenue // delete this line
@@ -126,7 +126,7 @@ Susppense を使用すると、何らかの条件が満たされるまで (た�
   }
 ```
 
-Then, import `<Suspense>` from React, and wrap it around `<RevenueChart />`. You can pass it a fallback component called `<RevenueChartSkeleton>`.
+次に、React から `<Suspense>` をインポートし、それを `<RevenueChart />` で囲みます。 `<RevenueChartSkeleton>` というフォールバックコンポーネントに渡すことができます。
 
 `/app/dashboard/(overview)/page.tsx`
 
@@ -174,7 +174,7 @@ Then, import `<Suspense>` from React, and wrap it around `<RevenueChart />`. You
   }
 ```
 
-Finally, update the `<RevenueChart>` component to fetch its own data and remove the prop passed to it:
+最後に、`<RevenueChart>` コンポーネントを更新して、それ自身のデータを取得し、渡された prop を削除します。
 
 `/app/ui/dashboard/revenue-chart.tsx`
 
@@ -202,11 +202,11 @@ Finally, update the `<RevenueChart>` component to fetch its own data and remove 
   }
 ```
 
-Now refresh the page, you should see the dashboard information almost immediately, while a fallback skeleton is shown for `<RevenueChart>`:
+ここでページを更新すると、`<RevenueChart>` のフォールバックスケルトンが表示され、その後すぐにダッシュボード情報が表示されるはずです。
 
-![Dashboard page with revenue chart skeleton and loaded Card and Latest Invoices components](/_images/loading-revenue-chart.avif)
+![収益グラフのスケルトンとロードされたカードおよび最新の請求書のコンポーネントを含むダッシュボードページ](/_images/loading-revenue-chart.avif)
 
-### Practice: Streaming `<LatestInvoices>`
+### 練習： `<LatestInvoices>` のストリーミング
 
 Now it's your turn! Practice what you've just learned by streaming the `<LatestInvoices>` component.
 
