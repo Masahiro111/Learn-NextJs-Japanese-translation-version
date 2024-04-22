@@ -206,19 +206,17 @@ Susppense を使用すると、何らかの条件が満たされるまで (た�
 
 ![収益グラフのスケルトンとロードされたカードおよび最新の請求書のコンポーネントを含むダッシュボードページ](/_images/loading-revenue-chart.avif)
 
-### 練習： `<LatestInvoices>` のストリーミング
+### 練習：`<LatestInvoices>` のストリーミング
 
-Now it's your turn! Practice what you've just learned by streaming the `<LatestInvoices>` component.
+それでは実際にストリーミングを体験してみましょう。`<LatestInvoices>` コンポーネントをストリーミングして、学んだ内容を実践してください。
 
-Move `fetchLatestInvoices()` down from the page to the `<LatestInvoices>` component. Wrap the component in a `<Suspense>` boundary with a fallback called `<LatestInvoicesSkeleton>`.
-
-Once you're ready, expand the toggle to see the solution code:
+`fetchLatestInvoices()` をページから `<LatestInvoices>` コンポーネントに移動します。 `<LatestInvoicesSkeleton>` というフォールバックを使用して、コンポーネントを `<Suspense>` 境界でラップします。
 
 Dashboard Page:
 
 `/app/dashboard/(overview)/page.tsx`
 
-```tsx diff
+```diff tsx
   import { Card } from "@/app/ui/dashboard/cards";
   import RevenueChart from "@/app/ui/dashboard/revenue-chart";
   import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
