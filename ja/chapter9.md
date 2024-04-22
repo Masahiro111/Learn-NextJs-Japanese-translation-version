@@ -31,7 +31,7 @@ Next.js でストリーミングを実装する方法は 2 つあります。
 
 ## `loading.tsx` を使用してページ全体をストリーミング
 
-`/app/dashboard` フォルダーに、`loading.tsx` という名前の新しいファイルを作成します。
+`/app/dashboard` フォルダに、`loading.tsx` という名前の新しいファイルを作成します。
 
 `/app/dashboard/loading.tsx`
 
@@ -79,21 +79,21 @@ http://localhost:3000/dashboard を更新すると、以下が表示されるは
 
 `loading.tsx` はファイルシステムの `/invoices/page.tsx` や ​​ `/customers/page.tsx` より上位階層のレベルであるため、これらのページにも適用されます。
 
-We can change this with [Route Groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups). Create a new folder called `/(overview)` inside the dashboard folder. Then, move your `loading.tsx` and `page.tsx` files inside the folder:
+これは [ルートグループ](https://nextjs.org/docs/app/building-your-application/routing/route-groups) で変更できます。`dashboard` フォルダ内に `/(overview)` という名前の新しいフォルダを作成します。次に、`loading.tsx` ファイルと `page.tsx` ファイルをフォルダ内に移動します。
 
-![Folder structure showing how to create a route group using parentheses](/_images/route-group.avif)
+![丸カッコを使用したルートグループの作成方法を示すフォルダ構造](/_images/route-group.avif)
 
-Now, the `loading.tsx` file will only apply to your dashboard overview page.
+これで、`loading.tsx` ファイルはダッシュボードの概要ページにのみ適用されます。
 
-Route groups allow you to organize files into logical groups without affecting the URL path structure. When you create a new folder using parentheses `()`, the name won't be included in the URL path. So `/dashboard/(overview)/page.tsx` becomes `/dashboard`.
+ルートグループを使用すると、URL パス構造に影響を与えることなく、ファイルを論理的グループにまとめることができます。括弧 `()` を使用して新しいフォルダを作成すると、その名前は URL パスに含まれません。つまり、`/dashboard/(overview)/page.tsx` は `/dashboard` になります。
 
-Here, you're using a route group to ensure `loading.tsx` only applies to your dashboard overview page. However, you can also use route groups to separate your application into sections (e.g. `(marketing)` routes and `(shop)` routes) or by teams for larger applications.
+ここでは `loading.tsx` がダッシュボードの概要ページにのみ適用されるようにルートグループを使用しています。しかし、ルートグループを使用して、アプリケーションをセクション（たとえば、`(marketing)` ルートと `(shop)` ルート）に分割したり、大規模なアプリケーションの場合はチームごとに分割したりすることもできます。
 
-### Streaming a component
+### コンポーネントのストリーミング
 
-So far, you're streaming a whole page. But, instead, you can be more granular and stream specific components using React Suspense.
+ここまでは、ページ全体をストリーミングしています。ただし、その代わりに、React Suspense を使用すると、より細かく特定のコンポーネントをストリーミングできます。
 
-Suspense allows you to defer rendering parts of your application until some condition is met (e.g. data is loaded). You can wrap your dynamic components in Suspense. Then, pass it a fallback component to show while the dynamic component loads.
+Susppense を使用すると、何らかの条件が満たされるまで (たとえば、データがロードされるまで)、アプリケーションの一部のレンダリングを延期できます。動的コンポーネントを Susppense でラップできます。次に、動的コンポーネントのロード中に表示するフォールバックコンポーネントを渡します。
 
 If you remember the slow data request, `fetchRevenue()`, this is the request that is slowing down the whole page. Instead of blocking your page, you can use Suspense to stream only this component and immediately show the rest of the page's UI.
 
