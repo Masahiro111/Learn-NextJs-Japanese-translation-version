@@ -265,11 +265,11 @@ Dashboard Page:
   }
 ```
 
-`<LatestInvoices>` component. Remember to remove the props!:
+`<LatestInvoices>` コンポーネントについては、props を忘れずに削除しておいてください。:
 
 `/app/ui/dashboard/latest-invoices.tsx`
 
-```tsx diff
+```diff tsx
   import { ArrowPathIcon } from '@heroicons/react/24/outline';
   import clsx from 'clsx';
   import Image from 'next/image';
@@ -285,25 +285,25 @@ Dashboard Page:
   }
 ```
 
-## Grouping components
+## コンポーネントのグループ化
 
-Great! You're almost there, now you need to wrap the `<Card>` components in Suspense. You can fetch data for each individual card, but this could lead to a popping effect as the cards load in, this can be visually jarring for the user.
+素晴らしい！もうすぐ完成です。次に、`<Card>` コンポーネントを Suspense でラップする必要があります。個々のカードデータを取得できますが、カードが読み込まれるときにポップエフェクトが発生する可能性があり、ユーザーにとって視覚的に不快になる可能性があります。
 
-So, how would you tackle this problem?
+では、この問題にどのように対処すればよいでしょうか？
 
-To create more of a staggered effect, you can group the cards using a wrapper component. This means the static `<SideNav/>` will be shown first, followed by the cards, etc.
+より多くの時差エフェクトを表示するには、ラッパーコンポーネントを使用してカードをグループ化します。これは、静的な `<SideNav/>` が最初に表示され、その後にカードなどが表示されることを意味します。
 
-In your `page.tsx` file:
+`page.tsx` ファイルを開いてみましょう。
 
-- Delete your `<Card>` components.
-- Delete the `fetchCardData()` function.
-- Import a new **wrapper** component called `<CardWrapper />`.
-- Import a new skeleton component called `<CardsSkeleton />`.
-- Wrap `<CardWrapper />` in Suspense.
+- `<Card>` コンポーネントを削除します
+- `fetchCardData()` 関数を削除します
+- `<CardWrapper />` という名前の新しい **wrapper** コンポーネントをインポートします
+- `<CardsSkeleton />` という名前の新しいスケルトンコンポーネントをインポートします
+- `<CardWrapper />` を Suspense でラップします
 
 `/app/dashboard/page.tsx`
 
-```tsx diff
+```diff tsx
 + import CardWrapper from "@/app/ui/dashboard/cards";
   // ...
   import {
@@ -329,7 +329,7 @@ In your `page.tsx` file:
   }
 ```
 
-Then, move into the file `/app/ui/dashboard/cards.tsx`, import the `fetchCardData()` function, and invoke it inside the `<CardWrapper/>` component. Make sure to uncomment any necessary code in this component.
+次に、`/app/ui/dashboard/cards.tsx` ファイルに移動し、`fetchCardData()` 関数をインポートし、`<CardWrapper/>` コンポーネント内で呼び出します。このコンポーネント内の必要なコードのコメントを必ず解除してください。
 
 `/app/ui/dashboard/cards.tsx`
 
@@ -362,30 +362,30 @@ Then, move into the file `/app/ui/dashboard/cards.tsx`, import the `fetchCardDat
   }
 ```
 
-Refresh the page, and you should see all the cards load in at the same time. You can use this pattern when you want multiple components to load in at the same time.
+ページを更新すると、すべてのカードが同時に読み込まれていることがわかります。複数のコンポーネントを同時にロードする場合は、このパターンを使用できます。
 
-## Deciding where to place your Suspense boundaries
+## Suspense の境界はどこに置くか
 
-Where you place your Suspense boundaries will depend on a few things:
+Suspense の境界をどこに置くかは、いくつかの要素によって決まります。
 
-1. How you want the user to experience the page as it streams.
-2. What content you want to prioritize.
-3. If the components rely on data fetching.
+1. ストリーミング中にユーザーにページをどのように体験してもらいたいか
+2. どのコンテンツを優先したのか
+3. コンポーネントがデータの取得に依存している場合
 
-Take a look at your dashboard page, is there anything you would've done differently?
+ダッシュボードページを見てください。別の方法で実行したかったことはありますか?
 
-Don't worry. There isn't a right answer.
+心配しないでください。正解はありません。
 
-- You could stream the **whole page** like we did with `loading.tsx`... but that may lead to a longer loading time if one of the components has a slow data fetch.
-- You could stream **every component** individually... but that may lead to UI popping into the screen as it becomes ready.
-- You could also create a staggered effect by streaming **page sections**. But you'll need to create wrapper components.
+- `loading.tsx` で行ったように **ページ全体** をストリーミングすることもできます。しかし、コンポーネントの 1 つでもデータの取得が遅い場合、読み込み時間が長くなる可能性があります。
+- **各々のコンポーネント** を個別にストリーミングすることもできます。ただし、その場合、UI の準備が整うと画面にポップアップされる可能性があります
+- **ページセクション** をストリーミングすることで、時差エフェクトを作成することもできます。ただし、ラッパーコンポーネントを作成する必要があります。
 
-Where you place your suspense boundaries will vary depending on your application. In general, it's good practice to move your data fetches down to the components that need it, and then wrap those components in Suspense. But there is nothing wrong with streaming the sections or the whole page if that's what your application needs.
+Suspense の境界をどこに置くかは、アプリケーションによって異なります。一般に、データの取得を必要なコンポーネントに移して、そのコンポーネントを Suspense でラップするのが良い方法です。ただし、アプリケーションが必要とするのであれば、セクションまたはページ全体をストリーミングする方法でも問題はありません。
 
-Don't be afraid to experiment with Suspense and see what works best, it's a powerful API that can help you create more delightful user experiences.
+Suspense は、より快適なユーザーエクスペリエンスを作成するのに役立つ強力な API なので、遠慮せずに試して何が最適かを確認してください。
 
-## Looking ahead
+## 将来を見据えて
 
-Streaming and Server Components give us new ways to handle data fetching and loading states, ultimately with the goal of improving the end user experience.
+ストリーミングコンポーネントとサーバーコンポーネントは、データのフェッチとロードの状態を処理する新しい方法を提供し、最終的にはエンドユーザーエクスペリエンスを向上させることを目的としています。
 
-In the next chapter, you'll learn about Partial Prerendering, a new Next.js rendering model built with streaming in mind.
+次の章では、ストリーミングを念頭に置いて構築された新しい Next.js レンダリングモデルである部分プリレンダリングについて学びます。
