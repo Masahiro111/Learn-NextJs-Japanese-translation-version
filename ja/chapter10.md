@@ -1,4 +1,4 @@
-Partial Prerendering (Optional)
+# Partial Prerendering (Optional)
 
 > Partial Prerendering is an experimental feature introduced in Next.js 14. The content of this page may be updated as the feature progresses in stability. You may want to skip this chapter if you prefer to not use experimental features. This chapter is not required to complete the course.
 
