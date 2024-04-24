@@ -61,7 +61,7 @@ http://localhost:3000/dashboard を更新すると、以下が表示されるは
 
 `/app/dashboard/loading.tsx`
 
-```tsx diff
+```diff tsx
 + import DashboardSkeleton from '@/app/ui/skeletons';
 
   export default function Loading() {
@@ -130,7 +130,7 @@ Susppense を使用すると、何らかの条件が満たされるまで (た�
 
 `/app/dashboard/(overview)/page.tsx`
 
-```tsx diff
+```diff tsx
   import { Card } from '@/app/ui/dashboard/cards';
   import RevenueChart from '@/app/ui/dashboard/revenue-chart';
   import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
@@ -178,7 +178,7 @@ Susppense を使用すると、何らかの条件が満たされるまで (た�
 
 `/app/ui/dashboard/revenue-chart.tsx`
 
-```tsx diff
+```diff tsx
   import { generateYAxis } from '@/app/lib/utils';
   import { CalendarIcon } from '@heroicons/react/24/outline';
   import { lusitana } from '@/app/ui/fonts';
@@ -333,7 +333,7 @@ Dashboard Page:
 
 `/app/ui/dashboard/cards.tsx`
 
-```tsx diff
+```diff tsx
   // ...
 + import { fetchCardData } from "@/app/lib/data";
 
