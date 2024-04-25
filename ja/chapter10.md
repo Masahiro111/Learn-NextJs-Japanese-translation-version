@@ -26,21 +26,21 @@
 
 ## 部分プリレンダリングとは？
 
-Next.js 14 contains a preview of **Partial Prerendering** – an experimental feature that allows you to render a route with a static loading shell, while keeping some parts dynamic. In other words, you can isolate the dynamic parts of a route. For example:
+Next.js 14 には、**部分プリレンダリング** のプレビューが含まれています。これは実験的な機能で、ルートを静的な読み込みシェルでレンダリングする一方で、一部の部分を動的に保持できます。言い換えると、ルートの動的な部分を分離することができます。たとえば
 
-![Partially Prerendered Product Page showing static nav and product information, and dynamic cart and recommended products]()
+![静的なナビゲーションと商品情報、動的なカートとおすすめ商品を表示する部分プリレンダリングされた商品ページ](/_images/thinking-in-ppr.avif)
 
-When a user visits a route:
+ユーザーがルートにアクセスすると
 
-- A static route shell is served, ensuring a fast initial load.
-- The shell leaves holes where dynamic content will load in asynchronous.
-- The async holes are streamed in parallel, reducing the overall load time of the page.
+- 静的なルートシェルが提供され、高速な初期ロードを保証します
+- シェルには、動的なコンテンツが非同期でロードされるホールが残ります
+- 非同期ホールは並行してストリーミングされ、ページ全体のロード時間を短縮します
 
-This is different from how your application behaves today, where entire routes are either entirely static or dynamic.
+これは、ルート全体が完全に静的または動的である今日のアプリケーションの動作とは異なります。
 
 Partial Prerendering combines ultra-quick static edge delivery with fully dynamic capabilities and we believe it has the potential to [become the default rendering model for web applications](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model), bringing together the best of static site generation and dynamic delivery.
 
-## How does Partial Prerendering work?
+## 部分プリレンダリングはどのように機能するか?
 
 Partial Prerendering leverages React's [Concurrent APIs](https://react.dev/blog/2021/12/17/react-conf-2021-recap#react-18-and-concurrent-features)
 and uses [Suspense](https://react.dev/reference/react/Suspense) to defer rendering parts of your application until some condition is met (e.g. data is loaded).
