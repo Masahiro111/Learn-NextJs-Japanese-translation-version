@@ -1,30 +1,30 @@
-# Partial Prerendering (Optional)
+# 部分プリレンダリング（オプション）
 
-> Partial Prerendering is an experimental feature introduced in Next.js 14. The content of this page may be updated as the feature progresses in stability. You may want to skip this chapter if you prefer to not use experimental features. This chapter is not required to complete the course.
+> 部分プリレンダリングは、Next.js 14 で導入された実験的な機能です。このページの内容は、機能の安定性が進むにつれて更新される可能性があります。実験的な機能を使用したくない場合は、この章をスキップしてもよいでしょう。この章はコースを完了するために必須ではありません。
 
-Here are the topics we’ll cover
+この章で取り上げるトピックは以下のとおりです。
 
-- What Partial Prerendering is.
-- How Partial Prerendering works.
+- 部分プリレンダリングとは何か
+- 部分プリレンダリングの仕組み
 
-## Combining Static and Dynamic Content
+## 静的コンテンツと動的コンテンツの結合
 
-Currently, if you call a [dynamic function](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions) inside your route (e.g. `noStore()`, `cookies()`, etc), your entire route becomes dynamic.
+現在、ルート内で [動的関数](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions) を呼び出すと（例：`noStore()`、`cookies()` など） ルート全体が動的になります。
 
-This is how most web apps are built today. You either choose between static and dynamic rendering for your **entire application** or for a **specific route**.
+今日、ほとんどの Web アプリはこのように作成されています。静的レンダリングと動的レンダリングのどちらかを **アプリケーション全体** または **特定のルート** に対して選択します。
 
-However, most routes are not fully static or dynamic. You may have a route that has both static and dynamic content. For example, consider an [ecommerce site](https://partialprerendering.com/). You might be able to prerender the majority of the product page, but you may want to fetch the user's cart and recommended products dynamically on-demand.
+ただし、たいていのルートが完璧に静的または動的というわけではありません。静的コンテンツと動的コンテンツの両方を含むルートがある場合があります。たとえば、[e コマースサイト](https://partialprerendering.com/) について考えてみましょう。商品ページの大部分をプリレンダリングできる場合もありますが、ユーザーのカートとおすすめ商品を必要に応じて動的に取得したい場合もあります。
 
-Going back to your dashboard page, what components would you consider static vs. dynamic?
+ダッシュボードページに戻って、静的なコンポーネントと動的なコンポーネントはどれだと思いますか？？
 
-Once you're ready, click the button below to see how we would split the dashboard route:
+準備ができたら、ダッシュボードのルートをどのように分割するかを見てみましょう。
 
-![Diagram showing how the sidenav is static while page's children are dynamic]()
+![サイドナビゲーションが静的で、ページの子コンポーネントが動的であることを示す図](/_images/dashboard-static-dynamic-components.avif)
 
-- The `<SideNav>` Component doesn't rely on data and is not personalized to the user, so it can be `static`.
-- The components in `<Page>` rely on data that changes often and will be personalized to the user, so they can be `dynamic`.
+- `<SideNav>` コンポーネントはデータに依存せず、ユーザーに合わせてパーソナライズされないので `静的` であることができます
+- `<Page>` 内のコンポーネントは頻繁に変更されるデータに依存しており、ユーザーに合わせてカスタマイズされるため `動的` にすることができます。
 
-## What is Partial Prerendering?
+## 部分プリレンダリングとは？
 
 Next.js 14 contains a preview of **Partial Prerendering** – an experimental feature that allows you to render a route with a static loading shell, while keeping some parts dynamic. In other words, you can isolate the dynamic parts of a route. For example:
 
