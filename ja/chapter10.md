@@ -45,19 +45,19 @@ Next.js 14 には、**部分プリレンダリング** のプレビューが含�
 部分プリレンダリングは React の [並列 API](https://react.dev/blog/2021/12/17/react-conf-2021-recap#react-18-and-concurrent-features) を活用します。
 そして、[Suspense](https://react.dev/reference/react/Sus​​pense) を使用して、何らかの条件が満たされるまで（データがロードされるなど）、アプリケーションの一部のレンダリングを延期します。
 
-The fallback is embedded into the initial static file along with other static content. At build time (or during revalidation), the static parts of the route are prerendered, and the rest is postponed until the user requests the route.
+フォールバックは、他の静的コンテンツと一緒に最初の静的ファイルに埋め込まれます。ビルド時（または再検証時）に、ルートの静的な部分がプリレンダリングされ、残りの部分はユーザーがルートをリクエストするまで延期されます。
 
-It's worth noting that wrapping a component in Suspense doesn't make the component itself dynamic (remember you used `unstable_noStore` to achieve this behavior), but rather Suspense is used as a boundary between the static and dynamic parts of your route.
+コンポーネントを Suspense でラップしても、コンポーネント自体が動的になるわけではなく（この動作を実現するために `unstable_noStore` を使用したことを思い出してください）、Suspense はルートの静的な部分と動的な部分の境界として使用されることに注意してください。
 
-The great thing about Partial Prerendering is that you don't need to change your code to use it. As long as you're using Suspense to wrap the dynamic parts of your route, Next.js will know which parts of your route are static and which are dynamic.
+部分プリレンダリングの素晴らしいところは、それを使用するためにコードを変更する必要がないことです。Suspense を使用してルートの動的な部分をラップしている限り、Next.js はルートのどの部分が静的でどの部分が動的であるかを知ることができます。
 
 > [!note]
 >
-> To learn more about how Partial Prerendering can be configured, see the [Partial Prerendering (experimental) documentation](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering) or try the [Partial Prerendering template and demo](https://vercel.com/templates/next.js/partial-prerendering-nextjs). It's important to note that this feature is **experimental** and **not yet ready for production deployment**.
+> 部分プリレンダリングの設定方法については、[部分プリレンダリング（実験的）ドキュメント](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering) を参照するか、 [部分プリレンダリングのテンプレートとデモ](https://vercel.com/templates/next.js/partial-prerendering-nextjs) を試してください。この機能は **実験的** であり、**まだ本番環境の準備が整っていない** ことに注意してください。
 
-## Summary
+## まとめ
 
-To recap, you've done a few things to optimize data fetching in your application, you've:
+要約すると、アプリケーションでのデータ取得を最適化するために次のことを行いました。
 
 1. Created a database in the same region as your application code to reduce latency between your server and database.
 1. Fetched data on the server with React Server Components. This allows you to keep expensive data fetches and logic on the server, reduces the client-side JavaScript bundle, and prevents your database secrets from being exposed to the client.
@@ -66,4 +66,4 @@ To recap, you've done a few things to optimize data fetching in your application
 1. Implemented Streaming to prevent slow data requests from blocking your whole page, and to allow the user to start interacting with the UI without waiting for everything to load.
 1. Move data fetching down to the components that need it, thus isolating which parts of your routes should be dynamic in preparation for Partial Prerendering.
 
-In the next chapter, we'll look at two common patterns you might need to implement when fetching data: search and pagination.
+次の章では、データを取得するときに実装する必要があるかもしれない 2 つの典型的なパターン「検索」と「ページネーション」について説明します。
