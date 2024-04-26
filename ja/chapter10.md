@@ -38,12 +38,12 @@ Next.js 14 には、**部分プリレンダリング** のプレビューが含�
 
 これは、ルート全体が完全に静的または動的である今日のアプリケーションの動作とは異なります。
 
-Partial Prerendering combines ultra-quick static edge delivery with fully dynamic capabilities and we believe it has the potential to [become the default rendering model for web applications](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model), bringing together the best of static site generation and dynamic delivery.
+部分プリレンダリングは、超高速な静的エッジ配信と完全な動的機能を兼ね備えており、静的サイトの生成と動的配信の利点を組み合わせて、[Web アプリケーションのデフォルトのレンダリングモデルになる](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model) 可能性があると考えています。
 
 ## 部分プリレンダリングはどのように機能するか?
 
-Partial Prerendering leverages React's [Concurrent APIs](https://react.dev/blog/2021/12/17/react-conf-2021-recap#react-18-and-concurrent-features)
-and uses [Suspense](https://react.dev/reference/react/Suspense) to defer rendering parts of your application until some condition is met (e.g. data is loaded).
+部分プリレンダリングは React の [並列 API](https://react.dev/blog/2021/12/17/react-conf-2021-recap#react-18-and-concurrent-features) を活用します。
+そして、[Suspense](https://react.dev/reference/react/Sus​​pense) を使用して、何らかの条件が満たされるまで（データがロードされるなど）、アプリケーションの一部のレンダリングを延期します。
 
 The fallback is embedded into the initial static file along with other static content. At build time (or during revalidation), the static parts of the route are prerendered, and the rest is postponed until the user requests the route.
 
