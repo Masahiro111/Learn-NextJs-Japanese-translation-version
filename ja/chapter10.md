@@ -59,11 +59,11 @@ Next.js 14 には、**部分プリレンダリング** のプレビューが含�
 
 要約すると、アプリケーションでのデータ取得を最適化するために次のことを行いました。
 
-1. Created a database in the same region as your application code to reduce latency between your server and database.
-1. Fetched data on the server with React Server Components. This allows you to keep expensive data fetches and logic on the server, reduces the client-side JavaScript bundle, and prevents your database secrets from being exposed to the client.
-1. Used SQL to only fetch the data you needed, reducing the amount of data transferred for each request and the amount of JavaScript needed to transform the data in-memory.
-1. Parallelize data fetching with JavaScript - where it made sense to do so.
-1. Implemented Streaming to prevent slow data requests from blocking your whole page, and to allow the user to start interacting with the UI without waiting for everything to load.
-1. Move data fetching down to the components that need it, thus isolating which parts of your routes should be dynamic in preparation for Partial Prerendering.
+1. サーバーとデータベース間の待ち時間を減らすために、アプリケーションコードと同じリージョンにデータベースを作成しました
+1. React Server Components を使用して、サーバー上のデータを取得します。これにより、高価なデータの取得とロジックをサーバー上に保持し、クライアント側の JavaScript バンドルを減らし、データベースの秘密がクライアントに公開されるのを防ぎます
+1. SQL を使用して必要なデータのみを取得し、リクエストごとに転送されるデータ量と、メモリ内のデータを変換するために必要な JavaScript の量を削減しました
+1. 合理的な判断とされる場合は、JavaScript を使用してのデータ取得を並列化します。
+1. 遅いデータリクエストによりページ全体がブロックされるのを防ぎ、ユーザーが読み込みを待たずに UI とのやりとりを開始できるように、ストリーミングを実装しました
+1. データ取得を必要なコンポーネントに移し、部分プリレンダリングに備えてルートのどの部分を動的にする必要があるかを分離します
 
 次の章では、データを取得するときに実装する必要があるかもしれない 2 つの典型的なパターン「検索」と「ページネーション」について説明します。
