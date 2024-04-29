@@ -1,15 +1,15 @@
-# Adding Search and Pagination
+# 検索とページネーションの追加
 
-In the previous chapter, you improved your dashboard's initial loading performance with streaming. Now let's move on to the `/invoices` page, and learn how to add search and pagination!
+前の章では、ストリーミングを使用してダッシュボードの初期読み込みパフォーマンスを向上させました。次に、`/invoices` ページに進み、検索とページネーションを追加する方法を学びましょう。
 
-In this chapter
+この章で取り上げるトピックは以下のとおりです。
 
-- Learn how to use the Next.js APIs: searchParams, usePathname, and useRouter.
-- Implement search and pagination using URL search params.
+- Next.js API である searchParams、usePathname、useRouter の使用方法を学びます
+- URL 検索パラメータを使用して検索とページネーションを実装します
 
-## Starting code
+## コードの書き始め
 
-Inside your `/dashboard/invoices/page.tsx` file, paste the following code:
+`/dashboard/invoices/page.tsx` ファイル内に、以下のコードを貼り付けます。
 
 `/app/dashboard/invoices/page.tsx`
 
@@ -43,27 +43,27 @@ export default async function Page() {
 }
 ```
 
-Spend some time familiarizing yourself with the page and the components you'll be working with:
+時間をかけて、作業するページとコンポーネントについてよく理解してください。
 
-1. `<Search/>` allows users to search for specific invoices.
-1. `<Pagination/>` allows users to navigate between pages of invoices.
-1. `<Table/>` displays the invoices.
+1. `<Search/>` を使用すると、ユーザーは特定の請求書を検索できます
+1. `<Pagination/>` を使用すると、ユーザーは請求書のページ間を移動できます
+1. `<Table/>` は請求書を表示します
 
-Your search functionality will span the client and the server. When a user searches for an invoice on the client, the URL params will be updated, data will be fetched on the server, and the table will re-render on the server with the new data.
+検索機能はクライアントとサーバーにまたがります。ユーザーがクライアント上で請求書を検索すると、URL パラメーターが更新され、サーバー上でデータが取得され、新しいデータを使用してテーブルがサーバー上で再レンダリングされます。
 
-## Why use URL search params?
+## URL 検索パラメータを使用する理由
 
-As mentioned above, you'll be using URL search params to manage the search state. This pattern may be new if you're used to doing it with client side state.
+上述したように、URL 検索パラメータを使用して検索状態を管理します。クライアントサイドのステートで検索を行うことに慣れていると、このパターンは新鮮かもしれません。
 
-There are a couple of benefits of implementing search with URL params:
+URL パラメータを使用して検索を実装すると、次のような利点があります。
 
-- **Bookmarkable and Shareable URLs** : Since the search parameters are in the URL, users can bookmark the current state of the application, including their search queries and filters, for future reference or sharing.
-- **Server-Side Rendering and Initial Load** : URL parameters can be directly consumed on the server to render the initial state, making it easier to handle server rendering.
-- **Analytics and Tracking** : Having search queries and filters directly in the URL makes it easier to track user behavior without requiring additional client-side logic.
+- **ブックマークとシェアが可能な URL** ： 検索パラメータは URL に含まれるため、ユーザーは検索クエリとフィルタを含むアプリケーションの現在の状態をブックマークして、将来の参照や共有に使うことができます。
+- **サーバーサイドレンダリングと初期ロード** ： URL パラメータをサーバー上で直接使用して初期状態をレンダリングできるため、サーバーレンダリングの処理が容易になります。
+- **分析と追跡** : URL へ直接的に検索クエリとフィルターを含めることにより、追加のクライアント側のロジックを必要とせずに、ユーザーの行動を追跡（トラッキング）することが容易になります。
 
-## Adding the search functionality
+## 検索機能の追加
 
-These are the Next.js client hooks that you'll use to implement the search functionality:
+以下は、検索機能を実装するために使用する Next.js クライアントフックです。
 
 - `useSearchParams` - Allows you to access the parameters of the current URL. For example, the search params for this URL `/dashboard/invoices?page=1&query=pending` would look like this: `{page: '1', query: 'pending'}`.
 - `usePathname` - Lets you read the current URL's pathname. For example, for the route `/dashboard/invoices`, `usePathname` would return `'/dashboard/invoices'`.
