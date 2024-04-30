@@ -65,25 +65,25 @@ URL パラメータを使用して検索を実装すると、次のような利�
 
 以下は、検索機能を実装するために使用する Next.js クライアントフックです。
 
-- `useSearchParams` - Allows you to access the parameters of the current URL. For example, the search params for this URL `/dashboard/invoices?page=1&query=pending` would look like this: `{page: '1', query: 'pending'}`.
-- `usePathname` - Lets you read the current URL's pathname. For example, for the route `/dashboard/invoices`, `usePathname` would return `'/dashboard/invoices'`.
-- `useRouter` - Enables navigation between routes within client components programmatically. There are [multiple methods](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter) you can use.
+- `useSearchParams` - 現在の URL のパラメータにアクセスできます。たとえば、`/dashboard/invoices?page=1&query=pending` という URL の検索パラメータは `{page: '1', query: 'pending'}` となります
+- `usePathname` - 現在の URL のパス名を読み取ることができます。たとえば、ルート `/dashboard/invoices` の場合、`usePathname` は `'/dashboard/invoices'` を返します
+- `useRouter` - クライアントコンポーネント内のルート間のナビゲーションをプログラム的に有効にします。使用できる [複数のメソッド](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter) があります
 
-Here's a quick overview of the implementation steps:
+実装手順の概要を次に示します。
 
-1. Capture the user's input.
-1. Update the URL with the search params.
-1. Keep the URL in sync with the input field.
-1. Update the table to reflect the search query.
+1. ユーザーの入力を取得
+1. 検索パラメータを使用して URL を更新
+1. URL を入力フィールドと同期する
+1. 検索クエリを反映するためにテーブルを更新
 
-### 1. Capture the user's input
+### 1. ユーザーの入力を取得
 
-Go into the `<Search>` Component (`/app/ui/search.tsx`), and you'll notice:
+`<Search>` コンポーネント（`/app/ui/search.tsx`）に移動すると、次のことに気づくでしょう。
 
-- `"use client"` - This is a Client Component, which means you can use event listeners and hooks.
-- `<input>` - This is the search input.
+- `"use client"` - これはクライアントコンポーネントで、イベントリスナーとフックを使用できます
+- `<input>` - これは検索の入力ボックスです
 
-Create a new `handleSearch` function, and add an `onChange` listener to the `<input>` element. `onChange` will invoke `handleSearch` whenever the input value changes.
+新しく `handleSearch` 関数を作成し、`onChange` リスナーを `<input>` 要素に追加します。`onChange` は、入力値が変更されるたびに `handleSearch` を呼び出します。
 
 `/app/ui/search.tsx`
 
@@ -115,13 +115,13 @@ Create a new `handleSearch` function, and add an `onChange` listener to the `<in
   }
 ```
 
-Test that it's working correctly by opening the console in your Developer Tools, then type into the search field. You should see the search term logged to the console.
+開発者ツールでコンソールを開き、検索フィールドにワードを入力して、正しく動作しているかテストします。検索したワードがコンソールに記録されるはずです。
 
-Great! You're capturing the user's search input. Now, you need to update the URL with the search term.
+素晴らしい！ユーザーの検索ワードをキャプチャできましたね。ここで検索ワードを使用して URL を更新する必要があります。
 
-### 2. Update the URL with the search params
+### 2. 検索パラメータを使用して URL を更新
 
-Import the `useSearchParams` hook from `'next/navigation'`, and assign it to a variable:
+`useSearchParams` フックを `'next/navigation'` からインポートし、変数に割り当てます。
 
 `/app/ui/search.tsx`
 
@@ -141,7 +141,7 @@ Import the `useSearchParams` hook from `'next/navigation'`, and assign it to a v
   }
 ```
 
-Inside `handleSearch`, create a new [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) instance using your new `searchParams` variable.
+`handleSearch` 内で、`searchParams` 変数を使用して、新規に [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) インスタンスを作成します。
 
 `/app/ui/search.tsx`
 
