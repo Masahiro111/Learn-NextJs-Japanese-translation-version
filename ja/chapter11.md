@@ -161,9 +161,9 @@ URL パラメータを使用して検索を実装すると、次のような利�
   }
 ```
 
-`URLSearchParams` is a Web API that provides utility methods for manipulating the URL query parameters. Instead of creating a complex string literal, you can use it to get the params string like `?page=1&query=a`.
+`URLSearchParams` は、URL クエリパラメータを操作するためのユーティリティメソッドを提供する Web API です。複雑な文字列リテラルを作成せずに、`?page=1&query=a` のようなパラメータ文字列を取得できます。
 
-Next, set the params string based on the user’s input. If the input is empty, you want to `delete` it:
+次に、ユーザーの入力に基づいたパラメータ文字列をセットします。もし、入力が空の場合は、`delete` メソッドを使用してください。
 
 `/app/ui/search.tsx`
 
@@ -188,9 +188,9 @@ Next, set the params string based on the user’s input. If the input is empty, 
 }
 ```
 
-Now that you have the query string. You can use Next.js's `useRouter` and `usePathname` hooks to update the URL.
+これでクエリ文字列が得られました。Next.js の `useRouter` フックと `usePathname` フックを使用して URL を更新できます。
 
-Import `useRouter` and `usePathname` from `'next/navigation'`, and use the `replace` method from `useRouter()` inside `handleSearch`:
+`next/navigation` から `useRouter` と `usePathname` をインポートし、`handleSearch` 内の `useRouter()` から `replace` メソッドを使用します。
 
 `/app/ui/search.tsx`
 
@@ -217,9 +217,9 @@ Import `useRouter` and `usePathname` from `'next/navigation'`, and use the `repl
   }
 ```
 
-Here's a breakdown of what's happening:
+何が起こっているかの説明は次のとおりです。
 
-- `${pathname}` is the current path, in your case, `"/dashboard/invoices"`.
+- `${pathname}` は現在のパスです。今回の場合は、`"/dashboard/invoices"` となります
 - As the user types into the search bar, `params.toString()` translates this input into a URL-friendly format.
 - `replace(${pathname}?${params.toString()})` updates the URL with the user's search data. For example, `/dashboard/invoices?query=lee` if the user searches for "Lee".
 - The URL is updated without reloading the page, thanks to Next.js's client-side navigation (which you learned about in the chapter on [navigating between pages](https://nextjs.org/learn/dashboard-app/navigating-between-pages).
