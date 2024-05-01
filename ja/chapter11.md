@@ -220,13 +220,13 @@ URL パラメータを使用して検索を実装すると、次のような利�
 何が起こっているかの説明は次のとおりです。
 
 - `${pathname}` は現在のパスです。今回の場合は、`"/dashboard/invoices"` となります
-- As the user types into the search bar, `params.toString()` translates this input into a URL-friendly format.
-- `replace(${pathname}?${params.toString()})` updates the URL with the user's search data. For example, `/dashboard/invoices?query=lee` if the user searches for "Lee".
-- The URL is updated without reloading the page, thanks to Next.js's client-side navigation (which you learned about in the chapter on [navigating between pages](https://nextjs.org/learn/dashboard-app/navigating-between-pages).
+- ユーザーが検索バーに入力すると、`p​​arams.toString()` がこの入力を URL に適した形式に変換します
+- `replace(${pathname}?${params.toString()})` は、URL をユーザーの検索データで更新します。たとえば、ユーザーが「Lee」を検索する場合は、`/dashboard/invoices?query=lee` となります
+- Next.js のクライアントサイドナビゲーション（[ページ間のナビゲーション](https://nextjs.org/learn/dashboard-app/navigating-between-pages) の章で学びました）のおかげで、ページをリロードすることなく URL が更新されます
 
-### 3. Keeping the URL and input in sync
+### 3. URL と入力を同期させる
 
-To ensure the input field is in sync with the URL and will be populated when sharing, you can pass a `defaultValue` to input by reading from `searchParams`:
+入力フィールドが URL と同期し、共有時に入力フィールドの値を URL 内に入れるために、`searchParams` からクエリを読み取り input に `defaultValue` を渡します。
 
 `/app/ui/search.tsx`
 
@@ -241,19 +241,19 @@ To ensure the input field is in sync with the URL and will be populated when sha
   />
 ```
 
-    `defaultValue` vs. `value` / Controlled vs. Uncontrolled
+    `defaultValue` と `value` / 制御されたものと制御されていないもの
 
-    If you're using state to manage the value of an input, you'd use the `value` attribute to make it a controlled component. This means React would manage the input's state.
+    state を使用して入力の値を管理している場合は、value 属性を使用して制御されたコンポーネントにします。これは、React が入力の state を管理することを意味します。
 
-    However, since you're not using state, you can use `defaultValue`. This means the native input will manage its own state. This is okay since you're saving the search query to the URL instead of state.
+    しかし、state を使用していないため、`defaultValue` を使用できます。これは、ネイティブ入力が自信の state を管理することを意味します。検索クエリを state ではなく URL に保存しているため、これは問題ありません。
 
-### 4. Updating the table
+### 4. テーブルの更新
 
-Finally, you need to update the table component to reflect the search query.
+最後に、検索クエリを反映させるため、テーブルコンポーネントを更新する必要があります。
 
-Navigate back to the invoices page.
+請求書ページに戻ってください。
 
-Page components [accept a prop called `searchParams`](https://nextjs.org/docs/app/api-reference/file-conventions/page), so you can pass the current URL params to the `<Table>` component.
+ページコンポーネントは [`searchParams` というプロパティを受け入れる](https://nextjs.org/docs/app/api-reference/file-conventions/page) ので、現在の URL パラメータを `<Table>` コンポーネントに渡すことができます。
 
 `/app/dashboard/invoices/page.tsx`
 
