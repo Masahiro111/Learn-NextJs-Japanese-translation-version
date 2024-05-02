@@ -297,7 +297,7 @@ URL パラメータを使用して検索を実装すると、次のような利�
   }
 ```
 
-If you navigate to the `<Table>` Component, you'll see that the two props, `query` and `currentPage`, are passed to the `fetchFilteredInvoices()` function which returns the invoices that match the query.
+`<Table>` コンポーネントに移動すると、2 つのプロパティ、`query` と `currentPage` が、クエリに一致する請求書を返す `fetchFilteredInvoices()` 関数に渡されていることがわかります。
 
 `/app/ui/invoices/table.tsx`
 
@@ -315,22 +315,22 @@ export default async function InvoicesTable({
 }
 ```
 
-With these changes in place, go ahead and test it out. If you search for a term, you'll update the URL, which will send a new request to the server, data will be fetched on the server, and only the invoices that match your query will be returned.
+これらの変更を行って、テストしてみましょう。用語を検索すると、URL が更新され、新しいリクエストがサーバーに送信され、サーバー上でデータが取得され、クエリに一致する請求書のみが返されます。
 
-    When to use the `useSearchParams()` hook vs. the `searchParams` prop?
+    `useSearchParams()` フックと `searchParams` プロパティの使い分けは？
 
-    You might have noticed you used two different ways to extract search params. Whether you use one or the other depends on whether you're working on the client or the server.
+    検索パラメータを抽出するために 2 つの異なる方法を使用していることに気づいたかもしれません。どちらを使用するかは、クライアントとサーバーのどちらで作業しているかによります。
 
-    - `<Search>` is a Client Component, so you used the `useSearchParams()` hook to access the params from the client.
-    - `<Table>` is a Server Component that fetches its own data, so you can pass the `searchParams` prop from the page to the component.
+    - `<Search>` はクライアントコンポーネントであるため、クライアントからパラメータにアクセスするには `useSearchParams()` フックを使用しました
+    - `<Table>` は独自のデータを取得するサーバーコンポーネントであるため、ページからコンポーネントに `searchParams` プロパティを渡すことができます
 
-    As a general rule, if you want to read the params from the client, use the `useSearchParams()` hook as this avoids having to go back to the server.
+    一般的なルールとして、クライアントからパラメータを読み取りたい場合は、`useSearchParams()` フックを使用します。これにより、サーバーに戻る必要がなくなります
 
-### Best practice: Debouncing
+### ベストプラクティス： デバウンス
 
-Congratulations! You've implemented search with Next.js! But there's something you can do to optimize it.
+おめでとうございます！Next.js で検索機能を実装できましたね。しかし、それを最適化するためにできることはまだあります。
 
-Inside your `handleSearch` function, add the following `console.log`:
+`handleSearch` 関数内に、次の `console.log` を追加してください。
 
 `/app/ui/search.tsx`
 
