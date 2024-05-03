@@ -348,7 +348,7 @@ export default async function InvoicesTable({
   }
 ```
 
-Then type "Emil" into your search bar and check the console in dev tools. What is happening?
+次に、検索バーに「Emil」と入力し、開発ツールのコンソールを確認してください。どうなっているでしょうか？
 
 `Dev Tools Console`
 
@@ -359,19 +359,19 @@ Searching... Emi
 Searching... Emil
 ```
 
-You're updating the URL on every keystroke, and therefore querying your database on every keystroke! This isn't a problem as our application is small, but imagine if your application had thousands of users, each sending a new request to your database on each keystroke.
+キーストロークごとに URL を更新するため、キーストロークごとにデータベースにクエリを実行することになります。私たちのアプリケーションは小さいため、これは問題ではありませんが、アプリケーションに数千人のユーザーがいて、各ユーザーがキーストロークごとに新しいリクエストをデータベースに送信すると想像してください。
 
-`Debouncing` is a programming practice that limits the rate at which a function can fire. In our case, you only want to query the database when the user has stopped typing.
+「デバウンス」とは、関数が起動するレートを制限するプログラミング手法です。この例では、ユーザーが入力をやめたときにのみデータベースにクエリの問い合わせを行います。
 
-    How Debouncing Works:
+デバウンスの仕組み
 
-    1. Trigger Event: When an event that should be debounced (like a keystroke in the search box) occurs, a timer starts.
-    1. Wait: If a new event occurs before the timer expires, the timer is reset.
-    1. Execution: If the timer reaches the end of its countdown, the debounced function is executed.
+1. トリガーイベント：デバウンスすべきイベント（検索ボックスのキーストロークなど）が発生すると、タイマーが開始します
+1. 待機：タイマーが期限切れになる前に新しいイベントが発生すると、タイマーはリセットされます
+1. 実行：タイマーのカウントダウンが終了すると、デバウンス関数が実行されます
 
-You can implement debouncing in a few ways, including manually creating your own debounce function. To keep things simple, we'll use a library called use-debounce.
+デバウンスは、独自のデバウンス関数を手動で作成するなど、いくつかの方法で実装できます。シンプルにするために、`use-debounce` というライブラリを使用します。
 
-Install `use-debounce`:
+`use-debounce` をインストールします。
 
 `Terminal`
 
@@ -379,7 +379,7 @@ Install `use-debounce`:
 npm i use-debounce
 ```
 
-In your `<Search>` Component, import a function called `useDebouncedCallback`:
+`<Search>` コンポーネントで、`useDebouncedCallback` という関数をインポートします。
 
 `/app/ui/search.tsx`
 
@@ -401,9 +401,9 @@ In your `<Search>` Component, import a function called `useDebouncedCallback`:
 + }, 300);
 ```
 
-This function will wrap the contents of handleSearch, and only run the code after a specific time once the user has stopped typing (300ms).
+この関数は handleSearch の内容をラップし、ユーザーが入力を停止してから特定の時間（300 ミリ秒）が経過した後にのみコードを実行します。
 
-Now type in your search bar again, and open the console in dev tools. You should see the following:
+もう一度、検索バーに入力し、開発ツールでコンソールを開きます。次の内容が表示されるはずです。
 
 `Dev Tools Console`
 
@@ -411,7 +411,7 @@ Now type in your search bar again, and open the console in dev tools. You should
 Searching... Emil
 ```
 
-By debouncing, you can reduce the number of requests sent to your database, thus saving resources.
+デバウンスすると、データベースに送信されるリクエストの数を減らし、リソースが節約することができます。
 
 ## Adding pagination
 
