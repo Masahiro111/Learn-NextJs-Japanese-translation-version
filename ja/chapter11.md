@@ -413,15 +413,15 @@ Searching... Emil
 
 デバウンスすると、データベースに送信されるリクエストの数を減らし、リソースが節約することができます。
 
-## Adding pagination
+## ページネーションの追加
 
-After introducing the search feature, you'll notice the table displays only 6 invoices at a time. This is because the `fetchFilteredInvoices()` function in data.ts returns a maximum of 6 invoices per page.
+検索機能を導入すると、表には一度に 6 件の請求書しか表示されないことがわかります。これは、data.ts の `fetchFilteredInvoices()` 関数が 1 ページあたり最大 6 件の請求書を返すためです。
 
-Adding pagination allows users to navigate through the different pages to view all the invoices. Let's see how you can implement pagination using URL params, just like you did with search.
+ページネーションを追加すると、ユーザーはさまざまなページを移動してすべての請求書を表示できるようになります。検索の場合と同じように、URL パラメータを使用してページネーションを実装する方法を見てみましょう。
 
-Navigate to the `<Pagination/>` component and you'll notice that it's a Client Component. You don't want to fetch data on the client as this would expose your database secrets (remember, you're not using an API layer). Instead, you can fetch the data on the server, and pass it to the component as a prop.
+`<Pagination/>` コンポーネントに移動すると、それがクライアントコンポーネントであることがわかります。クライアント上でデータを取得すると、データベースの秘密が漏洩してしまうため、これは望ましくありません（API レイヤーを使用していないことに注意してください）。代わりに、サーバーサイドでデータを取得し、それをプロパティとしてコンポーネントに渡すことができます。
 
-In `/dashboard/invoices/page.tsx`, import a new function called fetchInvoicesPages and pass the `query` from `searchParams` as an argument:
+`/dashboard/invoices/page.tsx` で、`fetchInvoicesPages` という新しい関数をインポートし、引数として `searchParams` から `query` を渡します。
 
 `/app/dashboard/invoices/page.tsx`
 
@@ -448,9 +448,9 @@ In `/dashboard/invoices/page.tsx`, import a new function called fetchInvoicesPag
   }
 ```
 
-`fetchInvoicesPages` returns the total number of pages based on the search query. For example, if there are 12 invoices that match the search query, and each page displays 6 invoices, then the total number of pages would be 2.
+`fetchInvoicesPages` は、検索クエリに基づいたページの総数を返します。たとえば、検索クエリに一致する請求書が 12 件あり、各ページに 6 件の請求書が表示される場合、総ページ数は 2 ページとなります。
 
-Next, pass the `totalPages` prop to the `<Pagination/>` component:
+次に、`totalPages` プロパティを `<Pagination/>` コンポーネントに渡します。
 
 `/app/dashboard/invoices/page.tsx`
 
@@ -490,7 +490,7 @@ Next, pass the `totalPages` prop to the `<Pagination/>` component:
   }
 ```
 
-Navigate to the `<Pagination/>` component and import the `usePathname` and `useSearchParams` hooks. We will use this to get the current page and set the new page. Make sure to also uncomment the code in this component. Your application will break temporarily as you haven't implemented the `<Pagination/>` logic yet. Let's do that now!
+`<Pagination/>` コンポーネントに移動して、`usePathname` フックと `useSearchParams` フックをインポートします。これを使用して現在のページを取得し、新しいページを設定します。このコンポーネント内のコードのコメントも解除してください。`<Pagination/>` ロジックをまだ実装していないため、アプリケーションは一時的に中断してしまいます。今すぐ実装してみましょう。
 
 `/app/ui/invoices/pagination.tsx`
 
@@ -512,7 +512,7 @@ Navigate to the `<Pagination/>` component and import the `usePathname` and `useS
   }
 ```
 
-Next, create a new function inside the `<Pagination>` Component called `createPageURL`. Similarly to the search, you'll use `URLSearchParams` to set the new page number, and `pathName` to create the URL string.
+次に、`<Pagination>` コンポーネント内に `createPageURL` という新しい関数を作成します。検索と同様に、`URLSearchParams` を使用して新しいページ番号を設定し、`pathName` を使用して URL 文字列を作成します。
 
 `/app/ui/invoices/pagination.tsx`
 
@@ -540,15 +540,15 @@ Next, create a new function inside the `<Pagination>` Component called `createPa
   }
 ```
 
-Here's a breakdown of what's happening:
+何が起こっているかの内訳は次のとおりです。
 
-- `createPageURL` creates an instance of the current search parameters.
-- Then, it updates the "page" parameter to the provided page number.
-- Finally, it constructs the full URL using the pathname and updated search parameters.
+- `createPageURL` は、現在の検索パラメータのインスタンスを作成します
+- 次に、「page」パラメータを指定されたページ番号に更新します
+- 最後に、パス名と更新された検索パラメータを使用して完全な URL を構築します
 
-The rest of the `<Pagination>` component deals with styling and different states (first, last, active, disabled, etc). We won't go into detail for this course, but feel free to look through the code to see where `createPageURL` is being called.
+`<Pagination>` コンポーネントの残りの部分は、スタイルとさまざまな状態（first、last、active、disabled など）を処理します。このコースでは詳細には触れませんが、コードを参照して `createPageURL` がどこで呼び出されているかを確認してください。
 
-Finally, when the user types a new search query, you want to reset the page number to 1. You can do this by updating the `handleSearch` function in your `<Search>` component:
+最後に、ユーザーが新しい検索クエリを入力したときに、ページ番号を 1 にリセットします。これを行うには、`<Search>` コンポーネントの `handleSearch` 関数を更新します。
 
 `/app/ui/search.tsx`
 
@@ -577,14 +577,14 @@ Finally, when the user types a new search query, you want to reset the page numb
 
 ```
 
-## Summary
+## まとめ
 
-Congratulations! You've just implemented search and pagination using URL Params and Next.js APIs.
+おめでとうございます！URL Params と Next.js API を使用して、検索とページネーションを実装しました。
 
-To summarize, in this chapter:
+この章の内容を要約すると、次のようになります。
 
-- You've handled search and pagination with URL search parameters instead of client state.
-- You've fetched data on the server.
-- You're using the `useRouter` router hook for smoother, client-side transitions.
+- クライアントの state ではなく URL 検索パラメータを使用して検索とページネーションを処理しました
+- サーバー上のデータを取得しました
+- クライアントサイドの移行をよりスムーズにするために `useRouter` ルーターフックを使用しました
 
-These patterns are different from what you may be used to when working with client-side React, but hopefully, you now better understand the benefits of using URL search params and lifting this state to the server.
+これらのパターンは、クライアントサイドの React を使用するときに慣れ親しんでいるものとは異なりますが、URL 検索パラメータを使用し、この状態をサーバーに移すことの利点をよりよく理解できたことと思います。
