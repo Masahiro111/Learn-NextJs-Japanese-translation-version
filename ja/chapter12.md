@@ -1,26 +1,26 @@
-# Mutating Data
+# データの変更
 
-In the previous chapter, you implemented search and pagination using URL Search Params and Next.js APIs. Let's continue working on the Invoices page by adding the ability to create, update, and delete invoices!
+前の章では、URL 検索パラメータ と Next.js API を使用して検索とページネーションを実装しました。請求書を作成、更新、削除する機能を追加して、請求書ページの作業を続けましょう。
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- What React Server Actions are and how to use them to mutate data.
-- How to work with forms and Server Components.
-- Best practices for working with the native formData object, including type validation.
-- How to revalidate the client cache using the revalidatePath API.
-- How to create dynamic route segments with specific IDs.
+- React Server Actions とは何か、またそれを使用してデータを変更する方法
+- フォームとサーバーコンポーネントの扱い方
+- 型の検証を含む、ネイティブの formData オブジェクトを使用する際のベストプラクティス
+- revalidatePath API を使用してクライアントキャッシュを再検証する方法
+- 特定の ID を持つ動的ルートセグメントを作成する方法
 
-## What are Server Actions?
+## サーバーアクションとは？
 
-React Server Actions allow you to run asynchronous code directly on the server. They eliminate the need to create API endpoints to mutate your data. Instead, you write asynchronous functions that execute on the server and can be invoked from your Client or Server Components.
+React Server Actions を使用すると、サーバー上で非同期コードを直接実行できます。データを変更するために API エンドポイントを作成する必要がなくなります。その代わりに、サーバー上で実行される非同期関数を記述し、クライアントまたはサーバーコンポーネントから呼び出すことができます。
 
-Security is a top priority for web applications, as they can be vulnerable to various threats. This is where Server Actions come in. They offer an effective security solution, protecting against different types of attacks, securing your data, and ensuring authorized access. Server Actions achieve this through techniques like POST requests, encrypted closures, strict input checks, error message hashing, and host restrictions, all working together to significantly enhance your app's safety.
+Web アプリケーションは様々な脅威にさらされやすいため、セキュリティは最優先事項です。そこでサーバーアクションの出番です。サーバーアクションは効果的なセキュリティソリューションを提供し、さまざまなタイプの攻撃から保護し、データを保護し、許可されたアクセスを保証します。サーバーアクションは、POST リクエスト、暗号化されたクロージャ、厳密な入力チェック、エラーメッセージのハッシュ化、ホスト制限などの技術によってこれを実現し、これらすべてが連携してアプリの安全性を大幅に向上させます。
 
-## Using forms with Server Actions
+## サーバーアクションでフォームを使用する
 
-In React, you can use the `action` attribute in the `<form>` element to invoke actions. The action will automatically receive the native [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) object, containing the captured data.
+React では、`<form>` 要素の `action` 属性を使用してアクションを呼び出すことができます。アクションは、取り込んだデータを含むネイティブ [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) オブジェクトを自動的に受け取ります。
 
-For example:
+たとえば
 
 ```ts
 // Server Component
@@ -37,7 +37,7 @@ export default function Page() {
 }
 ```
 
-An advantage of invoking a Server Action within a Server Component is progressive enhancement - forms work even if JavaScript is disabled on the client.
+サーバーコンポーネント内でサーバーアクションを呼び出すことの利点は、段階的な機能拡張です。クライアントで JavaScript が無効になっている場合でもフォームは機能します。
 
 ## Next.js with Server Actions
 
