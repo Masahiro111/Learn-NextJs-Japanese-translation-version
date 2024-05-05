@@ -16,7 +16,7 @@ React Server Actions を使用すると、サーバー上で非同期コード�
 
 Web アプリケーションは様々な脅威にさらされやすいため、セキュリティは最優先事項です。そこでサーバーアクションの出番です。サーバーアクションは効果的なセキュリティソリューションを提供し、さまざまなタイプの攻撃から保護し、データを保護し、許可されたアクセスを保証します。サーバーアクションは、POST リクエスト、暗号化されたクロージャ、厳密な入力チェック、エラーメッセージのハッシュ化、ホスト制限などの技術によってこれを実現し、これらすべてが連携してアプリの安全性を大幅に向上させます。
 
-## サーバーアクションでフォームを使用する
+## サーバーアクションでのフォームの使用
 
 React では、`<form>` 要素の `action` 属性を使用してアクションを呼び出すことができます。アクションは、取り込んだデータを含むネイティブ [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) オブジェクトを自動的に受け取ります。
 
@@ -39,30 +39,30 @@ export default function Page() {
 
 サーバーコンポーネント内でサーバーアクションを呼び出すことの利点は、段階的な機能拡張です。クライアントで JavaScript が無効になっている場合でもフォームは機能します。
 
-## Next.js with Server Actions
+## サーバーアクションと Next.js
 
-Server Actions are also deeply integrated with Next.js [caching](https://nextjs.org/docs/app/building-your-application/caching). When a form is submitted through a Server Action, not only can you use the action to mutate data, but you can also revalidate the associated cache using APIs like `revalidatePath` and `revalidateTag`.
+サーバーアクションは、Next.js の [キャッシュ](https://nextjs.org/docs/app/building-your-application/caching) とも緊密に統合されています。サーバーアクションを使ってフォームが送信されると、そのアクションを使用してデータを変更できるだけでなく、`revalidatePath` や `revalidateTag` などの API を使って、関連するキャッシュを再検証することもできます。
 
-Let's see how it all works together!
+どのように機能するかを見てみましょう！
 
-## Creating an invoice
+## 請求書の作成
 
-Here are the steps you'll take to create a new invoice:
+新しい請求書を作成する手順は次のとおりです。
 
-1. Create a form to capture the user's input.
-1. Create a Server Action and invoke it from the form.
-1. Inside your Server Action, extract the data from the formData object.
-1. Validate and prepare the data to be inserted into your database.
-1. Insert the data and handle any errors.
-1. Revalidate the cache and redirect the user back to invoices page.
+1. ユーザーの入力を取得するフォームを作成します
+1. サーバーアクションを作成し、フォームから呼び出します
+1. サーバーアクション内で、formData オブジェクトからデータを抽出します
+1. データベースに挿入するデータを検証して準備します
+1. データを挿入し、エラーがあれば処理します
+1. キャッシュを再検証し、ユーザーを請求書ページにリダイレクトします
 
-### 1. Create a new route and form
+### 1. 新しいルートとフォームの作成
 
-To start, inside the `/invoices` folder, add a new route segment called `/create` with a `page.tsx` file:
+まず、`/invoices` フォルダー内に、`/create` という新しいルートセグメントと `page.tsx` ファイルを追加します。
 
-![Invoices folder with a nested create folder, and a page.tsx file inside it]()
+![請求書フォルダの中に入れ子になった create フォルダがあり、その中に page.tsx ファイルがある]()
 
-You'll be using this route to create new invoices. Inside your `page.tsx` file, paste the following code, then spend some time studying it:
+このルートを使って新しい請求書を作成します。`page.tsx` ファイル内に次のコードを貼り付けて、時間をかけてコードを読んでみましょう。
 
 `/dashboard/invoices/create/page.tsx`
 
@@ -92,24 +92,24 @@ export default async function Page() {
 }
 ```
 
-Your page is a Server Component that fetches `customers` and passes it to the `<Form>` component. To save time, we've already created the `<Form>` component for you.
+あなたのページは、`customers` をフェッチし、それを `<Form>` コンポーネントに渡すサーバーコンポーネントです。時間を節約するために、`<Form>` コンポーネントはすでに作成されています。
 
-Navigate to the `<Form>` component, and you'll see that the form:
+`<Form>` コンポーネントに移動すると、フォームが次のようになっていることがわかります。
 
-- Has one `<select>` (dropdown) element with a list of customers.
-- Has one `<input>` element for the amount with `type="number"`.
-- Has two `<input>` elements for the status with `type="radio"`.
-- Has one button with `type="submit"`.
+- 顧客リストの `<select>` （ドロップダウン）要素があります
+- `type="number"` で金額を指定する `<input>` 要素があります
+- `type="radio"` のステータスを表す `<input>` 要素が 2 つあります
+- `type="submit"` のボタンがあります
 
-On http://localhost:3000/dashboard/invoices/create, you should see the following UI:
+http://localhost:3000/dashboard/invoices/create に、次の UI が表示されるはずです。
 
-![Create invoices page with breadcrumbs and form 2.]()
+![パンくずリストとフォーム2で請求書ページを作成する]()
 
-### Create a Server Action
+### サーバーアクションの作成
 
-Great, now let's create a Server Action that is going to be called when the form is submitted.
+フォームの送信時に呼び出されるサーバーアクションを作成しましょう。
 
-Navigate to your `lib` directory and create a new file named `actions.ts`. At the top of this file, add the React [use server](https://react.dev/reference/react/use-server) directive:
+`lib` ディレクトリに移動し、`actions.ts` という名前の新しいファイルを作成します。このファイルの先頭に、React [use server](https://react.dev/reference/react/use-server) ディレクティブを追加します。
 
 `/app/lib/actions.ts`
 
@@ -117,11 +117,11 @@ Navigate to your `lib` directory and create a new file named `actions.ts`. At th
 "use server";
 ```
 
-By adding the `'use server'`, you mark all the exported functions within the file as server functions. These server functions can then be imported into Client and Server components, making them extremely versatile.
+`use server` を追加すると、ファイル内のエクスポートされるすべての関数がサーバー関数としてマークされます。これらのサーバー機能はクライアントコンポーネントとサーバー コンポーネントにインポートできるため、非常に多用途なものになります。
 
-You can also write Server Actions directly inside Server Components by adding "use server" inside the action. But for this course, we'll keep them all organized in a separate file.
+アクション内に `use server` を追加することで、サーバーコンポーネント内にサーバーアクションを直接記述することもできます。ただし、このコースでは、それらをすべて別のファイルに整理しています。
 
-In your `actions.ts` file, create a new async function that accepts `formData`:
+`actions.ts` ファイルに、`formData` を受け取る新しい非同期関数を作成します。
 
 `/app/lib/actions.ts`
 
@@ -131,7 +131,7 @@ In your `actions.ts` file, create a new async function that accepts `formData`:
 + export async function createInvoice(formData: FormData) {}
 ```
 
-Then, in your `<Form>` component, import the `createInvoice` from your actions.ts file. Add a `action` attribute to the `<form>` element, and call the `createInvoice` action.
+次に、`<Form>` コンポーネントに actions.ts ファイルから `createInvoice` をインポートします。`action` 属性を `<form>` 要素に追加し、`createInvoice` アクションを呼び出します。
 
 `/app/ui/invoices/create-form.tsx`
 
@@ -161,7 +161,7 @@ Then, in your `<Form>` component, import the `createInvoice` from your actions.t
 
 > [!tip]
 >
-> **Good to know** : In HTML, you'd pass a URL to the `action` attribute. This URL would be the destination where your form data should be submitted (usually an API endpoint).
+> **知っておくと便利**：HTML では、`action` 属性に URL を記述します。この URL は、フォームデータの送信先（通常は API エンドポイント）になります。
 >
 > However, in React, the `action` attribute is considered a special prop - meaning React builds on top of it to allow actions to be invoked.
 >
