@@ -163,7 +163,7 @@ http://localhost:3000/dashboard/invoices/create に、次の UI が表示され�
 >
 > **知っておくと便利**：HTML では、`action` 属性に URL を記述します。この URL は、フォームデータの送信先（通常は API エンドポイント）になります。
 >
-> ただし、React では、`action` 属性は特別なプロパティとみなされます。つまり、React はその上に構築され、アクションを呼び出すことができるようになります。
+> ただし、React では、`action` 属性は特別なプロップとみなされます。つまり、React はその上に構築され、アクションを呼び出すことができるようになります。
 >
 > サーバーアクションは背後で `POST` API エンドポイントを作成します。このため、サーバーアクションを使用する際に API エンドポイントを手動で作成する必要がありません。
 
@@ -339,9 +339,9 @@ JavaScript の浮動小数点エラーを排除し、より高い精度を確保
 
 ### 6. 再検証とリダイレクト
 
-Next.js has a [Client-side Router Cache](https://nextjs.org/docs/app/building-your-application/caching#router-cache) that stores the route segments in the user's browser for a time. Along with [prefetching](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching), this cache ensures that users can quickly navigate between routes while reducing the number of requests made to the server.
+Next.js には、ユーザーのブラウザにルートセグメントを一時的に保存する [クライアントサイドルーターキャッシュ](https://nextjs.org/docs/app/building-your-application/caching#router-cache) があります。[プリフェッチ](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching) と合わせて、このキャッシュはサーバーへのリクエスト数を減らしながら、ユーザーがルート間をすばやく移動できるようにします。
 
-Since you're updating the data displayed in the invoices route, you want to clear this cache and trigger a new request to the server. You can do this with the [revalidatePath](https://nextjs.org/docs/app/api-reference/functions/revalidatePath) function from Next.js:
+請求書ルートに表示されるデータを更新するので、このキャッシュをクリアして、サーバーへの新しいリクエストをトリガーしたいと思います。これは、Next.js の [revalidatePath](https://nextjs.org/docs/app/api-reference/functions/revalidatePath) 関数を使用して実行できます。
 
 `/app/lib/actions.ts`
 
@@ -372,9 +372,9 @@ Since you're updating the data displayed in the invoices route, you want to clea
   }
 ```
 
-Once the database has been updated, the `/dashboard/invoices` path will be revalidated, and fresh data will be fetched from the server.
+データベースが更新されると、`/dashboard/invoices` パスが再検証され、新しいデータがサーバーから取得されます。
 
-At this point, you also want to redirect the user back to the `/dashboard/invoices` page. You can do this with the [redirect](https://nextjs.org/docs/app/api-reference/functions/redirect) function from Next.js:
+この時点で、ユーザーを `/dashboard/invoices` ページにリダイレクトします。これは、Next.js の [redirect](https://nextjs.org/docs/app/api-reference/functions/redirect) 関数を使用して実行できます。
 
 `/app/lib/actions.ts`
 
@@ -396,32 +396,32 @@ At this point, you also want to redirect the user back to the `/dashboard/invoic
   }
 ```
 
-Congratulations! You've just implemented your first Server Action. Test it out by adding a new invoice, if everything is working correctly:
+おめでとうございます！これで、最初のサーバーアクションが実装されました。新しい請求書を追加してテストしてみてください。
 
-1. You should be redirected to the `/dashboard/invoices` route on submission.
-1. You should see the new invoice at the top of the table.
+1. 送信すると、`/dashboard/invoices` ルートにリダイレクトされます
+1. 表の一番上に新しい請求書が表示されます
 
-## Updating an invoice
+## 請求書の更新
 
-The updating invoice form is similar to the create an invoice form, except you'll need to pass the invoice `id` to update the record in your database. Let's see how you can get and pass the invoice `id`.
+請求書の更新フォームは請求書の作成フォームに似ていますが、データベースのレコードを更新するために請求書の `id` を渡す必要がある点が異なります。請求書の `id` を取得して渡し方を見てみましょう。
 
-These are the steps you'll take to update an invoice:
+請求書を更新する手順は以下の通りです。
 
-1. Create a new dynamic route segment with the invoice `id`.
-1. Read the invoice `id` from the page params.
-1. Fetch the specific invoice from your database.
-1. Pre-populate the form with the invoice data.
-1. Update the invoice data in your database.
+1. 請求書の `id` を使用して新しい動的ルートセグメントを作成します
+1. ページパラメータから請求書の `id` を読み取ります
+1. データベースから指定の請求書を取得します
+1. 請求書のデータをフォームへ事前に入力します
+1. データベースの請求書データを更新します
 
-### 1. Create a Dynamic Route Segment with the invoice `id`
+### 1. 請求書 `id` を使用した動的ルートセグメントの作成
 
-Next.js allows you to create [Dynamic Route Segments](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes) when you don't know the exact segment name and want to create routes based on data. This could be blog post titles, product pages, etc. You can create dynamic route segments by wrapping a folder's name in square brackets. For example, `[id]`, `[post]` or `[slug]`.
+Next.js では、正確なセグメント名がわからず、データに基づいてルートを作成したい場合に、[ダイナミックルートセグメント](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes)を作成することができます。例えば、ブログ記事のタイトルや商品ページなどです。フォルダの名前を角括弧で囲むことで、動的なルートセグメントを作成できます。たとえば `[id]`、`[post]`、`[slug]`などです。
 
-In your `/invoices` folder, create a new dynamic route called `[id]`, then a new route called `edit` with a `page.tsx` file. Your file structure should look like this:
+`/invoices` フォルダに、`[id]` という名前の新しい動的ルートを作成し、次に `page.tsx` ファイルを含む `edit` という名前の新しいルートを作成します。ファイル構造は次のようになります。
 
-![Invoices folder with a nested [id] folder, and an edit folder inside it]()
+![ネストされた [id] フォルダーとその中に edit フォルダがある invoices フォルダ]()
 
-In your `<Table>` component, notice there's a `<UpdateInvoice />` button that receives the invoice's `id` from the table records.
+`<Table>` コンポーネントには、テーブルレコードから請求書の `id` を受け取る `<UpdateInvoice />` ボタンがあることに注目してください。
 
 `/app/ui/invoices/table.tsx`
 
@@ -444,7 +444,7 @@ In your `<Table>` component, notice there's a `<UpdateInvoice />` button that re
   }
 ```
 
-Navigate to your `<UpdateInvoice />` component, and update the `href` of the `Link` to accept the `id` prop. You can use template literals to link to a dynamic route segment:
+`<UpdateInvoice />` コンポーネントに移動し、`id` プロップを受け入れるように `Link` の `href` を更新します。動的ルートセグメントにリンクするためにテンプレートリテラルを使用します。
 
 `/app/ui/invoices/buttons.tsx`
 
@@ -466,9 +466,9 @@ Navigate to your `<UpdateInvoice />` component, and update the `href` of the `Li
   }
 ```
 
-2. Read the invoice `id` from page `params`
+2. Page コンポーネントの `params` から請求書 `id` を読み込む
 
-Back on your `<Page>` component, paste the following code:
+`<Page>` コンポーネントに戻り、次のコードを貼り付けます。
 
 `/app/dashboard/invoices/[id]/edit/page.tsx`
 
@@ -496,9 +496,9 @@ export default async function Page() {
 }
 ```
 
-Notice how it's similar to your `/create` invoice page, except it imports a different form (from the `edit-form.tsx` file). This form should be **pre-populated** with a `defaultValue` for the customer's name, invoice amount, and status. To pre-populate the form fields, you need to fetch the specific invoice using `id`.
+これは `/create` 請求書ページと似ていますが、（`edit-form.tsx` ファイルから）別のフォームをインポートしていることに注意してください。このフォームには、顧客の名前、請求金額、ステータスの `defaultValue` を **事前に入力** しておく必要があります。フォームフィールドに事前に入力するには、`id` を使用して指定の請求書を取得する必要があります。
 
-In addition to `searchParams`, page components also accept a prop called `params` which you can use to access the `id`. Update your `<Page>` component to receive the prop:
+`searchParams` に加えて、ページコンポーネントは `id` にアクセスするために使用できる `params` というプロップも受け取ります。`<Page>` コンポーネントを更新してプロップを受け取ってみてください。
 
 `/app/dashboard/invoices/[id]/edit/page.tsx`
 
@@ -513,14 +513,14 @@ In addition to `searchParams`, page components also accept a prop called `params
   }
 ```
 
-### 3. Fetch the specific invoice
+### 3. 指定の請求書を取得
 
-Then:
+そして
 
-- Import a new function called `fetchInvoiceById` and pass the `id` as an argument.
-- Import `fetchCustomers` to fetch the customer names for the dropdown.
+- `fetchInvoiceById` という新しい関数をインポートし、引数として `id` を渡します
+- `fetchCustomers` をインポートして、ドロップダウン用の顧客名を取得します
 
-You can use `Promise.all` to fetch both the invoice and customers in parallel:
+`Promise.all` を使用すると、請求書と顧客の両方を並行して取得することができます。
 
 `/dashboard/invoices/[id]/edit/page.tsx`
 
