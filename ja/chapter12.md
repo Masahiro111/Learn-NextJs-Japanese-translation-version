@@ -163,13 +163,13 @@ http://localhost:3000/dashboard/invoices/create に、次の UI が表示され�
 >
 > **知っておくと便利**：HTML では、`action` 属性に URL を記述します。この URL は、フォームデータの送信先（通常は API エンドポイント）になります。
 >
-> However, in React, the `action` attribute is considered a special prop - meaning React builds on top of it to allow actions to be invoked.
+> ただし、React では、`action` 属性は特別なプロパティとみなされます。つまり、React はその上に構築され、アクションを呼び出すことができるようになります。
 >
-> Behind the scenes, Server Actions create a `POST` API endpoint. This is why you don't need to create API endpoints manually when using Server Actions.
+> サーバーアクションは背後で `POST` API エンドポイントを作成します。このため、サーバーアクションを使用する際に API エンドポイントを手動で作成する必要がありません。
 
-### 3. Extract the data from `formData`
+### 3. `formData` からデータを抽出
 
-Back in your `actions.ts` file, you'll need to extract the values of `formData`, there are a [couple of methods](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append) you can use. For this example, let's use the [.get(name)](https://developer.mozilla.org/en-US/docs/Web/API/FormData/get) method.
+`actions.ts` ファイルに戻って、`formData` の値を抽出する必要があります。[いくつかの方法](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append) がありますが、今回の例では [.get(name)](https://developer.mozilla.org/en-US/docs/Web/API/FormData/get) メソッドを使用してみましょう。
 
 `/app/lib/actions.ts`
 
@@ -189,17 +189,17 @@ Back in your `actions.ts` file, you'll need to extract the values of `formData`,
 
 > [!tip]
 >
-> If you're working with forms that have many fields, you may want to consider using the [entries()](https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries) method with JavaScript's [Object.fromEntries()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries). For example:
+> 多くのフィールドを持つフォームを扱う場合、JavaScript の [Object.fromEntries()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries) と一緒に [entries()](https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries) メソッドを使うことを検討するとよいでしょう。たとえば
 >
 > `const rawFormData = Object.fromEntries(formData.entries())`
 
-To check everything is connected correctly, go ahead and try out the form. After submitting, you should see the data you just entered into the form logged in your terminal.
+すべてが正しく接続されていることを確認するために、先に進んでフォームをテストしてください。送信すると、フォームに入力したデータがターミナルに記録されるはずです。
 
-Now that your data is in the shape of an object, it'll be much easier to work with.
+データがオブジェクトの形になったので、より簡単に作業できるようになります。
 
-### 4. Validate and prepare the data
+### 4. データを検証と準備
 
-Before sending the form data to your database, you want to ensure it's in the correct format and with the correct types. If you remember from earlier in the course, your invoices table expects data in the following format:
+フォームデータをデータベースに送る前に、正しいフォーマットと正しいデータ型であることを確認します。このコースの最初のほうで、請求書テーブルが次のような形式のデータを必要としていることを思い出してください。
 
 `/app/lib/definitions.ts`
 
@@ -213,17 +213,17 @@ export type Invoice = {
 };
 ```
 
-So far, you only have the `customer_id`, `amount`, and `status` from the form.
+これまでのところ、フォームから取得できるのは `customer_id`、`amount`、`status` のみです。
 
-#### Type validation and coercion
+#### 型の検証と強制
 
-It's important to validate that the data from your form aligns with the expected types in your database. For instance, if you add a `console.log` inside your action:
+フォームからのデータがデータベースで期待される型と一致しているかどうかを検証することは重要です。たとえば、アクションの中に `console.log` を追加したとすると次のようになります。
 
 ```js
 console.log(typeof rawFormData.amount);
 ```
 
-You'll notice that `amount` is of type `string` and not `number`. This is because `input` elements with `type="number"` actually return a string, not a number!
+`amount` の型は `number` ではなく `string` であることがわかります。これは、`type="number"` を持つ `input` 要素が実際には数値ではなく文字列を返すためです。
 
 To handle type validation, you have a few options. While you can manually validate types, using a type validation library can save you time and effort. For your example, we'll use [Zod](https://zod.dev/), a TypeScript-first validation library that can simplify this task for you.
 
