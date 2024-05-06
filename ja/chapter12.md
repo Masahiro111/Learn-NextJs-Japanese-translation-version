@@ -225,9 +225,9 @@ console.log(typeof rawFormData.amount);
 
 `amount` の型は `number` ではなく `string` であることがわかります。これは、`type="number"` を持つ `input` 要素が実際には数値ではなく文字列を返すためです。
 
-To handle type validation, you have a few options. While you can manually validate types, using a type validation library can save you time and effort. For your example, we'll use [Zod](https://zod.dev/), a TypeScript-first validation library that can simplify this task for you.
+型の検証を行うには、いくつかの方法があります。手作業で型を検証することもできますが、型検証ライブラリを使用すると時間と労力を節約できます。例として、このタスクを簡素化できる TypeScript ファーストの検証ライブラリである [Zod](https://zod.dev/) を使用します。
 
-In your `actions.ts` file, import Zod and define a schema that matches the shape of your form object. This schema will validate the `formData` before saving it to a database.
+`actions.ts` ファイルで Zod をインポートし、フォームオブジェクトの形状に一致するスキーマを定義します。このスキーマは、データベースに保存する前に `formData` を検証します。
 
 `/app/lib/actions.ts`
 
@@ -251,9 +251,9 @@ In your `actions.ts` file, import Zod and define a schema that matches the shape
   }
 ```
 
-The `amount` field is specifically set to coerce (change) from a string to a number while also validating its type.
+`amount` フィールドは、文字列から数値に強制的に変更すると同時に、その型を検証するように設定されています。
 
-You can then pass your `rawFormData` to `CreateInvoice` to validate the types:
+次に、`rawFormData` を `CreateInvoice` に渡して型を検証します。
 
 `/app/lib/actions.ts`
 
@@ -268,11 +268,11 @@ You can then pass your `rawFormData` to `CreateInvoice` to validate the types:
   }
 ```
 
-#### Storing values in cents
+#### セント単位で値を保存
 
-It's usually good practice to store monetary values in cents in your database to eliminate JavaScript floating-point errors and ensure greater accuracy.
+JavaScript の浮動小数点エラーを排除し、より高い精度を確保するために、通常、データベースに通貨値をセント単位で保存することをお勧めします。
 
-Let's convert the amount into cents:
+金額をセントに変換しましょう。
 
 `/app/lib/actions.ts`
 
@@ -288,9 +288,9 @@ Let's convert the amount into cents:
   }
 ```
 
-#### Creating new dates
+#### 新しい日付の作成
 
-Finally, let's create a new date with the format "YYYY-MM-DD" for the invoice's creation date:
+最後に、請求書の作成日として「YYYY-MM-DD」の形式で新しい日付を作成しましょう。
 
 `/app/lib/actions.ts`
 
@@ -307,9 +307,9 @@ Finally, let's create a new date with the format "YYYY-MM-DD" for the invoice's 
   }
 ```
 
-5.  Inserting the data into your database
+5. データベースにデータを挿入
 
-Now that you have all the values you need for your database, you can create an SQL query to insert the new invoice into your database and pass in the variables:
+データベースに必要な値がすべて揃いました。新しい請求書をデータベースに挿入するために、SQL クエリの作成とクエリに必要な変数を渡します。
 
 `/app/lib/actions.ts`
 
@@ -335,9 +335,9 @@ Now that you have all the values you need for your database, you can create an S
   }
 ```
 
-Right now, we're not handling any errors. We'll do it in the next chapter. For now, let's move on to the next step.
+今はまだエラーを処理していません。次の章で処理を行います。とりあえず、次のステップに進みましょう。
 
-### 6. Revalidate and redirect
+### 6. 再検証とリダイレクト
 
 Next.js has a [Client-side Router Cache](https://nextjs.org/docs/app/building-your-application/caching#router-cache) that stores the route segments in the user's browser for a time. Along with [prefetching](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching), this cache ensures that users can quickly navigate between routes while reducing the number of requests made to the server.
 
