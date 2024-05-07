@@ -539,25 +539,25 @@ export default async function Page() {
   }
 ```
 
-You will see a temporary TS error for the `invoice` prop in your terminal because `invoice` could be potentially `undefined`. Don't worry about it for now, you'll resolve it in the next chapter when you add error handling.
+`invoice` が `undefined` である可能性があるため、ターミナルで `invoice` プロップの一時的な TS エラーが表示されます。次の章でエラー処理を追加するときに解決するので、今は気にしないでください。
 
-Great! Now, test that everything is wired correctly. Visit http://localhost:3000/dashboard/invoices and click on the Pencil icon to edit an invoice. After navigation, you should see a form that is pre-populated with the invoice details:
+素晴らしい！それでは、すべてが正しく記述されているかテストしてみましょう。http://localhost:3000/dashboard/invoices にアクセスし、鉛筆のアイコンをクリックして請求書を編集します。ナビゲーションが完了すると、請求書の詳細が事前に入力されたフォームが表示されます。
 
-![Edit invoices page with breadcrumbs and form]()
+![パンくずリストとフォームを含む請求書ページの編集]()
 
-The URL should also be updated with an `id` as follows: http://localhost:3000/dashboard/invoice/uuid/edit
+URL も次のような `id` で更新されるはずです。http://localhost:3000/dashboard/invoice/uuid/edit
 
-> [!info]
+> [!note]
 >
-> **UUIDs vs. Auto-incrementing Keys**
+> **UUID と自動インクリメントキー**
 >
-> We use UUIDs instead of incrementing keys (e.g., 1, 2, 3, etc.). This makes the URL longer; however, UUIDs eliminate the risk of ID collision, are globally unique, and reduce the risk of enumeration attacks - making them ideal for large databases.
+> インクリメントキー（1、2、3 など）の代わりに UUID を使用しています。これは URL が長くなりますが、UUID は ID 衝突のリスクを排除し、グローバルに一意であり、列挙型攻撃のリスクを軽減するため、大規模なデータベースに最適です。
 >
-> However, if you prefer cleaner URLs, you might prefer to use auto-incrementing keys.
+> ただし、よりクリーンな URL を好む場合は、自動インクリメントキーを使用することをお勧めします。
 
-### 4. Pass the id to the Server Action
+### 4. id をサーバーアクションに渡す
 
-Lastly, you want to pass the `id` to the Server Action so you can update the right record in your database. You **cannot** pass the `id` as an argument like so:
+最後に、データベースの適切なレコードを更新できるように、`id` をサーバーアクションに渡します。次のように `id` を引数として渡すことは **できません**。
 
 `/app/ui/invoices/edit-form.tsx`
 
@@ -566,7 +566,7 @@ Lastly, you want to pass the `id` to the Server Action so you can update the rig
 <form action={updateInvoice(id)}>
 ```
 
-Instead, you can pass `id` to the Server Action using JS `bind`. This will ensure that any values passed to the Server Action are encoded.
+代わりに、JS の `bind` を使用して `id` をサーバーアクションに渡すことができます。こうすることで、サーバーアクションに渡される値がエンコードされるようになります。
 
 `/app/ui/invoices/edit-form.tsx`
 
@@ -593,9 +593,9 @@ Instead, you can pass `id` to the Server Action using JS `bind`. This will ensur
 
 > [!note]
 >
-> Using a hidden input field in your form also works (e.g. `<input type="hidden" name="id" value={invoice.id} />`). However, the values will appear as full text in the HTML source, which is not ideal for sensitive data like IDs.
+> フォームに隠し入力フィールドを使うこともできます（例：`<input type="hidden" name="id" value={invoice.id} />`）。ただし、値は HTML ソースにフルテキストとして表示されるため、ID などの機密データには適していません。
 
-Then, in your `actions.ts` file, create a new action, `updateInvoice`:
+次に、`actions.ts` ファイルに新しいアクション `updateInvoice` を作成します。
 
 `/app/lib/actions.ts`
 
@@ -625,20 +625,20 @@ export async function updateInvoice(id: string, formData: FormData) {
 }
 ```
 
-Similarly to the `createInvoice` action, here you are:
+`createInvoice` アクションと同様に、次のようになります。
 
-- Extracting the data from `formData`.
-- Validating the types with Zod.
-- Converting the amount to cents.
-- Passing the variables to your SQL query.
-- Calling `revalidatePath` to clear the client cache and make a new server request.
-- Calling `redirect` to redirect the user to the invoice's page.
+- `formData` からデータを抽出します
+- Zod を使用して型を検証します
+- 金額をセントに変換します
+- SQL クエリに変数を渡します
+- `revalidatePath` を呼び出してクライアントキャッシュをクリアし、新しいサーバーリクエストを作成します
+- `redirect` を呼び出して、ユーザーを請求書のページにリダイレクトします
 
-Test it out by editing an invoice. After submitting the form, you should be redirected to the invoices page, and the invoice should be updated.
+請求書を編集してテストしてみましょう。フォームを送信すると、請求書ページにリダイレクトされ、請求書が更新されるはずです。
 
-## Deleting an invoice
+## 請求書の削除
 
-To delete an invoice using a Server Action, wrap the delete button in a `<form>` element and pass the `id` to the Server Action using `bind`:
+サーバーアクションを使用して請求書を削除するには、削除ボタンを `<form>` 要素でラップし、`bind` を使用して `id` をサーバーアクションに渡します。
 
 `/app/ui/invoices/buttons.tsx`
 
@@ -661,7 +661,7 @@ To delete an invoice using a Server Action, wrap the delete button in a `<form>`
   }
 ```
 
-Inside your `actions.ts` file, create a new action called `deleteInvoice`.
+`actions.ts` ファイルに、`deleteInvoice` という新しいアクションを作成します。
 
 `/app/lib/actions.ts`
 
@@ -672,10 +672,10 @@ export async function deleteInvoice(id: string) {
 }
 ```
 
-Since this action is being called in the `/dashboard/invoices` path, you don't need to call `redirect`. Calling `revalidatePath` will trigger a new server request and re-render the table.
+このアクションは `/dashboard/invoices` パスで呼び出されるので、`redirect` を呼び出す必要はありません。`revalidatePath` を呼び出すと、新しいサーバーリクエストが発生し、テーブルが再レンダリングされます。
 
-## Further reading
+## 参考文献
 
-In this chapter, you learned how to use Server Actions to mutate data. You also learned how to use the `revalidatePath` API to revalidate the Next.js cache and `redirect` to redirect the user to a new page.
+この章では、サーバーアクションを使用してデータを変更する方法を学習しました。また、`revalidatePath` API を使用して Next.js のキャッシュを再検証し、`redirect` を使用してユーザーを新しいページにリダイレクトする方法も学びました。
 
-You can also read more about [security with Server Actions](https://nextjs.org/blog/security-nextjs-server-components-actions) for additional learning.
+さらに、[サーバーアクションによるセキュリティ](https://nextjs.org/blog/security-nextjs-server-components-actions) についてもお読みください。
