@@ -108,7 +108,7 @@ export async function deleteInvoice(id: string) {
 
 このようなエラーが表示されると、潜在的な問題を早期に発見できるため、開発中には役立つでしょう。しかし、突然の障害を避けてアプリケーションの実行を継続できるように、ユーザーにエラーを表示することも必要です。
 
-そこで Next.js [error.tsx]() ファイルの出番です。
+そこで Next.js [error.tsx](https://nextjs.org/docs/app/api-reference/file-conventions/error) ファイルの出番です。
 
 ## `error.tsx` ですべてのエラーを処理する
 
@@ -171,11 +171,11 @@ export default function Error({
 
 これはデータベースに存在しない偽の UUID です。
 
-You'll immediately see `error.tsx` kicks in because this is a child route of `/invoices` where `error.tsx` is defined.
+このルートは `/invoices` の子ルートで `error.tsx` が定義されているので、すぐに `error.tsx` が開始されることがわかります。
 
-However, if you want to be more specific, you can show a 404 error to tell the user the resource they're trying to access hasn't been found.
+しかし、より具体的にしたい場合は、アクセスしようとしているリソースが見つからないことをユーザーに伝えるために、404 エラーを表示することができます。
 
-You can confirm that the resource hasn't been found by going into your `fetchInvoiceById` function in `data.ts`, and console logging the returned `invoice`:
+リソースが見つからなかったことを確認するには、`data.ts` の `fetchInvoiceById` 関数に移動し、返された `invoice` をコンソールで確認できます。
 
 `/app/lib/data.ts`
 
@@ -194,9 +194,9 @@ You can confirm that the resource hasn't been found by going into your `fetchInv
   }
 ```
 
-Now that you know the invoice doesn't exist in your database, let's use `notFound` to handle it. Navigate to `/dashboard/invoices/[id]/edit/page.tsx`, and import `{ notFound }` from `'next/navigation'`.
+請求書がデータベースに存在しないことがわかったので、`notFound` を使用して処理しましょう。`/dashboard/invoices/[id]/edit/page.tsx` に移動し、`'next/navigation'` から `{ notFound }` をインポートします。
 
-Then, you can use a conditional to invoke `notFound` if the invoice doesn't exist:
+次に、請求書が存在しない場合に `notFound` を呼び出す条件を記述します。
 
 `/dashboard/invoices/[id]/edit/page.tsx`
 
@@ -220,11 +220,11 @@ Then, you can use a conditional to invoke `notFound` if the invoice doesn't exis
   }
 ```
 
-Perfect! `<Page>` will now throw an error if a specific invoice is not found. To show an error UI to the user. Create a `not-found.tsx` file inside the `/edit` folder.
+完璧です！これで `<Page>` は、特定の請求書が見つからない場合にエラーをスローするようになりました。ユーザーにエラー UI を表示させましょう。`not-found.tsx` ファイルを `/edit` フォルダー内に作成します。
 
-![The not-found.tsx file inside the edit folder]()
+![edit フォルダ内の not-found.tsx ファイル]()
 
-Then, inside the `not-found.tsx` file, paste the following the code:
+次に、`not-found.tsx` ファイル内に次のコードを貼り付けます。
 
 `/dashboard/invoices/[id]/edit/not-found.tsx`
 
@@ -249,17 +249,17 @@ export default function NotFound() {
 }
 ```
 
-Refresh the route, and you should now see the following UI:
+ルートを更新すると、次の UI が表示されるはずです。
 
-![404 Not Found Page]()
+![404 ページの表示]()
 
-That's something to keep in mind, `notFound` will take precedence over `error.tsx`, so you can reach out for it when you want to handle more specific errors!
+これは覚えておいてほしいことですが、`notFound` は `error.tsx` よりも優先されます！より具体的なエラーを処理したい場合は、これを活用してください。
 
-## Further reading
+## 参考文献
 
-To learn more about error handling in Next.js, check out the following documentation:
+Next.js でのエラー処理の詳細については、次のドキュメントを参照してください。
 
-- Error Handling
-- `error.js` API Reference
-- `notFound()` API Reference
-- `not-found.js` API Reference
+- [エラーハンドリング](https://nextjs.org/docs/app/building-your-application/routing/error-handling)
+- [`error.js` API リファレンス](https://nextjs.org/docs/app/api-reference/file-conventions/error)
+- [`notFound()` API リファレンス](https://nextjs.org/docs/app/api-reference/functions/not-found)
+- [`not-found.js` API リファレンス](https://nextjs.org/docs/app/api-reference/file-conventions/not-found)
