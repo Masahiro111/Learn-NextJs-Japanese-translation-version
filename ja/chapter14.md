@@ -2,15 +2,11 @@
 
 In the previous chapter, we looked at how to catch errors (including 404 errors) and display a fallback to the user. However, we still need to discuss another piece of the puzzle: form validation. Let's see how to implement server-side validation with Server Actions, and how you can show form errors using the `useFormState` hook - while keeping accessibility in mind!
 
-In this chapter...
-
 Here are the topics we’ll cover
 
-How to use `eslint-plugin-jsx-a11y` with Next.js to implement accessibility best practices.
-
-How to implement server-side form validation.
-
-How to use the React `useFormState` hook to handle form errors, and display them to the user.
+- How to use `eslint-plugin-jsx-a11y` with Next.js to implement accessibility best practices.
+- How to implement server-side form validation.
+- How to use the React `useFormState` hook to handle form errors, and display them to the user.
 
 ## What is accessibility?
 
