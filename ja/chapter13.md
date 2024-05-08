@@ -1,17 +1,17 @@
-# Handling Errors
+# エラーの処理
 
-In the previous chapter, you learned how to mutate data using Server Actions. Let's see how you can handle errors gracefully using JavaScript's try/catch statements and Next.js APIs.
+前の章では、サーバーアクションを使用してデータを変更する方法を学びました。JavaScript の try/catch 文と Next.js API を使用してエラーを適切に処理する方法を見てみましょう。
 
-In this chapter...
+この章で取り上げるトピックは以下のとおりです。
 
-- How to use the special error.tsx file to catch errors in your route segments, and show a fallback UI to the user.
-- How to use the notFound function and not-found file to handle 404 errors (for resources that don’t exist).
+- 特別な error.tsx ファイルを使用して、ルートセグメントでエラーを捕捉し、ユーザーにフォールバック UI を表示する方法
+- notFound 関数と not-found ファイルを使用して 404 エラー（存在しないリソースの場合）を処理する方法
 
-## Adding `try/catch` to Server Actions
+## サーバーアクションに `try/catch` を追加
 
-First, let's add JavaScript's `try/catch` statements to your Server Actions to allow you to handle errors gracefully.
+まず、JavaScript の `try/catch` 文をサーバーアクションに追加して、エラーを適切に処理できるようにしましょう。
 
-If you know how to do this, spend a few minutes updating your Server Actions, or you can copy the code below:
+以下のコードをコピーして実装してみましょう。
 
 `/app/lib/actions.ts`
 
@@ -83,9 +83,9 @@ export async function deleteInvoice(id: string) {
 }
 ```
 
-Note how `redirect` is being called outside of the `try/catch` block. This is because `redirect` works by throwing an error, which would be caught by the `catch` block. To avoid this, you can call `redirect` after `try/catch`. `redirect` would only be reachable if `try` is successful.
+`try/catch` ブロックの外側で `redirect` が呼び出されていることに注目してください。これは、`redirect` がエラーをスローすることで動作し、そのエラーは `catch` ブロックによってキャッチされるためです。これを回避するには、`try/catch` の後に `redirect` を呼び出します。`redirect` は、`try` が成功した場合にのみ到達可能です。
 
-Now, let's check what happens when an error is thrown in your Server Action. You can do this by throwing an error earlier. For example, in the `deleteInvoice` action, throw an error at the top of the function:
+ここで、サーバーアクションでエラーがスローされた場合に何が起こるかを確認してみましょう。これを行うには、事前にエラーをスローします。たとえば、`deleteInvoice` アクションでは、関数の先頭でエラーをスローします。
 
 `/app/lib/actions.ts`
 
@@ -104,17 +104,17 @@ Now, let's check what happens when an error is thrown in your Server Action. You
   }
 ```
 
-When you try to delete an invoice, you should see an error on localhost.
+請求書を削除しようとすると、ローカルホストでエラーが表示されるはずです。
 
-Seeing these errors are helpful while developing as you can catch any potential problems early. However, you also want to show errors to the user to avoid an abrupt failure and allow your application to continue running.
+このようなエラーが表示されると、潜在的な問題を早期に発見できるため、開発中には役立つでしょう。しかし、突然の障害を避けてアプリケーションの実行を継続できるように、ユーザーにエラーを表示することも必要です。
 
-This is where Next.js [error.tsx]() file comes in.
+そこで Next.js [error.tsx]() ファイルの出番です。
 
-## Handling all errors with `error.tsx`
+## `error.tsx` ですべてのエラーを処理する
 
-The `error.tsx` file can be used to define a UI boundary for a route segment. It serves as a **catch-all** for unexpected errors and allows you to display a fallback UI to your users.
+`error.tsx` ファイルは、ルートセグメントの UI 境界を定義するために使用できます。これは、予期しないエラーのための **キャッチオール** として機能し、ユーザーにフォールバック UI を表示できるようにします。
 
-Inside your `/dashboard/invoices` folder, create a new file called `error.tsx` and paste the following code:
+`/dashboard/invoices` フォルダ内に、`error.tsx` という新しいファイルを作成し、次のコードを貼り付けます。
 
 `/dashboard/invoices/error.tsx`
 
@@ -152,24 +152,24 @@ export default function Error({
 }
 ```
 
-There are a few things you'll notice about the code above:
+上記のコードについては、いくつか注意すべき箇所があります。
 
-- "use client" - `error.tsx` needs to be a Client Component.
-- It accepts two props:
-  - `error`: This object is an instance of JavaScript's native [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object.
-  - `reset`: This is a function to reset the error boundary. When executed, the function will try to re-render the route segment.
+- "use client" - `error.tsx` はクライアントコンポーネントである必要があります
+- 2 つのプロップを受け取ります
+  - `error`：このオブジェクトは、JavaScript のネイティブの [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) オブジェクトのインスタンスです
+  - `reset`：エラー境界をリセットする機能です。実行されると、この関数はルートセグメントの再レンダリングを試みます
 
-When you try to delete an invoice again, you should see the following UI:
+請求書を再度削除しようとすると、次の UI が表示されます。
 
-![The error.tsx file showing the props it accepts]()
+![受け取るプロップを示す error.tsx ファイル]()
 
-## Handling 404 errors with the `notFound` function
+## `notFound` 関数で 404 エラーを処理する
 
-Another way you can handle errors gracefully is by using the `notFound` function. While `error.tsx` is useful for catching **all** errors, `notFound` can be used when you try to fetch a resource that doesn't exist.
+エラーを適切に処理するもう 1 つの方法は、`notFound` 関数を使用することです。`error.tsx` は **すべての** エラーをキャッチするのに便利ですが、存在しないリソースを取得しようとする場合は `notFound` を使用できます。
 
-For example, visit http://localhost:3000/dashboard/invoices/2e94d1ed-d220-449f-9f11-f0bbceed9645/edit .
+たとえば、 http://localhost:3000/dashboard/invoices/2e94d1ed-d220-449f-9f11-f0bbceed9645/edit にアクセスしたとします。
 
-This is a fake UUID that doesn't exist in your database.
+これはデータベースに存在しない偽の UUID です。
 
 You'll immediately see `error.tsx` kicks in because this is a child route of `/invoices` where `error.tsx` is defined.
 
