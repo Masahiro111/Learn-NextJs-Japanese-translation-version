@@ -1,28 +1,28 @@
-# Improving Accessibility
+# アクセシビリティの向上
 
-In the previous chapter, we looked at how to catch errors (including 404 errors) and display a fallback to the user. However, we still need to discuss another piece of the puzzle: form validation. Let's see how to implement server-side validation with Server Actions, and how you can show form errors using the `useFormState` hook - while keeping accessibility in mind!
+前の章では、エラー（404 エラーを含む）をキャッチし、ユーザーにフォールバックを表示する方法について説明しました。しかし、パズルのもう 1 つのピースであるフォームバリデーションについてはまだ説明する必要があります。ここでは、Server Actions を使用してサーバーサイドのバリデーションを実装する方法と、`useFormState` フックを使用してフォームエラーを表示する方法について、アクセシビリティを考慮しながら説明します！
 
-Here are the topics we’ll cover
+この章で取り上げるトピックは以下のとおりです。
 
-- How to use `eslint-plugin-jsx-a11y` with Next.js to implement accessibility best practices.
-- How to implement server-side form validation.
-- How to use the React `useFormState` hook to handle form errors, and display them to the user.
+- Next.js で `eslint-plugin-jsx-a11y` を使用してアクセシビリティのベストプラクティスを実装する方法
+- サーバーサイドのフォームバリデーションの実装方法
+- React の `useFormState` フックを使用してフォームエラーを処理し、ユーザーに表示する方法
 
-## What is accessibility?
+## アクセシビリティとは？
 
-Accessibility refers to designing and implementing web applications that everyone can use, including those with disabilities. It's a vast topic that covers many areas, such as keyboard navigation, semantic HTML, images, colors, videos, etc.
+アクセシビリティとは、障害のある人を含め、誰もが利用できる Web アプリケーションを設計、実装することを指します。キーボードナビゲーション、セマンティック HTML、画像、色、動画など、多くの領域をカバーする広大なトピックです。
 
-While we won't go in-depth into accessibility in this course, we'll discuss the accessibility features available in Next.js and some common practices to make your applications more accessible.
+このコースでは、アクセシビリティについて深く掘り下げることはしませんが、Next.js で利用可能なアクセシビリティ機能と、アプリケーションをよりアクセシブルにするための一般的な実践方法について説明します。
 
-> If you'd like to learn more about accessibility, we recommend the [Learn Accessibility](https://web.dev/learn/accessibility/) course by [web.dev](https://web.dev/) .
+> アクセシビリティについてさらに詳しく知りたい場合は、[web.dev](https://web.dev/) の [Learn Accessibility](https://web.dev/learn/accessibility/) コースをお勧めします。
 
-## Using the ESLint accessibility plugin in Next.js
+## Next.js で ESLint アクセシビリティプラグインを使う
 
-By default, Next.js includes the [eslint-plugin-jsx-a11y](https://www.npmjs.com/package/eslint-plugin-jsx-a11y) plugin to help catch accessibility issues early. For example, this plugin warns if you have images without `alt` text, use the `aria-*` and role attributes incorrectly, and more.
+デフォルトでは、Next.js にはアクセシビリティの問題を早期に発見するのに役立つ [eslint-plugin-jsx-a11y](https://www.npmjs.com/package/eslint-plugin-jsx-a11y) プラグインが含まれています。たとえば、画像に `alt` テキストがなかったり、`aria-*` 属性や role 属性が正しく使われていなかったりすると警告が表示されます。
 
-Let's see how this works!
+どのように機能するかを見てみましょう！
 
-Add `next lint` as a script in your `package.json` file:
+`package.json` ファイルにスクリプトとして `next lint` を追加します。
 
 `/package.json`
 
@@ -36,25 +36,25 @@ Add `next lint` as a script in your `package.json` file:
   },
 ```
 
-Then run `npm run lint` in your terminal:
+次に、ターミナルで `npm run lint` を実行します。
 
-`_ Terminal`
+`_ ターミナル`
 
 ```command
 npm run lint
 ```
 
-You should see the following warning:
+次のような警告が表示されるはずです。
 
-`_ Terminal`
+`_ ターミナル`
 
 ```
 ✔ No ESLint warnings or errors
 ```
 
-However, what would happen if you had an image without `alt` text? Let's find out!
+しかし、もし `alt` テキストがない画像があったらどうなるでしょうか？確認してみましょう！
 
-Go to `/app/ui/invoices/table.tsx` and remove the `alt` prop from the image. You can use your editor's search feature to quickly find the `<Image>`:
+`/app/ui/invoices/table.tsx` に移動し、画像から `alt` プロパティを削除します。エディタの検索機能を使えば、すぐに `<Image>` を見つけることができます。
 
 `/app/ui/invoices/table.tsx`
 
@@ -64,13 +64,13 @@ Go to `/app/ui/invoices/table.tsx` and remove the `alt` prop from the image. You
     className="rounded-full"
     width={28}
     height={28}
-+   alt={`${invoice.name}'s profile picture`} // Delete this line
+-   alt={`${invoice.name}'s profile picture`} // Delete this line
   />
 ```
 
-Now run `npm run lint` again, and you should see the following warning:
+もう一度 `npm run lint` を実行すると、次のような警告が表示されるはずです。
 
-`_ Terminal`
+`_ ターミナル`
 
 ```
 ./app/ui/invoices/table.tsx
@@ -78,14 +78,14 @@ Now run `npm run lint` again, and you should see the following warning:
 either with meaningful text, or an empty string for decorative images. jsx-a11y/alt-text
 ```
 
-If you tried to deploy your application to Vercel, the warning would also show up in the build logs. This is because `next lint` runs as part of the build process. So you can run `lint` locally to catch accessibility issues before deploying your application.
+アプリケーションを Vercel にデプロイしようとすると、警告がビルドログにも表示されます。これは、`next lint` がビルドプロセスの一部として実行されるためです。したがって、アプリケーションをデプロイする前にローカルで `lint` を実行してアクセシビリティの問題を見つけることができます。
 
-## Improving form accessibility
+## フォームのアクセシビリティの向上
 
-There are three things we're already doing to improve accessibility in our forms:
+フォームのアクセシビリティを向上させるために、私たちがすでに行っていることが3つあります。
 
-- **Semantic HTML** : Using semantic elements (`<input>`, `<option>`, etc) instead of `<div>`. This allows assistive technologies (AT) to focus on the input elements and provide appropriate contextual information to the user, making the form easier to navigate and understand.
-- **Labelling** : Including `<label>` and the `htmlFor` attribute ensures that each form field has a descriptive text label. This improves AT support by providing context and also enhances usability by allowing users to click on the label to focus on the corresponding input field.
+- **セマンティック HTML** : `<div>` の代わりにセマンティック要素（`<input>`、`<option>` など）を使用します。これにより、支援技術（AT）が入力要素に焦点を当て、適切なコンテキスト情報をユーザーに提供できるようになり、フォームのナビゲーションや理解が容易になります。
+- **ラベル付け** : `<label>` と `htmlFor` 属性を含めることで、各フォームフィールドに説明的なテキストラベルが付けられます。これにより、コンテキストが提供されることで AT サポートが向上し、ユーザーがラベルをクリックして対応する入力フィールドにフォーカスできるようにすることでユーザビリティを向上させます。
 - **Focus Outline** : The fields are properly styled to show an outline when they are in focus. This is critical for accessibility as it visually indicates the active element on the page, helping both keyboard and screen reader users to understand where they are on the form. You can verify this by pressing `tab`.
 
 These practices lay a good foundation for making your forms more accessible to many users. However, they don't address `form validation` and `errors`.
