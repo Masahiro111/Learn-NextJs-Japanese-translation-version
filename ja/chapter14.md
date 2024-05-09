@@ -82,23 +82,23 @@ either with meaningful text, or an empty string for decorative images. jsx-a11y/
 
 ## フォームのアクセシビリティの向上
 
-フォームのアクセシビリティを向上させるために、私たちがすでに行っていることが3つあります。
+フォームのアクセシビリティを向上させるために、私たちがすでに行っていることが 3 つあります。
 
 - **セマンティック HTML** : `<div>` の代わりにセマンティック要素（`<input>`、`<option>` など）を使用します。これにより、支援技術（AT）が入力要素に焦点を当て、適切なコンテキスト情報をユーザーに提供できるようになり、フォームのナビゲーションや理解が容易になります。
 - **ラベル付け** : `<label>` と `htmlFor` 属性を含めることで、各フォームフィールドに説明的なテキストラベルが付けられます。これにより、コンテキストが提供されることで AT サポートが向上し、ユーザーがラベルをクリックして対応する入力フィールドにフォーカスできるようにすることでユーザビリティを向上させます。
-- **Focus Outline** : The fields are properly styled to show an outline when they are in focus. This is critical for accessibility as it visually indicates the active element on the page, helping both keyboard and screen reader users to understand where they are on the form. You can verify this by pressing `tab`.
+- **フォーカスアウトライン** : フィールドがフォーカスされているときにアウトラインが表示されるように、フィールドは適切にスタイルされます。これはアクセシビリティにとって重要で、ページ上のアクティブな要素を視覚的に示し、キーボードとスクリーンリーダーの両方のユーザーがフォームのどこにいるかを理解するのに役立ちます。これは、`tab`を押すことで確認することができます。
 
-These practices lay a good foundation for making your forms more accessible to many users. However, they don't address `form validation` and `errors`.
+これらのプラクティスは、フォームを多くのユーザーにとってよりアクセシブルなものにするための良い基礎となります。しかし、`フォームの検証（バリデーション）` や `エラー` には対応していません。
 
-## Form validation
+## フォームバリデーション
 
-Go to http://localhost:3000/dashboard/invoices/create , and submit an empty form. What happens?
+http://localhost:3000/dashboard/invoices/create に移動し、空のフォームを送信します。何が起こるのですか？
 
-You get an error! This is because you're sending empty form values to your Server Action. You can prevent this by validating your form on the client or the server.
+エラーが発生します。これは、空のフォーム値をサーバーアクションに送信しているためです。クライアント側またはサーバー側でフォームのバリデーションを行うことで、これを防ぐことができます。
 
-### Client-Side validation
+### クライアントサイドのバリデーション
 
-There are a couple of ways you can validate forms on the client. The simplest would be to rely on the form validation provided by the browser by adding the `required` attribute to the `<input>` and `<select>` elements in your forms. For example:
+クライアント側でフォームを検証する方法はいくつかあります。最も簡単な方法は、フォーム内の `<input>` 要素と `<select>` 要素に `required` 属性を追加することで、ブラウザが提供するフォームバリデーションに頼ることができます。たとえば
 
 `/app/ui/invoices/create-form.tsx`
 
