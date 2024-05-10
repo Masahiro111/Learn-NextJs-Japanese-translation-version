@@ -113,21 +113,21 @@ http://localhost:3000/dashboard/invoices/create に移動し、空のフォー�
   />
 ```
 
-Submit the form again, and you should now see the browser a warning if you try to submit a form with empty values.
+フォームをもう一度送信してみましょう。今度は空の値でフォームを送信するのでブラウザに警告が表示されるはずです。
 
-This approach is generally okay because some ATs support browser validation.
+AT によってはブラウザのバリデーションをサポートしているものもあるので、この方法は一般的に問題ありません。
 
-An alternative to client-side validation is server-side validation. Let's see how you can implement it in the next section. For now, delete the `required` attributes if you added them.
+クライアントサイドのバリデーションに代わるものとして、サーバーサイドのバリデーションがあります。次のセクションで実装方法を見てみましょう。ここでは、`required` 属性を追加した場合は削除してください。
 
-### Server-Side validation
+### サーバーサイドのバリデーション
 
-By validating forms on the server, you can:
+サーバー上でフォームのバリデーションを行うことで、次のことが可能になります。
 
-- Ensure your data is in the expected format before sending it to your database.
-- Reduce the risk of malicious users bypassing client-side validation.
-- Have one source of truth for what is considered _valid_ data.
+- データベースにデータを送信する前に、データが期待通りの形式であることを確認します
+- 悪意のあるユーザーがクライアント側のバリデーションを回避するリスクを減らします
+- 有効なデータであるかどうかの判断基準をひとつにまとめられます
 
-In your `create-form.tsx` component, import the `useFormState` hook from `react-dom`. Since `useFormState` is a hook, you will need to turn your form into a Client Component using `"use client"` directive:
+`create-form.tsx` コンポーネントで、`react-dom` から `useFormState` フックをインポートします。`useFormState` はフックであるため、`"use client"` ディレクティブを使用してフォームをクライアントコンポーネントにする必要があります。
 
 `/app/ui/invoices/create-form.tsx`
 
@@ -138,12 +138,12 @@ In your `create-form.tsx` component, import the `useFormState` hook from `react-
 + import { useFormState } from 'react-dom';
 ```
 
-Inside your Form Component, the `useFormState` hook:
+フォームコンポーネント内部の `useFormState` フックは
 
-- Takes two arguments: (`action`, `initialState`).
-- Returns two values: `[state, dispatch]` - the form state, and a dispatch function (similar to [useReducer](https://react.dev/reference/react/useReducer))
+- 2 つの引数を取ります (`action`, `initialState`)
+- 2 つの値を返します `[state, dispatch]` - フォームの state とディスパッチ関数（[useReducer](https://react.dev/reference/react/useReducer) と同様）
 
-Pass your `createInvoice` action as an argument of `useFormState`, and inside your `<form action={}>` attribute, call `dispatch`.
+`useFormState` の引数に `createInvoice` アクションを渡し、`<form action={}>` 属性内で `dispatch` を呼び出します。
 
 `/app/ui/invoices/create-form.tsx`
 
@@ -158,7 +158,7 @@ Pass your `createInvoice` action as an argument of `useFormState`, and inside yo
   }
 ```
 
-The `initialState` can be anything you define, in this case, create an object with two empty keys: `message` and `errors`.
+`initialState` は任意に定義できます。この場合は、2 つの空のキー（`message` と `errors`）を持つオブジェクトを作成します。
 
 `/app/ui/invoices/create-form.tsx`
 
@@ -174,9 +174,9 @@ The `initialState` can be anything you define, in this case, create an object wi
   }
 ```
 
-This may seem confusing initially, but it'll make more sense once you update the server action. Let's do that now.
+最初は混乱するかもしれませんが、サーバーアクションを更新すれば、より理解できるようになります。それではやってみましょう。
 
-In your `action.ts` file, you can use Zod to validate form data. Update your `FormSchema` as follows:
+`action.ts` ファイルでは、Zod を使用してフォームデータを検証できます。次のように `FormSchema` を更新します。
 
 `/app/lib/action.ts`
 
@@ -196,11 +196,11 @@ In your `action.ts` file, you can use Zod to validate form data. Update your `Fo
   });
 ```
 
-- `customerId` - Zod already throws an error if the customer field is empty as it expects a type `string`. But let's add a friendly message if the user doesn't select a customer.
-- `amount` - Since you are coercing the amount type from `string` to `number`, it'll default to zero if the string is empty. Let's tell Zod we always want the amount greater than 0 with the `.gt()` function.
-- `status` - Zod already throws an error if the status field is empty as it expects "pending" or "paid". Let's also add a friendly message if the user doesn't select a status.
+- `customerId` - Zod は `string` 型を想定しているため、customer フィールドが空の場合、エラーをスローします。しかし、ユーザーが顧客を選択しなかった場合にフレンドリーなメッセージを追加してみましょう
+- `amount` - 金額の型を `string` から `number` に強制しているので、文字列が空の場合はデフォルトで 0 になります。`.gt()` 関数を使用して、常に 0 より大きい金額を行事するよう Zod に伝えましょう
+- `status` - Zod は "pending "または "paid "を期待しているので、status フィールドが空だとエラーをスローします。ユーザーがステータスを選択しなかった場合にフレンドリーなメッセージを追加してみましょう
 
-Next, update your `createInvoice` action to accept two parameters:
+次に、`createInvoice`アクションを更新して、2 つのパラメータを受け取れるようにします。
 
 `/app/lib/actions.ts`
 
@@ -220,10 +220,10 @@ Next, update your `createInvoice` action to accept two parameters:
   }
 ```
 
-- `formData` - same as before.
-- `prevState` - contains the state passed from the `useFormState` hook. You won't be using it in the action in this example, but it's a required prop.
+- `formData` - 以前と同じです
+- `prevState` - `useFormState` フックから渡された state を含みます。今回の例のアクションでは使用しませんが、必須のプロップです
 
-Then, change the Zod `parse()` function to `safeParse()`:
+次に、Zod の `parse()` 関数を `safeParse()` に変更します。
 
 `/app/lib/actions.ts`
 
@@ -240,9 +240,9 @@ Then, change the Zod `parse()` function to `safeParse()`:
   }
 ```
 
-`safeParse()` will return an object containing either a `success` or `error` field. This will help handle validation more gracefully without having put this logic inside the `try/catch` block.
+`safeParse()` は、`success` または `error` フィールドのいずれかを含むオブジェクトを返します。これにより、このロジックを `try/catch` ブロック内に記述することなく、バリデーションをより適切に処理できるようになります。
 
-Before sending the information to your database, check if the form fields were validated correctly with a conditional:
+データベースに情報を送信する前に、フォームフィールドが正しくバリデートされたかどうかを条件付きでチェックします。
 
 `/app/lib/actions.ts`
 
@@ -267,13 +267,13 @@ Before sending the information to your database, check if the form fields were v
   }
 ```
 
-If `validatedFields` isn't successful, we return the function early with the error messages from Zod.
+`validatedFields` が成功しない場合は、Zod からのエラー メッセージとともに関数を早期に返します。
 
 > [!tip]
 >
-> console.log `validatedFields` and submit an empty form to see the shape of it.
+> console.log `validatedFields` を実行し、空のフォームを送信してその形状を確認します。
 
-Finally, since you're handling form validation separately, outside your try/catch block, you can return a specific message for any database errors, your final code should look like this:
+最後に、try/catch ブロックの外側でフォームのバリデーションを個別に処理しているため、データベースエラーに対して特定のメッセージを返すことができます。最終的なコードは次のようになります。
 
 `/app/lib/actions.ts`
 
@@ -318,9 +318,9 @@ export async function createInvoice(prevState: State, formData: FormData) {
 }
 ```
 
-Great, now let's display the errors in your form component. Back in the `create-form.tsx` component, you can access the errors using the form `state`.
+それでは、フォームコンポーネントにエラーを表示してみましょう。`create-form.tsx` コンポーネントに戻って、フォーム `state` を使用してエラーにアクセスできます。
 
-Add a **ternary operator** that checks for each specific error. For example, after the customer's field, you can add:
+特定のエラーをそれぞれチェックする **三項演算子** を追加します。たとえば、customer のフィールドの後に次のように追加します。
 
 `/app/ui/invoices/create-form.tsx`
 
@@ -367,33 +367,33 @@ Add a **ternary operator** that checks for each specific error. For example, aft
 
 > [!tip]
 >
-> You can console.log `state` inside your component and check if everything is wired correctly. Check the console in Dev Tools as your form is now a Client Component.
+> コンポーネントの内部で console.log `state` を実行し、すべてが正しく接続されているかどうかを確認できます。フォームがクライアントコンポーネントになっているので、開発ツールのコンソールをチェックしてください。
 
-In the code above, you're also adding the following aria labels:
+上記のコードでは、次の aria ラベルも追加しています。
 
-- `aria-describedby="customer-error"` : This establishes a relationship between the `select` element and the error message container. It indicates that the container with `id="customer-error"` describes the `select` element. Screen readers will read this description when the user interacts with the `select` box to notify them of errors.
-- `id="customer-error"` : This `id` attribute uniquely identifies the HTML element that holds the error message for the `select` input. This is necessary for `aria-describedby` to establish the relationship.
-- `aria-live="polite"` : The screen reader should politely notify the user when the error inside the `div` is updated. When the content changes (e.g. when a user corrects an error), the screen reader will announce these changes, but only when the user is idle so as not to interrupt them.
+- `aria-describedby="customer-error"` : これにより、`select` 要素とエラーメッセージコンテナの関係を確立します。これは、`id="customer-error"` のコンテナが `select` 要素を記述していることを示します。ユーザーが `select` ボックスを操作してエラーを通知すると、スクリーンリーダーがこの説明を読み上げます。
+- `id="customer-error"` : この `id` 属性は、`select` 入力のエラーメッセージを保持する HTML 要素を一意に識別します。これは、`aria-describedby` が関係を確立するために必要です。
+- `aria-live="polite"` : `div` 内のエラーが更新されたとき、スクリーンリーダーはユーザーに丁寧に通知する必要があります。コンテンツが変更されたとき（例えば、ユーザーがエラーを修正したとき）、スクリーンリーダーはこれらの変更をアナウンスしますが、ユーザーの邪魔にならないように、ユーザーがアイドル状態のときにのみアナウンスします。
 
-## Practice: Adding aria labels
+## 練習：aria ラベルを追加する
 
-Using the example above, add errors to your remaining form fields. You should also show a message at the bottom of the form if any fields are missing. Your UI should look like this:
+上記の例を使用して、残りのフォームフィールドにエラーを追加します。フィールドが不足している場合は、フォームの下部にメッセージを表示する必要もあります。UI は次のようになります。
 
-![Create invoice form showing error messages for each field.]()
+![各フィールドのエラーメッセージを表示する請求書フォームを作成します。]()
 
-Once you're ready, run `npm run lint` to check if you're using the aria labels correctly.
+準備ができたら、`npm run lint` を実行して、aria ラベルが正しく使用されているかチェックしてください。
 
-If you'd like to challenge yourself, take the knowledge you've learned in this chapter and add form validation to the `edit-form.tsx` component.
+この章で学んだ知識を活用して、`edit-form.tsx` コンポーネントにフォームバリデーションを追加してみましょう。
 
-You'll need to:
+そのために
 
-- Add `useFormState` to your `edit-form.tsx` component.
-- Edit the `updateInvoice` action to handle validation errors from Zod.
-- Display the errors in your component, and add aria labels to improve accessibility.
+- `edit-form.tsx` コンポーネントに `useFormState` を追加します
+- `updateInvoice` アクションを編集して、Zod からのバリデーションエラーを処理します
+- コンポーネントにエラーを表示し、アクセシビリティを向上させるために aria ラベルを追加します
 
-Once you're ready, expand the code snippet below to see the solution:
+準備ができたら、以下のコードスニペットを活用してアプリを作成していきましょう。
 
-Edit Invoice Form:
+**請求書フォームの編集**
 
 `/app/ui/invoices/edit-form.tsx`
 
@@ -413,7 +413,7 @@ export default function EditInvoiceForm({
 }
 ```
 
-Server Action:
+**サーバーアクション**
 
 `/app/lib/actions.ts`
 
