@@ -198,11 +198,11 @@ export const { auth, signIn, signOut } = NextAuth({
 
 > [!tip]
 >
-> Although we're using the Credentials provider, it's generally recommended to use alternative providers such as [OAuth](https://authjs.dev/getting-started/providers/oauth-tutorial) or [email](https://authjs.dev/getting-started/providers/email-tutorial) providers. See the NextAuth.js docs for a full list of options.
+> 認証情報プロバイダを使用していますが、通常は、[OAuth](https://authjs.dev/getting-started/providers/oauth-tutorial) や [email](https://authjs.dev/getting-started/providers/email-tutorial) などのプロバイダを使用することが推奨されています。オプションの一覧は NextAuth.js のドキュメントをご覧ください。
 
-### Adding the sign in functionality
+### サインイン機能の追加
 
-You can use the `authorize` function to handle the authentication logic. Similarly to Server Actions, you can use `zod` to validate the email and password before checking if the user exists in the database:
+認証ロジックの処理には `authorize` 関数を利用します。Server Actions と同様に、`zod` を使ってメールアドレスとパスワードのバリデーションを行ってから、そのユーザーがデータベースに存在するかどうかをチェックします。
 
 `/auth.ts`
 
@@ -226,7 +226,7 @@ You can use the `authorize` function to handle the authentication logic. Similar
   });
 ```
 
-After validating the credentials, create a new `getUser` function that queries the user from the database.
+認証情報をバリデートした後、データベースからユーザーを取得する `getUser` 関数を新たに作成します。
 
 `/auth.ts`
 
@@ -271,7 +271,7 @@ After validating the credentials, create a new `getUser` function that queries t
   });
 ```
 
-Then, call `bcrypt.compare` to check if the passwords match:
+次に、`bcrypt.compare` を呼び出して、パスワードが一致するか確認します。
 
 `/auth.ts`
 
@@ -310,11 +310,11 @@ Then, call `bcrypt.compare` to check if the passwords match:
   });
 ```
 
-Finally, if the passwords match you want to return the user, otherwise, return `null` to prevent the user from logging in.
+最後に、パスワードが一致すればユーザーを返し、一致しなければ `null` を返してユーザーがログインできないようにします。
 
-### Updating the login form
+### ログインフォームの更新
 
-Now you need to connect the auth logic with your login form. In your `actions.ts` file, create a new action called `authenticate`. This action should import the `signIn` function from `auth.ts`:
+次に、認証ロジックをログインフォームに接続する必要があります。`actions.ts` ファイルに、`authenticate` という新しいアクションを作成します。このアクションでは、`auth.ts` から `signIn` 関数をインポートする必要があります。
 
 `/app/lib/actions.ts`
 
@@ -344,9 +344,9 @@ export async function authenticate(
 }
 ```
 
-If there's a `'CredentialsSignin'` error, you want to show an appropriate error message. You can learn about NextAuth.js errors in [the documentation](https://errors.authjs.dev/)
+`'CredentialsSignin'` エラーが発生した場合は、適切なエラーメッセージを表示する必要があります。NextAuth.js のエラーについては、[ドキュメント](https://errors.authjs.dev/) を参照してください。
 
-Finally, in your `login-form.tsx` component, you can use React's `useFormState` to call the server action and handle form errors, and use `useFormStatus` to handle the pending state of the form:
+最後に、`login-form.tsx` コンポーネントで、React の `useFormState` を使用してサーバーアクションを呼び出し、フォームエラーを処理します。また、`useFormStatus` を使用してフォームの保留状態を処理します。
 
 `app/ui/login-form.tsx`
 
@@ -443,9 +443,9 @@ Finally, in your `login-form.tsx` component, you can use React's `useFormState` 
   }
 ```
 
-## Adding the logout functionality
+## ログアウト機能の追加
 
-To add the logout functionality to `<SideNav />`, call the `signOut` function from `auth.ts` in your `<form>` element:
+ログアウト機能を `<SideNav />` に追加するには、`<form>` 要素の `auth.ts` から `signOut` 関数を呼び出します。
 
 `/ui/dashboard/sidenav.tsx`
 
@@ -480,9 +480,9 @@ To add the logout functionality to `<SideNav />`, call the `signOut` function fr
   }
 ```
 
-## Try it out
+## 試してみよう
 
-Now, try it out. You should be able to log in and out of your application using the following credentials:
+早速、試してみましょう。次の認証情報を使用して、アプリケーションにログインしたりログアウトしたりできるはずです。
 
 - Email: `user@nextmail.com`
 - Password: `123456`
