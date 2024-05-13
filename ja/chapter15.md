@@ -1,32 +1,32 @@
-# Adding Authentication
+# 認証機能の追加
 
-In the previous chapter, you finished building the invoices routes by adding form validation and improving accessibility. In this chapter, you'll be adding authentication to your dashboard.
+前の章では、フォームのバリデーションを追加し、アクセシビリティを改善することで請求書ルートの構築を完了しました。この章では、ダッシュボードに認証機能を追加します。
 
-Here are the topics we’ll cover
+ここで取り上げるトピックは次のとおりです
 
-- What is authentication.
-- How to add authentication to your app using NextAuth.js.
-- How to use Middleware to redirect users and protect your routes.
-- How to use React's `useFormStatus` and `useFormState` to handle pending states and form errors.
+- 認証とは何か
+- NextAuth.js を使用してアプリに認証を追加する方法
+- ミドルウェアを使用してユーザーをリダイレクトし、ルートを保護する方法
+- React の `useFormStatus` と `useFormState` を使用して保留状態やフォームエラーを処理する方法
 
-## What is authentication?
+## 認証とは？
 
-Authentication is a key part of many web applications today. It's how a system checks if the user is who they say they are.
+認証は、今日の多くの web アプリケーションの重要な役割を担っています。これは、ユーザーが本人であるかどうかをシステムがチェックする方法です。
 
-A secure website often uses multiple ways to check a user's identity. For instance, after entering your username and password, the site may send a verification code to your device or use an external app like Google Authenticator. This 2-factor authentication (2FA) helps increase security. Even if someone learns your password, they can't access your account without your unique token.
+セキュアな Web サイトでは、多くの場合、ユーザーの身元を確認するために複数の方法が使用さることがよくあります。たとえば、ユーザー名とパスワードを入力すると、サイトからデバイスに確認コードが送信されたり、Google Authenticator のような外部アプリを使用したりします。この 2 要素認証（2FA）はセキュリティの向上に役立ちます。たとえ誰かがあなたのパスワードを知ったとしても、あなたの固有のトークンがなければあなたのアカウントにアクセスすることはできません。
 
-### Authentication vs. Authorization
+### 認証と認可
 
-In web development, authentication and authorization serve different roles:
+Web 開発では、認証と認可は異なる役割を果たします。
 
-- **Authentication** is about making sure the user is who they say they are. You're proving your identity with something you have like a username and password.
-- **Authorization** is the next step. Once a user's identity is confirmed, authorization decides what parts of the application they are allowed to use.
+- **認証** は、ユーザーが本人であることを確認することです。ユーザー名やパスワードなど、自分が持っているもので自分の身元を証明することになります。
+- **認可** は次のステップです。ユーザーの身元が確認されると、認可によってアプリケーションのどの部分の使用が許可されるかを決定します。
 
-So, authentication checks who you are, and authorization determines what you can do or access in the application.
+つまり、認証はあなたが誰であるかをチェックし、認可はあなたがアプリケーションで何ができるのか、何にアクセスできるのかを決定します。
 
-## Creating the login route
+## ログインルートの作成
 
-Start by creating a new route in your application called `/login` and paste the following code:
+まず、アプリケーションに `/login` という名前の新しいルートを作成し、次のコードを貼り付けます。
 
 `/app/login/page.tsx`
 
@@ -50,15 +50,15 @@ export default function LoginPage() {
 }
 ```
 
-You'll notice the page imports `<LoginForm />`, which you'll update later in the chapter.
+このページで `<LoginForm />` がインポートされていますが、これはこの章の後半で更新します。
 
 ## NextAuth.js
 
-We will be using [NextAuth.js](https://nextjs.authjs.dev/) to add authentication to your application. NextAuth.js abstracts away much of the complexity involved in managing sessions, sign-in and sign-out, and other aspects of authentication. While you can manually implement these features, the process can be time-consuming and error-prone. NextAuth.js simplifies the process, providing a unified solution for auth in Next.js applications.
+アプリケーションに認証を追加するために、[NextAuth.js](https://nextjs.authjs.dev/) を使います。NextAuth.js は、セッション管理、サインイン、サインアウトなど、 認証にかかわる複雑な処理の多くを抽象化してくれます。手作業でこれらの機能を実装することもできますが、そのプロセスには時間がかかり、エラーも発生しがちです。NextAuth.js はこのプロセスを簡略化し、Next.js アプリケーションにおける認証のための統一されたソリューションを提供します。
 
-## Setting up NextAuth.js
+## NextAuth.js のセットアップ
 
-Install NextAuth.js by running the following command in your terminal:
+ターミナルで次のコマンドを実行して、NextAuth.js をインストールします。
 
 `_ Terminal`
 
@@ -66,9 +66,9 @@ Install NextAuth.js by running the following command in your terminal:
 npm install next-auth@beta
 ```
 
-Here, you're installing the `beta` version of NextAuth.js, which is compatible with Next.js 14.
+ここでは、Next.js 14 と互換性のある NextAuth.js の `beta` 版をインストールします。
 
-Next, generate a secret key for your application. This key is used to encrypt cookies, ensuring the security of user sessions. You can do this by running the following command in your terminal:
+次に、アプリケーションの秘密鍵を生成します。このキーは Cookie の暗号化に使用され、ユーザーセッションのセキュリティが確保されます。ターミナルで次のコマンドを実行してください。
 
 `_ Terminal`
 
@@ -76,7 +76,7 @@ Next, generate a secret key for your application. This key is used to encrypt co
 openssl rand -base64 32
 ```
 
-Then, in your `.env` file, add your generated key to the `AUTH_SECRET` variable:
+次に、`.env` ファイルで、生成されたキーを `AUTH_SECRET` 変数に追加します。
 
 `.env`
 
@@ -84,11 +84,11 @@ Then, in your `.env` file, add your generated key to the `AUTH_SECRET` variable:
 + AUTH_SECRET=your-secret-key
 ```
 
-For auth to work in production, you'll need to update your environment variables in your Vercel project too. Check out this [guide](https://vercel.com/docs/projects/environment-variables) on how to add environment variables on Vercel.
+実稼働環境で認証を機能させるには、Vercel プロジェクトの環境変数も更新する必要があります。Vercel に環境変数を追加する方法については、こちらの [ガイド](https://vercel.com/docs/projects/environment-variables) を確認してください。
 
-### Adding the pages option
+### ページオプションの追加
 
-Create an `auth.config.ts` file at the root of our project that exports an `authConfig` object. This object will contain the configuration options for NextAuth.js. For now, it will only contain the `pages` option:
+プロジェクトのルートに `auth.config.ts` ファイルを作成し、`authConfig` オブジェクトをエクスポートする。このオブジェクトには NextAuth.js の設定オプションが含まれます。今のところ、`pages` オプションだけが含まれています。
 
 `/auth.config.ts`
 
@@ -102,11 +102,11 @@ export const authConfig = {
 };
 ```
 
-You can use the `pages` option to specify the route for custom sign-in, sign-out, and error pages. This is not required, but by adding `signIn: '/login'` into our `pages` option, the user will be redirected to our custom login page, rather than the NextAuth.js default page.
+`pages` オプションを使うと、カスタムサインイン、カスタムサインアウト、カスタムエラーページのルートを指定することができます。これは必須ではありませんが、`pages` オプションに `signIn: '/login'` を追加することで、ユーザは NextAuth.js のデフォルトページではなく、カスタムログインページにリダイレクトされます。
 
-## Protecting your routes with Next.js Middleware
+## Next.js ミドルウェアでルートを保護する
 
-Next, add the logic to protect your routes. This will prevent users from accessing the dashboard pages unless they are logged in.
+次に、ルートを保護するロジックを追加します。ログインしていないユーザーがダッシュボードのページにアクセスできないようにします。
 
 `/auth.config.ts`
 
@@ -134,11 +134,11 @@ Next, add the logic to protect your routes. This will prevent users from accessi
 + } satisfies NextAuthConfig;
 ```
 
-The `authorized` callback is used to verify if the request is authorized to access a page via [Next.js Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware). It is called before a request is completed, and it receives an object with the `auth` and `request` properties. The `auth` property contains the user's session, and the `request` property contains the incoming request.
+`authorized` コールバックは、リクエストが [Next.js Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) を経由したページへのアクセスを許可されているかどうかを確認するために使用します。このコールバックはリクエストが完了する前に呼び出され、`auth` プロパティと `request` プロパティを持つオブジェクトを受け取ります。`auth` プロパティにはユーザーのセッションが格納され、`request` プロパティには受信したリクエストが格納されます。
 
-The `providers` option is an array where you list different login options. For now, it's an empty array to satisfy NextAuth config. You'll learn more about it in the [Adding the Credentials provider](https://nextjs.org/learn/dashboard-app/adding-authentication#adding-the-credentials-provider) section.
+`providers` オプションは、さまざまなログインオプションをリストする配列となっています。現時点では、NextAuth の設定を満たすための空の配列です。詳細については、[認証情報プロバイダの追加](https://nextjs.org/learn/dashboard-app/adding-authentication#adding-the-credentials-provider) のセクションで説明します。
 
-Next, you will need to import the `authConfig` object into a Middleware file. In the root of your project, create a file called `middleware.ts` and paste the following code:
+次に、`authConfig` オブジェクトをミドルウェアファイルにインポートします。プロジェクトのルートに `middleware.ts` というファイルを作成し、次のコードを貼り付けます。
 
 `/middleware.ts`
 
@@ -154,17 +154,17 @@ export const config = {
 };
 ```
 
-Here you're initializing NextAuth.js with the `authConfig` object and exporting the `auth` property. You're also using the `matcher` option from Middleware to specify that it should run on specific paths.
+ここでは、NextAuth.js を `authConfig` オブジェクトで初期化し、`auth` プロパティをエクスポートしています。また、ミドルウェアの `matcher` オプションを使って、特定のパスで実行するように指定しています。
 
-The advantage of employing Middleware for this task is that the protected routes will not even start rendering until the Middleware verifies the authentication, enhancing both the security and performance of your application.
+このタスクにミドルウェアを使用する利点は、ミドルウェアが認証を確認するまで保護されたルートのレンダリングが開始されないため、アプリケーションのセキュリティとパフォーマンスの両方が向上することです。
 
-### Password hashing
+### パスワードのハッシュ化
 
-It's good practice to **hash** passwords before storing them in a database. Hashing converts a password into a fixed-length string of characters, which appears random, providing a layer of security even if the user's data is exposed.
+パスワードをデータベースに保存する前に、**ハッシュ化** することをお勧めします。ハッシュ化により、パスワードがランダムに見える固定長の文字列に変換され、ユーザーのデータが漏洩した場合でもセキュリティ層を確保することができます。
 
-In your `seed.js` file, you used a package called `bcrypt` to hash the user's password before storing it in the database. You will use it again later in this chapter to compare that the password entered by the user matches the one in the database. However, you will need to create a separate file for the `bcrypt` package. This is because `bcrypt` relies on Node.js APIs not available in Next.js Middleware.
+`seed.js` ファイルでは、`bcrypt` というパッケージを使用して、ユーザーのパスワードをデータベースに保存する前にハッシュ化しました。この章の後半で、ユーザが入力したパスワードがデータベースのパスワードと一致するかどうかを比較するために、再びこのパッケージを使用することになります。ただし、`bcrypt` パッケージ用に別のファイルを作成する必要があります。`bcrypt` は Next.js ミドルウェアでは利用できない Node.js API に依存しているからです。
 
-Create a new file called auth.ts that spreads your `authConfig` object:
+auth.ts という新しいファイルを作成し、`authConfig` オブジェクトを展開します。
 
 `/auth.ts`
 
@@ -177,11 +177,11 @@ export const { auth, signIn, signOut } = NextAuth({
 });
 ```
 
-### Adding the Credentials provider
+### 認証情報プロバイダの追加
 
-Next, you will need to add the `providers` option for NextAuth.js. `providers` is an array where you list different login options such as Google or GitHub. For this course, we will focus on using the [Credentials provider](https://authjs.dev/getting-started/providers/credentials-tutorial) only.
+次に、NextAuth.js に `providers` オプションを追加します。`providers` は、Google や GitHub など、さまざまなログインオプションをリストする配列です。このコースでは、[認証情報プロバイダ](https://authjs.dev/getting-started/providers/credentials-tutorial) のみに焦点を当てます。
 
-The Credentials provider allows users to log in with a username and a password.
+認証情報プロバイダを使用すると、ユーザーはユーザー名とパスワードを使用してログインできます。
 
 `/auth.ts`
 
@@ -196,7 +196,7 @@ The Credentials provider allows users to log in with a username and a password.
   });
 ```
 
-> **Good to know:**
+> [!tip]
 >
 > Although we're using the Credentials provider, it's generally recommended to use alternative providers such as [OAuth](https://authjs.dev/getting-started/providers/oauth-tutorial) or [email](https://authjs.dev/getting-started/providers/email-tutorial) providers. See the NextAuth.js docs for a full list of options.
 
