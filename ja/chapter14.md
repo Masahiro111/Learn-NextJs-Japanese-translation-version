@@ -379,7 +379,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
 上記の例を使用して、残りのフォームフィールドにエラーを追加します。フィールドが不足している場合は、フォームの下部にメッセージを表示する必要もあります。UI は次のようになります。
 
-![各フィールドのエラーメッセージを表示する請求書フォームを作成します。]()
+![各フィールドのエラーメッセージを表示する請求書フォームを作成します。](/_images/form-validation-page.avif)
 
 準備ができたら、`npm run lint` を実行して、aria ラベルが正しく使用されているかチェックしてください。
 

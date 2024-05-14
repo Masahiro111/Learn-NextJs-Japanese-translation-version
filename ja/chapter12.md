@@ -60,7 +60,7 @@ export default function Page() {
 
 まず、`/invoices` フォルダー内に、`/create` という新しいルートセグメントと `page.tsx` ファイルを追加します。
 
-![請求書フォルダの中に入れ子になった create フォルダがあり、その中に page.tsx ファイルがある]()
+![請求書フォルダの中に入れ子になった create フォルダがあり、その中に page.tsx ファイルがある](/_images/create-invoice-route.avif)
 
 このルートを使って新しい請求書を作成します。`page.tsx` ファイル内に次のコードを貼り付けて、時間をかけてコードを読んでみましょう。
 
@@ -103,7 +103,7 @@ export default async function Page() {
 
 http://localhost:3000/dashboard/invoices/create に、次の UI が表示されるはずです。
 
-![パンくずリストとフォーム2で請求書ページを作成する]()
+![パンくずリストとフォーム2で請求書ページを作成する](/_images/create-invoice-page.avif)
 
 ### サーバーアクションの作成
 
@@ -419,7 +419,7 @@ Next.js では、正確なセグメント名がわからず、データに基づ
 
 `/invoices` フォルダに、`[id]` という名前の新しい動的ルートを作成し、次に `page.tsx` ファイルを含む `edit` という名前の新しいルートを作成します。ファイル構造は次のようになります。
 
-![ネストされた [id] フォルダーとその中に edit フォルダがある invoices フォルダ]()
+![ネストされた [id] フォルダーとその中に edit フォルダがある invoices フォルダ](/_images/edit-invoice-route.avif)
 
 `<Table>` コンポーネントには、テーブルレコードから請求書の `id` を受け取る `<UpdateInvoice />` ボタンがあることに注目してください。
 
@@ -543,7 +543,7 @@ export default async function Page() {
 
 素晴らしい！それでは、すべてが正しく記述されているかテストしてみましょう。http://localhost:3000/dashboard/invoices にアクセスし、鉛筆のアイコンをクリックして請求書を編集します。ナビゲーションが完了すると、請求書の詳細が事前に入力されたフォームが表示されます。
 
-![パンくずリストとフォームを含む請求書ページの編集]()
+![パンくずリストとフォームを含む請求書ページの編集](/_images/edit-invoice-page.avif)
 
 URL も次のような `id` で更新されるはずです。http://localhost:3000/dashboard/invoice/uuid/edit
 

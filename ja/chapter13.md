@@ -161,7 +161,7 @@ export default function Error({
 
 請求書を再度削除しようとすると、次の UI が表示されます。
 
-![受け取るプロップを示す error.tsx ファイル]()
+![受け取るプロップを示す error.tsx ファイル](/_images/error-page.avif)
 
 ## `notFound` 関数で 404 エラーを処理する
 
@@ -222,7 +222,7 @@ export default function Error({
 
 完璧です！これで `<Page>` は、特定の請求書が見つからない場合にエラーをスローするようになりました。ユーザーにエラー UI を表示させましょう。`not-found.tsx` ファイルを `/edit` フォルダー内に作成します。
 
-![edit フォルダ内の not-found.tsx ファイル]()
+![edit フォルダ内の not-found.tsx ファイル](/_images/not-found-file.avif)
 
 次に、`not-found.tsx` ファイル内に次のコードを貼り付けます。
 
@@ -251,7 +251,7 @@ export default function NotFound() {
 
 ルートを更新すると、次の UI が表示されるはずです。
 
-![404 ページの表示]()
+![404 ページの表示](/_images/404-not-found-page.avif)
 
 これは覚えておいてほしいことですが、`notFound` は `error.tsx` よりも優先されます！より具体的なエラーを処理したい場合は、これを活用してください。
 
