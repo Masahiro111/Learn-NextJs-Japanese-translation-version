@@ -118,11 +118,11 @@ Next.js は自動的にタイトルとメタデータをアプリケーション
 + };
 ```
 
-This works, but we are repeating the title of the application in every page. If something changes, like the company name, you'd have to update it on every page.
+これは機能はするのですが、すべてのページでアプリケーションのタイトルを繰り返してしまいます。会社名のように、何か変更があれば、すべてのページで更新する必要があります。
 
-Instead, you can use the `title.template` field in the `metadata` object to define a template for your page titles. This template can include the page title, and any other information you want to include.
+代わりに、`metadata` オブジェクトの `title.template` フィールドを使って、ページタイトルのテンプレートを定義することができます。このテンプレートにはページタイトルや その他の必要な情報を含めることができます。
 
-In your root layout, update the `metadata` object to include a template:
+ルートレイアウトで、`metadata` オブジェクトを更新して、テンプレートを含めます。
 
 `/app/layout.tsx`
 
@@ -139,9 +139,9 @@ In your root layout, update the `metadata` object to include a template:
 + };
 ```
 
-The `%s` in the template will be replaced with the specific page title.
+テンプレート内の `%s` は特定のページタイトルに置き換えられます。
 
-Now, in your `/dashboard/invoices` page, you can add the page title:
+ここで、`/dashboard/invoices` ページにページタイトルを追加できます。
 
 `/app/dashboard/invoices/page.tsx`
 
@@ -151,11 +151,11 @@ export const metadata: Metadata = {
 };
 ```
 
-Navigate to the `/dashboard/invoices` page and check the `<head>` element. You should see the page title is now `Invoices | Acme Dashboard`.
+`/dashboard/invoices` ページに移動し、`<head>` 要素を確認します。ページのタイトルが `Invoices | Acme Dashboard` になっていると思います。
 
-## Practice: Adding metadata
+## 実践：メタデータの追加
 
-Now that you've learned about metadata, practice by adding titles to your other pages:
+メタデータについて学習したので、他のページにタイトルを追加して練習してみましょう。
 
 1. `/login` page.
 1. `/dashboard/` page.
@@ -163,4 +163,4 @@ Now that you've learned about metadata, practice by adding titles to your other 
 1. `/dashboard/invoices/create` page.
 1. `/dashboard/invoices/[id]/edit` page.
 
-The Next.js Metadata API is powerful and flexible, giving you full control over your application's metadata. Here, we've shown you how to add some basic metadata, but you can add multiple fields, including `keywords`, `robots`, `canonical`, and more. Feel free to explore the [documentation](https://nextjs.org/docs/app/api-reference/functions/generate-metadata), and add any additional metadata you want to your application.
+Next.js のメタデータ API は高機能かつ柔軟で、アプリケーションのメタデータを最大限にコントロールできます。ここでは、基本的なメタデータの追加方法を紹介しましたが `keywords`、`robots`、`canonical` など、複数のフィールドを追加することもできます。お気軽に [ドキュメント](https://nextjs.org/docs/app/api-reference/functions/generate-metadata) を調べて、あなたのアプリケーションに必要なメタデータを追加してください。
