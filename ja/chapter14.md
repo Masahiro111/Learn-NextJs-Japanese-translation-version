@@ -38,7 +38,7 @@
 
 次に、ターミナルで `npm run lint` を実行します。
 
-`_ ターミナル`
+`ターミナル`
 
 ```command
 npm run lint
@@ -46,7 +46,7 @@ npm run lint
 
 次のような警告が表示されるはずです。
 
-`_ ターミナル`
+`ターミナル`
 
 ```
 ✔ No ESLint warnings or errors
@@ -70,7 +70,7 @@ npm run lint
 
 もう一度 `npm run lint` を実行すると、次のような警告が表示されるはずです。
 
-`_ ターミナル`
+`ターミナル`
 
 ```
 ./app/ui/invoices/table.tsx

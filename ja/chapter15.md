@@ -60,7 +60,7 @@ export default function LoginPage() {
 
 ターミナルで次のコマンドを実行して、NextAuth.js をインストールします。
 
-`_ Terminal`
+`ターミナル`
 
 ```
 npm install next-auth@beta
@@ -70,7 +70,7 @@ npm install next-auth@beta
 
 次に、アプリケーションの秘密鍵を生成します。このキーは Cookie の暗号化に使用され、ユーザーセッションのセキュリティが確保されます。ターミナルで次のコマンドを実行してください。
 
-`_ Terminal`
+`ターミナル`
 
 ```
 openssl rand -base64 32

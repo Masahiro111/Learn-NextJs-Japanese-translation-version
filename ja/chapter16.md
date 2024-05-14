@@ -11,7 +11,7 @@
 
 ## メタデータとは？
 
-Web 開発において、メタデータは Web ページに関する補足情報を付与します。メタデータは、ページを訪問するユーザーには表示されません。その代わり、ページの HTML（通常は`<head>`要素内）に埋め込まれ、見えないところで機能します。この隠れた情報は、検索エンジンやその他のシステムがウェブページの内容をよりよく理解するために重要です。
+Web 開発において、メタデータは Web ページに関する補足情報を付与します。メタデータは、ページを訪問するユーザーには表示されません。その代わり、ページの HTML（通常は `<head>` 要素内）に埋め込まれ、見えないところで機能します。この隠れた情報は、検索エンジンやその他のシステムがウェブページの内容をよりよく理解するために重要です。
 
 ## なぜメタデータが重要なのか？
 
@@ -157,10 +157,10 @@ export const metadata: Metadata = {
 
 メタデータについて学習したので、他のページにタイトルを追加して練習してみましょう。
 
-1. `/login` page.
-1. `/dashboard/` page.
-1. `/dashboard/customers` page.
-1. `/dashboard/invoices/create` page.
-1. `/dashboard/invoices/[id]/edit` page.
+1. `/login` ページ
+1. `/dashboard/` ページ
+1. `/dashboard/customers` ページ
+1. `/dashboard/invoices/create` ページ
+1. `/dashboard/invoices/[id]/edit` ページ
 
 Next.js のメタデータ API は高機能かつ柔軟で、アプリケーションのメタデータを最大限にコントロールできます。ここでは、基本的なメタデータの追加方法を紹介しましたが `keywords`、`robots`、`canonical` など、複数のフィールドを追加することもできます。お気軽に [ドキュメント](https://nextjs.org/docs/app/api-reference/functions/generate-metadata) を調べて、あなたのアプリケーションに必要なメタデータを追加してください。

@@ -373,7 +373,7 @@ Searching... Emil
 
 `use-debounce` をインストールします。
 
-`Terminal`
+`ターミナル`
 
 ```
 npm i use-debounce
