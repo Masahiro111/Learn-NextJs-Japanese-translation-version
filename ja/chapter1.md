@@ -48,7 +48,7 @@ cd nextjs-dashboard
 
 このプロジェクトでは、いくつかのプレースホルダデータを `app/lib/placeholder-data.js` に用意しました。ファイル内の各 JavaScript オブジェクトは、データベース内のテーブルを表しています。たとえば、invoices テーブルの場合は以下のようになります。
 
-```js
+```diff
 const invoices = [
   {
     customer_id: customers[0].id,
@@ -76,7 +76,7 @@ TypeScript を知らなくても大丈夫です。必要に応じて TypeScript 
 
 `/app/lib/settings.ts` ファイルを見てください。ここでは、データベースから返される型を手動で定義します。たとえば、invoices テーブルには以下の型があります。
 
-```ts /app/lib/definitions.ts
+```diff
 export type Invoice = {
   id: string;
   customer_id: string;
@@ -91,6 +91,7 @@ export type Invoice = {
 TypeScript を使用することで、コンポーネントやデータベースに間違ったデータ形式を誤って渡さないようにすることができます。たとえば、請求書の `amount` に `number` ではなく `string` を渡すような場合です。
 
 > TypeScript 開発者の場合:
+>
 > - データ型を手動で宣言していますが、型の安全性を高めるために、データベーススキーマに基づいて型を自動的に生成する Prisma をお勧めします。
 > - Next.js は、プロジェクトで TypeScript が使用されているかどうかを検出し、必要なパッケージと構成を自動的にインストールします。Next.js には、自動補完（オートコンプリート）と型安全性（タイプセーフティ）を支援する、コードエディタ用の TypeScript プラグインも付属しています。
 
