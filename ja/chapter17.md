@@ -1,26 +1,26 @@
-# Next Steps
+# 次のステップ
 
-Congratulations! You've completed the Next.js dashboard course where you learned about the main features of Next.js and best practices for building web applications.
+おめでとうございます！これで Next.js の主な機能と、Web アプリケーション構築のベストプラクティスについて学習した Next.js ダッシュボードコースは完結しました。
 
-But this is just the beginning—Next.js has many other features. It's designed to help you build small side projects, your next startup idea, or even large-scale applications with your team.
+しかし、これはほんの始まりにすぎません。Next.js には他にもたくさんの機能があります。Next.js は、小規模なサイドプロジェクトや次のスタートアップのアイデア、さらには大規模なアプリケーションをチームで構築できるように設計されています。
 
-Here are some resources to continue exploring Next.js:
+Next.js をさらに使いこなすためのリソースをいくつかご紹介します。
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Next.js Templates:](https://vercel.com/templates?framework=next.js)
-  - [Admin Dashboard Template](https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs)
-  - [Next.js Commerce](https://vercel.com/templates/next.js/nextjs-commerce)
-  - [Blog Starter Kit](https://vercel.com/templates/next.js/blog-starter-kit)
-  - [Nextra: Docs Starter Kit](https://vercel.com/templates/next.js/documentation-starter-kit)
-  - [Image Gallery Starter](https://vercel.com/templates/next.js/image-gallery-starter)
-- [Next.js Repository](https://github.com/vercel/next.js)
+- [Next.js ドキュメント](https://nextjs.org/docs)
+- [Next.js テンプレート](https://vercel.com/templates?framework=next.js)
+  - [管理者ダッシュボードテンプレート](https://vercel.com/templates/next.js/admin-dashboard-tailwind-planetscale-react-nextjs)
+  - [Next.js コマース](https://vercel.com/templates/next.js/nextjs-commerce)
+  - [ブログスターターキット](https://vercel.com/templates/next.js/blog-starter-kit)
+  - [Nextra: ドキュメントスターターキット](https://vercel.com/templates/next.js/documentation-starter-kit)
+  - [イメージギャラリースターター](https://vercel.com/templates/next.js/image-gallery-starter)
+- [Next.js リポジトリ](https://github.com/vercel/next.js)
 - [Vercel YouTube](https://www.youtube.com/@VercelHQ/videos)
-  - [Next.js App Router: Routing, Data Fetching, Caching](https://www.youtube.com/watch?v=gSSsZReIFRk)
-  - [Performance in React and Next.js (Lydia Hallie)](https://www.youtube.com/watch?v=SqVLqvsiAYQ)
-  - [Vercel Product Walkthrough](https://www.youtube.com/watch?v=sPmat30SE4k)
+  - [Next.js App Router: ルーティング、データ取得、キャッシュ](https://www.youtube.com/watch?v=gSSsZReIFRk)
+  - [React と Next.js のパフォーマンス (Lydia Hallie)](https://www.youtube.com/watch?v=SqVLqvsiAYQ)
+  - [Vercel 製品ウォークスルー](https://www.youtube.com/watch?v=sPmat30SE4k)
 
-## Share your Next.js app
+## Next.js アプリを共有する
 
-We encourage you to share the app you built in this tutorial on X. If you do, please mention our team at [@nextjs](https://twitter.com/nextjs) so that we can take a look! We'd love to get your feedback on this course as well.
+このチュートリアルで作成したアプリを X で共有することをお勧めします。共有する場合は、[@nextjs](https://twitter.com/nextjs) までご連絡ください！このコースに関するご意見もお待ちしています。
 
-We hope you enjoyed this course, and we encourage you to continue learning - by building.
+このコースを楽しんでいただければ幸いです。構築を通じて学習を続けていきましょう。

@@ -2,17 +2,17 @@
 
 ## 新規プロジェクトの作成
 
-Next.js アプリを作成するには、ターミナルを開き、プロジェクトを保存したいフォルダに [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) で移動し、以下のコマンドを実行します。
+Next.js アプリを作成するには、ターミナルを開き、プロジェクトを保存したいフォルダに [cd](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line#basic_built-in_terminal_commands) コマンドで移動し、以下のコマンドを実行します。
 
 ```shell
 npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
 ```
 
-このコマンドは、Next.js アプリケーションをセットアップするコマンドラインインターフェイス (CLI) ツールである `create-next-app` を使用しています。上記のコマンドでは、このコースの [スターターサンプル](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example) を使用するため --example フラグを付加しています。
+このコマンドは、Next.js アプリケーションをセットアップするコマンドラインインターフェイス（CLI）ツールである `create-next-app` を使用しています。上記のコマンドでは、このコースの [スターターサンプル](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example) を使用するため --example フラグを追加しています。
 
 ## プロジェクトの探索
 
-コードを最初から作成するチュートリアルとは異なり、このコースのコードの多くはすでに作成されています。これは、既存のコードベースを使用して作業することになる実際の開発をよりよく反映しています。
+コードを最初から作成していくチュートリアルとは異なり、このコースのコードの多くはすでに作成されています。これは、既存のコードベースを使用して作業することになる実際の開発をよりよく反映しています。
 
 私たちの目標は、すべてのアプリケーションコードを記述することなく、Next.js の主な機能の学習に集中できるようにすることです。
 
@@ -30,12 +30,12 @@ cd nextjs-dashboard
 
 ![ダッシュボード プロジェクトのフォルダ構造。主要なフォルダとファイル: アプリ、パブリック、構成ファイルが表示されます。](/_images/learn-folder-structure.avif)
 
-* `/app`: アプリケーションのすべてのルート、コンポーネント、ロジックが含まれています。主にここから作業します。
-* `/app/lib`: 再利用可能なユーティリティ関数やデータ取得関数など、アプリケーションで使用される関数が含まれています。
-* `/app/ui`: カード、テーブル、フォームなど、アプリケーションのすべての UI コンポーネントが含まれます。時間を節約するために、これらのコンポーネントは事前にスタイル設定されています。
-* `/public`: 画像など、アプリケーションのすべての静的アセットが含まれます。
-* `/scripts`: 後の章で使用する、データベースにデータを取り込むためのシードスクリプトが含まれています。
-* `Config Files`: アプリケーションのルートに `next.config.js` などの構成ファイルがあることにも気づくでしょう。これらのファイルのほとんどは `create-next-app` を使用して新しいプロジェクトを開始するときに作成され、あらかじめ設定されています。このコースでは、これらのファイルを変更する必要はありません。
+- `/app`: アプリケーションのすべてのルート、コンポーネント、ロジックが含まれています。主にここから作業します
+- `/app/lib`: 再利用可能なユーティリティ関数やデータ取得関数など、アプリケーションで使用される関数が含まれています
+- `/app/ui`: カード、テーブル、フォームなど、アプリケーションのすべての UI コンポーネントが含まれます。時間を節約するために、これらのコンポーネントは事前にスタイル設定されています
+- `/public`: 画像など、アプリケーションのすべての静的アセットが含まれます
+- `/scripts`: 後の章で使用する、データベースにデータを取り込むためのシードスクリプトが含まれています
+- `Config Files`: アプリケーションのルートに `next.config.js` などの構成ファイルがあることにも気づくでしょう。これらのファイルのほとんどは `create-next-app` を使用して新しいプロジェクトを開始するときに作成され、あらかじめ設定されています。このコースでは、これらのファイルを変更する必要はありません
 
 これらのフォルダを自由に探索してください。コードの動作をすべて理解していなくても心配する必要はありません。
 
@@ -43,12 +43,12 @@ cd nextjs-dashboard
 
 ユーザーインターフェイスを構築するとき、いくつかのプレースホルダデータがあると便利です。データベースや API がまだ利用できない場合は、以下のような方法があります。
 
-* プレースホルダデータは JSON 形式または JavaScript オブジェクトとして使用します。
-* [mockAPI](https://mockapi.io/) などのサードパーティサービスを使用します。
+- プレースホルダデータは JSON 形式または JavaScript オブジェクトとして使用します。
+- [mockAPI](https://mockapi.io/) などのサードパーティサービスを使用します。
 
 このプロジェクトでは、いくつかのプレースホルダデータを `app/lib/placeholder-data.js` に用意しました。ファイル内の各 JavaScript オブジェクトは、データベース内のテーブルを表しています。たとえば、invoices テーブルの場合は以下のようになります。
 
-```js /app/lib/placeholder-data.js
+```js
 const invoices = [
   {
     customer_id: customers[0].id,
