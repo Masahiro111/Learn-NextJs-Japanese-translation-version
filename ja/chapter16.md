@@ -1,45 +1,45 @@
-# Adding Metadata
+# メタデータの追加
 
-Metadata is crucial for SEO and shareability. In this chapter, we'll discuss how you can add metadata to your Next.js application.
+メタデータは SEO とシェアビリティに必要不可欠です。この章では、Next.js アプリケーションにメタデータを追加する方法について説明します。
 
-Here are the topics we’ll cover
+ここで取り上げるトピックは次のとおりです
 
-- What metadata is.
-- Types of metadata.
-- How to add an Open Graph image using metadata.
-- How to add a favicon using metadata.
+- メタデータとは何か
+- メタデータの種類
+- メタデータを使用して Open Graph 画像を追加する方法
+- メタデータを使用してファビコンを追加する方法
 
-## What is metadata?
+## メタデータとは？
 
-In web development, metadata provides additional details about a webpage. Metadata is not visible to the users visiting the page. Instead, it works behind the scenes, embedded within the page's HTML, usually within the `<head>` element. This hidden information is crucial for search engines and other systems that need to understand your webpage's content better.
+Web 開発において、メタデータは Web ページに関する補足情報を付与します。メタデータは、ページを訪問するユーザーには表示されません。その代わり、ページの HTML（通常は`<head>`要素内）に埋め込まれ、見えないところで機能します。この隠れた情報は、検索エンジンやその他のシステムがウェブページの内容をよりよく理解するために重要です。
 
-## Why is metadata important?
+## なぜメタデータが重要なのか？
 
-Metadata plays a significant role in enhancing a webpage's SEO, making it more accessible and understandable for search engines and social media platforms. Proper metadata helps search engines effectively index webpages, improving their ranking in search results. Additionally, metadata like Open Graph improves the appearance of shared links on social media, making the content more appealing and informative for users.
+メタデータは Web ページの SEO を強化する上で重要な役割を果たし、検索エンジンやソーシャルメディアプラットフォームにとってよりアクセスしやすく、理解しやすいものにします。適切なメタデータは、検索エンジンが Web ページを効果的にインデックスし、検索結果でのランキングを向上させるのに役立ちます。さらに、Open Graph のようなメタデータは、ソーシャルメディア上で共有されたリンクの見栄えを改善し、コンテンツをユーザーにとってより魅力的で有益なものにします。
 
-## Types of metadata
+## メタデータの種類
 
-There are various types of metadata, each serving a unique purpose. Some common types include:
+メタデータにはさまざまな種類があり、それぞれが独自の目的を果たします。一般的なタイプには次のようなものがあります。
 
-**Title Metadata:** Responsible for the title of a webpage that is displayed on the browser tab. It's crucial for SEO as it helps search engines understand what the webpage is about.
+**タイトルメタデータ** ブラウザのタブに表示される Web ページのタイトルを担当します。これは検索エンジンがウェブページの内容を理解するのに役立つため、SEO にとって非常に重要です。
 
 ```html
 <title>Page Title</title>
 ```
 
-**Description Metadata:** This metadata provides a brief overview of the webpage content and is often displayed in search engine results.
+**説明メタデータ** このメタデータは Web ページのコンテンツの簡単な概要を提供し、多くの場合、検索エンジンの検索結果に表示されます。
 
 ```html
 <meta name="description" content="A brief description of the page content." />
 ```
 
-**Keyword Metadata:** This metadata includes the keywords related to the webpage content, helping search engines index the page.
+**キーワードメタデータ** このメタデータには Web ページのコンテンツに関連するキーワードが含まれ、検索エンジンがページをインデックスするのに役立ちます。
 
 ```html
 <meta name="keywords" content="keyword1, keyword2, keyword3" />
 ```
 
-**Open Graph Metadata:** This metadata enhances the way a webpage is represented when shared on social media platforms, providing information such as the title, description, and preview image.
+**オープングラフメタデータ** このメタデータは、ソーシャルメディアプラットフォームで Web ページが共有される際の表現方法を強化し、タイトル、説明文、プレビュー画像などの情報を提供します。
 
 ```html
 <meta property="og:title" content="Title Here" />
@@ -47,42 +47,44 @@ There are various types of metadata, each serving a unique purpose. Some common 
 <meta property="og:image" content="image_url_here" />
 ```
 
-**Favicon Metadata:** This metadata links the favicon (a small icon) to the webpage, displayed in the browser's address bar or tab.
+**ファビコンメタデータ** このメタデータは、ブラウザのアドレスバーやタブに表示されるファビコン（小さなアイコン）を Web ページにリンクします。
 
 ```html
 <link rel="icon" href="path/to/favicon.ico" />
 ```
 
-## Adding metadata
+## メタデータの追加
 
-Next.js has a Metadata API that can be used to define your application metadata. There are two ways you can add metadata to your application:
+Next.js には、アプリケーションのメタデータを定義するためのメタデータ API が用意されています。アプリケーションにメタデータを追加するには、2 つの方法があります。
 
-- **Config-based:** Export a [static `metadata` object](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadata-object) or a dynamic [`generateMetadata` function](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) in a layout.js or page.js file.
-- **File-based:** Next.js has a range of special files that are specifically used for metadata purposes:
-  - `favicon.ico`, `apple-icon.jpg`, and `icon.jpg`: Utilized for favicons and icons
-  - `opengraph-image.jpg` and `twitter-image.jpg`: Employed for social media images
-  - `robots.txt`: Provides instructions for search engine crawling
-  - `sitemap.xml`: Offers information about the website's structure
+- **設定ベース** [静的 `metadata` オブジェクト](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadata-object) または、動的な [`generateMetadata` 関数](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) を layout.js または page.js ファイル内に記述します。
+- **ファイルベース** Next.js には、メタデータのために使用される特別なファイルがあります。
+  - `favicon.ico`、`apple-icon.jpg`、`icon.jpg` はファビコンとアイコンに使用されます
+  - `opengraph-image.jpg`、`twitter-image.jpg` はソーシャルメディア画像に使用されます
+  - `robots.txt` は検索エンジンのクロールの仕方を指示します
+  - `sitemap.xml` は Web サイトの構造に関する情報を提供します
 
-You have the flexibility to use these files for static metadata, or you can generate them programmatically within your project.
+これらのファイルを静的なメタデータとして柔軟に利用することもできますし、プロジェクト内でプログラム的に生成することもできます。
 
-With both these options, Next.js will automatically generate the relevant `<head>` elements for your pages.
+どちらのオプションでも、Next.js はページに関連する `<head>` 要素を自動的に生成します。
 
-## Favicon and Open Graph image
+## ファビコンとオープングラフ画像
 
-In your `/public` folder, you'll notice you have two images: `favicon.ico` and `opengraph-image.jpg`.
+`/public` フォルダーに、`favicon.ico` と `opengraph-image.jpg` という 2 つの画像があることに気づくでしょう。
 
-Move these images to the root of your `/app` folder.
+これらの画像を `/app` フォルダのルートに移動させましょう。
 
-After doing this, Next.js will automatically identify and use these files as your favicon and OG image. You can verify this by checking the `<head>` element of your application in dev tools.
+こうすると、Next.js がこれらのファイルを自動的に識別して、ファビコンと OG 画像として使用します。このことは、開発ツールでアプリケーションの `<head>` 要素をチェックすることで確認できます。
 
-> **Good to know:** You can also create dynamic OG images using the [`ImageResponse`](https://nextjs.org/docs/app/api-reference/functions/image-response) constructor.
+> [!tip]
+>
+> [`ImageResponse`](https://nextjs.org/docs/app/api-reference/functions/image-response) コンストラクタを使用して動的に OG 画像を作成することもできます。
 
-### Page title and descriptions
+### ページのタイトルと説明
 
-You can also include a [`metadata` object](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadata-fields) from any `layout.js` or `page.js` file to add additional page information like title and description. Any metadata in `layout.js` will be inherited by all pages that use it.
+`layout.js` または `page.js` ファイルから [`metadata`オブジェクト](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadata-fields) を取り込むことで、タイトルや説明文のような追加のページ情報を加えることができます。layout.js` に含まれるメタデータは、それを使用するすべてのページに継承されます。
 
-In your root layout, create a new `metadata` object with the following fields:
+ルートレイアウトで、以下のフィールドを持つ新しい `metadata` オブジェクトを作成します。
 
 `/app/layout.tsx`
 
@@ -100,11 +102,11 @@ In your root layout, create a new `metadata` object with the following fields:
   }
 ```
 
-Next.js will automatically add the title and metadata to your application.
+Next.js は自動的にタイトルとメタデータをアプリケーションに追加します。
 
-But what if you want to add a custom title for a specific page? You can do this by adding a `metadata` object to the page itself. Metadata in nested pages will override the metadata in the parent.
+しかし、特定のページにカスタムタイトルを追加したい場合はどうすればよいでしょうか？その場合は、ページ自体に `metadata` オブジェクトを追加します。ネストされたページのメタデータは親のメタデータを上書きします。
 
-For example, in the `/dashboard/invoices` page, you can update the page title:
+たとえば、`/dashboard/invoices` ページでは、ページタイトルを以下のようにして更新することができます。
 
 `/app/dashboard/invoices/page.tsx`
 
