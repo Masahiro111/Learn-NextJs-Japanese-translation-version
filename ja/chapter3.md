@@ -61,15 +61,17 @@ export default function RootLayout({
 
 ここであなたの番です！`fonts.ts` ファイルで、`Lusitana` というセカンダリフォントをインポートし、それを `/app/page.tsx` ファイルの `<p>` 要素に渡します。前と同じようにサブセットを指定することに加えて、フォントの太さも指定する必要があります。
 
-> ヒント
+> [!tip]
 >
 > - フォントにどのウェイトオプションを渡すべきかわからない場合は、コードエディタで TypeScript エラーを確認してください。
 > - [Google Fonts](https://fonts.google.com/) の Web サイトにアクセスし、`Lusitana` を検索して、利用可能なオプションを確認します。
 > - [複数のフォントの追加](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts) と [オプションの完全なリスト](https://nextjs.org/docs/app/api-reference/components/font#font-function-arguments) のドキュメントを参照してください。
 
-答え
+どうでしょうか？答えは以下のコードとなります。
 
-```ts diff:/app/ui/fonts.ts
+`/app/ui/fonts.ts`
+
+```diff
 + import { Inter, Lusitana } from 'next/font/google';
 
   export const inter = Inter({ subsets: ['latin'] });
@@ -80,7 +82,9 @@ export default function RootLayout({
 + });
 ```
 
-```tsx diff:/app/page.tsx
+`/app/page.tsx`
+
+```diff
   import AcmeLogo from "@/app/ui/acme-logo";
   import { ArrowRightIcon } from "@heroicons/react/24/outline";
   import Link from "next/link";
@@ -105,8 +109,10 @@ export default function RootLayout({
 
 最後に `<AcmeLogo />` コンポーネントも Lusitana を使用します。エラーを防ぐためにコメントアウトされていますが、コメントを解除できるようになりました。
 
-```tsx:/app/page.tsx
-// ...
+`/app/page.tsx`
+
+```diff
+  // ...
 
   export default function Page() {
     return (
@@ -150,8 +156,8 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 
 - 画像読み込み時に自動的にレイアウトがずれるのを防ぎます
 - 小さなビューポートを備えたデバイスに大きな画像が送信されるのを避けるために、画像のサイズを変更します
-- デフォルトで画像を遅延読み込みします (画像はビューポートに入るときに読み込まれます)
-- ブラウザーがサポートしている場合、WebP や AVIF などの最新の形式で画像を提供します
+- デフォルトで画像を遅延読み込みします（画像はビューポートに入るときに読み込まれます）
+- ブラウザがサポートしている場合、[WebP](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#webp) や [AVIF](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#avif_image) などの最新の形式で画像を提供します
 
 ## デスクトップにヒーロー画像を追加
 
@@ -159,7 +165,9 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 
 `/app/page.tsx` ファイルで、[next/image](https://nextjs.org/docs/api-reference/next/image) からコンポーネントをインポートします。それから、コメントの下に画像を追加します。
 
-```tsx diff:/app/page.tsx
+`/app/page.tsx`
+
+```diff
   import AcmeLogo from '@/app/ui/acme-logo';
   import { ArrowRightIcon } from '@heroicons/react/24/outline';
   import Link from 'next/link';
@@ -201,7 +209,9 @@ Next.js は、最上位の [/public](https://nextjs.org/docs/app/building-your-a
 
 コードが書けたら、以下のコードスニペットを展開して解決策を確認してみてください。
 
-```tsx diff:/app/page.tsx
+`/app/page.tsx`
+
+```diff
   import AcmeLogo from '@/app/ui/acme-logo';
   import { ArrowRightIcon } from '@heroicons/react/24/outline';
   import Link from 'next/link';

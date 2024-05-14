@@ -212,7 +212,7 @@ const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
 
 `/app/dashboard/page.tsx`
 
-```tsx diff
+```diff tsx
   import { Card } from '@/app/ui/dashboard/cards';
   import RevenueChart from '@/app/ui/dashboard/revenue-chart';
   import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
@@ -264,7 +264,7 @@ const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
 ただし...注意しなければならないことが 2 つあります。
 
 1. データリクエストが意図せずお互いにブロックし合い、`リクエストウォーターフォール` を作り出してしまうこと
-2. デフォルトでは、Next.js はパフォーマンスを向上させるためにルートをプリレンダリングします。これは「静的レンダリング」と呼ばれます。そのため、データが変更されてもダッシュボードには反映されません。
+1. デフォルトでは、Next.js はパフォーマンスを向上させるためにルートをプリレンダリングします。これは「静的レンダリング」と呼ばれます。そのため、データが変更されてもダッシュボードには反映されません。
 
 この章では 1 について説明し、次の章で 2 について詳しく説明します。
 
@@ -301,7 +301,7 @@ JavaScript では、[Promise.all()](https://developer.mozilla.org/en-US/docs/Web
 
 `/app/lib/data.js`
 
-```js diff
+```diff js
   export async function fetchCardData() {
     try {
       const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;

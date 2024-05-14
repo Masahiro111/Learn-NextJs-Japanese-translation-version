@@ -24,7 +24,7 @@ Next.js では、`<Link />` コンポーネントを使用してアプリケー�
 
 `/app/ui/dashboard/nav-links.tsx`
 
-```tsx diff
+```diff
   import {
     UserGroupIcon,
     HomeIcon,
@@ -77,7 +77,7 @@ Next.js では、`<Link />` コンポーネントを使用してアプリケー�
 
 `/app/ui/dashboard/nav-links.tsx`
 
-```tsx diff
+```diff
 + 'use client';
 
   import {
@@ -95,7 +95,7 @@ Next.js では、`<Link />` コンポーネントを使用してアプリケー�
 
 `/app/ui/dashboard/nav-links.tsx`
 
-```tsx diff
+```diff
   export default function NavLinks() {
 +   const pathname = usePathname();
     // ...
@@ -108,7 +108,7 @@ Next.js では、`<Link />` コンポーネントを使用してアプリケー�
 
 `/app/ui/dashboard/nav-links.tsx`
 
-```tsx diff
+```diff
   'use client';
 
   import {

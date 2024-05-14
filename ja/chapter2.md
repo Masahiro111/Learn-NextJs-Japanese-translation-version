@@ -2,23 +2,25 @@
 
 現在、あなたのホームページにはスタイル設定がされていません。Next.js アプリケーションをスタイル設定するさまざまな方法を見てみましょう。
 
-この章で取り上げるトピックは以下のとおりです。
+この章で取り上げるトピックは以下のとおりです
 
-> - グローバル CSS ファイルをアプリケーションに追加する方法
-> - Tailwind モジュールと CSS モジュールを使用した、2つの異なるスタイル設定方法
-> - clsx ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
+- グローバル CSS ファイルをアプリケーションに追加する方法
+- Tailwind モジュールと CSS モジュールを使用した、2 つの異なるスタイル設定方法
+- `clsx` ユーティリティパッケージを使用して条件付きでクラス名を追加する方法
 
 ## グローバルスタイル
 
 `/app/ui` フォルダの中を見ると、`global.css` というファイルがあることがわかります。このファイルを使用すると、CSS リセットルール、リンクなどの HTML 要素のサイト全体のスタイルなど、CSS ルールをアプリケーション内のすべてのルートに追加できます。
 
-`global.css` はアプリケーションのどのコンポーネントにもインポートできますが、通常はそれを最上位コンポーネントに追加することをお勧めします。Next.js では、これは [ルートレイアウト](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) となっています (これについては後で詳しく説明します) 。
+`global.css` はアプリケーションのどのコンポーネントにもインポートできますが、通常はそれを最上位コンポーネントに追加することをお勧めします。Next.js では、これは [ルートレイアウト](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required) となっています（これについては後で詳しく説明します）。
 
 `/app/layout.tsx` に移動し、`global.css` ファイルをインポートして、グローバルスタイルをアプリケーションに追加します。
 
-```ts diff:/app/layout.tsx
+`/app/layout.tsx`
+
+```diff:
 + import '@/app/ui/global.css';
- 
+
   export default function RootLayout({
     children,
   }: {
@@ -38,9 +40,11 @@
 
 しかし、ちょっと待ってください。CSS ルールを追加していません。スタイルはどこから来たのでしょうか？
 
-global.css の内部を見ると、いくつかの @tailwind ディレクティブに気づくでしょう。
+`global.css` の内部を見ると、いくつかの `@tailwind` ディレクティブに気づくでしょう。
 
-```css:/app/ui/global.css
+`/app/ui/global.css`
+
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -56,17 +60,19 @@ Tailwind では、クラス名を追加することで要素をスタイル設�
 <h1 className="text-blue-500">I'm blue!</h1>
 ```
 
-CSSスタイルはグローバルに共有されますが、各クラスは各要素に個別に適用されます。つまり、要素を追加したり削除したりしても、別々のスタイルシートを維持したり、スタイルが衝突したり、アプリケーションの拡張に伴って CSS バンドルのサイズが大きくなったりする心配はありません。
+CSS スタイルはグローバルに共有されますが、各クラスは各要素に個別に適用されます。つまり、要素を追加したり削除したりしても、別々のスタイルシートを維持したり、スタイルが衝突したり、アプリケーションの拡張に伴って CSS バンドルのサイズが大きくなったりする心配はありません。
 
 `create-next-app` を使用して新しいプロジェクトを開始すると、Next.js は Tailwind を使用するかどうかを尋ねます。`yes` を選択すると、Next.js は必要なパッケージを自動的にインストールし、アプリケーションに Tailwind を設定します。
 
 `/app/page.tsx` を見ると、サンプルで Tailwind のクラスを使っていることがわかります。
 
-```ts:/app/page.tsx
+`/app/page.tsx`
+
+```ts
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
- 
+
 export default function Page() {
   return (
     // これらは Tailwind のクラスです
@@ -81,10 +87,10 @@ Tailwind を初めて使用する場合でも心配する必要はありませ�
 
 Tailwind で遊んでみましょう！以下のコードをコピーして `/app/page.tsx` の `<p>` 要素の上に貼り付けてください。
 
-```ts:app/page.tsx
-<div
-  className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"
-/>
+`app/page.tsx`
+
+```ts
+<div className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent" />
 ```
 
 **クイズの時間です！**
@@ -113,7 +119,9 @@ Tailwind で遊んでみましょう！以下のコードをコピーして `/ap
 
 `/app/ui` 内に、`home.module.css` という名前の新しいファイルを作成し、以下の CSS ルールを追加します。
 
-```css:/app/ui/home.module.css
+`/app/ui/home.module.css`
+
+```css
 .shape {
   height: 0;
   width: 0;
@@ -125,20 +133,22 @@ Tailwind で遊んでみましょう！以下のコードをコピーして `/ap
 
 次に、`/app/page.tsx` ファイル内でスタイルをインポートし、追加した `<div>` の Tailwind クラス名を `styles.shape` に置き換えます。
 
-```ts:/app/page.tsx
-import styles from '@/app/ui/home.module.css';
+`/app/page.tsx`
+
+```ts
+import styles from "@/app/ui/home.module.css";
 <div className={styles.shape} />;
 ```
 
 変更を保存し、ブラウザでプレビューしてください。以前と同じ形状が表示されるはずです。
 
-Tailwind と CSS モジュールは、Next.js アプリケーションをスタイリングする最も一般的な2つの方法です。どちらを使うかは好みの問題ですが、同じアプリケーションで両方を使うこともできます！
+Tailwind と CSS モジュールは、Next.js アプリケーションをスタイリングする最も一般的な 2 つの方法です。どちらを使うかは好みの問題ですが、同じアプリケーションで両方を使うこともできます！
 
 **クイズの時間です！**
 
 あなたの知識をテストして、今学んだことを確認しましょう。
 
-CSS モジュールを使う利点の1つは何でしょう？
+CSS モジュールを使う利点の 1 つは何でしょう？
 
 1. CSS クラスのグローバルスコープを広げ、異なるファイル間での管理を容易にする
 2. CSS クラスをデフォルトでコンポーネントに対してローカルにスコープさせる方法を提供し、スタイルの衝突のリスクを減らす
@@ -150,18 +160,21 @@ CSS モジュールを使う利点の1つは何でしょう？
 </details>
 
 ## `clsx` ライブラリを使用してクラス名を切り替える
+
 状態やその他の条件に基づいて要素を条件付きでスタイル設定する必要がある場合があります。
 
 [clsx](https://www.npmjs.com/package/clsx) は、クラス名を簡単に切り替えることができるライブラリです。詳細については、[ドキュメント](https://github.com/lukeed/clsx) を参照することをお勧めしますが、基本的な使用法は以下のとおりです。
 
-* `InvoiceStatus`コンポーネントを作成して `status`を受け入れます。ステータスは `'pending'` （保留中） または `'paid'` （支払い済み） になります。
-* もし `'paid'` なら、色をグリーンにします。`pending'`の場合はグレーにします。
+- `InvoiceStatus`コンポーネントを作成して `status`を受け入れます。ステータスは `'pending'` （保留中） または `'paid'` （支払い済み） になります。
+- もし `'paid'` なら、色をグリーンにします。`pending'`の場合はグレーにします。
 
 `clsx` を使用うと、以下のように条件付きでクラスを適用できます。
 
-```ts diff:/app/ui/invoices/status.tsx
+`/app/ui/invoices/status.tsx`
+
+```diff
   import clsx from 'clsx';
-  
+
   export default function InvoiceStatus({ status }: { status: string }) {
     return (
       <span
@@ -196,7 +209,7 @@ CSS モジュールを使う利点の1つは何でしょう？
 
 これまで説明してきたアプローチに加えて、以下のように Next.js アプリケーションのスタイルを設定することもできます。
 
-* `.css` および `.scss` ファイルをインポートできる Sass。
-* [styled-jsx](https://github.com/vercel/styled-jsx)、[styled-components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)、[emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion) などの CSS-in-JS ライブラリ。
+- `.css` および `.scss` ファイルをインポートできる Sass。
+- [styled-jsx](https://github.com/vercel/styled-jsx)、[styled-components](https://github.com/vercel/next.js/tree/canary/examples/with-styled-components)、[emotion](https://github.com/vercel/next.js/tree/canary/examples/with-emotion) などの CSS-in-JS ライブラリ。
 
 詳細については、[CSS ドキュメント](https://nextjs.org/docs/app/building-your-application/styling) を参照してください。

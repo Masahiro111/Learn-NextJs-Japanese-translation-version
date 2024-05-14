@@ -46,7 +46,7 @@
 
 `/app/lib/data.ts`
 
-```ts diff
+```diff ts
   // ...
 + import { unstable_noStore as noStore } from 'next/cache';
 
@@ -93,6 +93,7 @@
 ```
 
 > [!note]
+>
 > 現在 `unstable_noStore` は実験的な API であり、将来変更される可能性があります。独自のプロジェクトで安定した API を使用したい場合は、[Segment Config Option](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config) `export const dynamic = "force-dynamic"` を使用することもできます
 
 ## 低速なデータフェッチのシミュレーション
@@ -103,24 +104,24 @@
 
 `/app/lib/data.ts`
 
-```ts diff
-export async function fetchRevenue() {
-  try {
-    // We artificially delay a response for demo purposes.
-    // Don't do this in production :)
-    +console.log("Fetching revenue data...");
-    +(await new Promise((resolve) => setTimeout(resolve, 3000)));
+```diff ts
+  export async function fetchRevenue() {
+    try {
+      // We artificially delay a response for demo purposes.
+      // Don't do this in production :)
++     console.log('Fetching revenue data...');
++     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+      const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    +console.log("Data fetch completed after 3 seconds.");
++     console.log('Data fetch completed after 3 seconds.');
 
-    return data.rows;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch revenue data.");
+      return data.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch revenue data.');
+    }
   }
-}
 ```
 
 新しいタブで http://localhost:3000/dashboard/ を開くと、ページの読み込みに時間がかかることがわかります。ターミナルには次のメッセージも表示されるはずです。

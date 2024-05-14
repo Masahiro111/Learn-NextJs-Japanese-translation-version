@@ -51,6 +51,7 @@ GitHub リポジトリに接続すると、**main** ブランチに変更をプ�
 ![データベース名とリージョンを表示するデータベース作成モーダル](/_images/database-region.avif)
 
 > [!TIP]
+>
 > データベース領域は、一度初期化されると変更できません。別の [リージョン](https://vercel.com/docs/storage/vercel-postgres/limits#supported-regions) を使用したい場合は、データベースを作成する前に設定する必要があります。
 
 接続が完了したら `.env.local` タブに移動し、`Show secret` と `Copy Snippet` をクリックします。必ず秘密のキーを表示させてから、コピーするようにしてください。
@@ -60,6 +61,7 @@ GitHub リポジトリに接続すると、**main** ブランチに変更をプ�
 コードエディタに移動し、`.env.example` ファイルの名前を `.env` に変更します。 Vercel からコピーした内容を貼り付けます。
 
 > [!IMPORTANT]
+>
 > GitHub にプッシュする際、データベースの機密情報である接続キーが公開されるのを防ぐため、`.gitignore` ファイルで、無視されるファイルに `.env` が含まれていることを確認してください。
 
 最後に、ターミナルで `npm i @vercel/postgres` を実行して、[Vercel Postgres SDK](https://vercel.com/docs/storage/vercel-postgres/sdk) をインストールします。
@@ -76,7 +78,7 @@ GitHub リポジトリに接続すると、**main** ブランチに変更をプ�
 
 `/package.json`
 
-```js diff
+```diff js
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -90,6 +92,7 @@ GitHub リポジトリに接続すると、**main** ブランチに変更をプ�
 ここで、`npm run seed` を実行してみましょう。ターミナルにいくつかの `console.log` メッセージが表示され、スクリプトが実行中であることがわかります。
 
 > [!IMPORTANT]
+>
 > データベースのシークレットキーを `.env` ファイルにコピーする前に、必ず公開してご確認ください
 > スクリプトは bcrypt を使用してユーザーのパスワードをハッシュします。`bcrypt` が現在の環境と互換性がない場合は、代わりに [bcryptjs](https://www.npmjs.com/package/bcryptjs) を使用するようにスクリプトを更新できます
 > データベースのシード中に問題が発生し、スクリプトを再度実行したい場合は、データベースクエリインターフェイスで `DROP TABLE tablename` を実行して既存のテーブルを削除できます。詳細については、以下の [クエリの実行セクション](https://nextjs.org/learn/dashboard-app/setting-up-your-database#executing-queries) を参照してください。ただし、このコマンドはテーブルとそのすべてのデータを削除することに注意してください。プレースホルダデータを操作しているため、サンプルアプリでこれを実行しても問題ありませんが、運用アプリではこのコマンドを実行しないでください。
